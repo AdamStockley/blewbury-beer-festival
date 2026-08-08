@@ -1,0 +1,50 @@
+---
+const {
+  title = "Blewbury Beer Festival 2026",
+  description = "Blewbury Beer Festival returns on Saturday 3 October 2026. Beer, cider, food, live music and good causes in Blewbury, Oxfordshire."
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Festival",
+        name: "Blewbury Beer Festival 2026",
+        startDate: "2026-10-03",
+        eventStatus: "https://schema.org/EventScheduled",
+        eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+        location: {
+          "@type": "Place",
+          name: "Blewbury, Oxfordshire",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Blewbury",
+            addressRegion: "Oxfordshire",
+            addressCountry: "GB"
+          }
+        },
+        description
+      })}
+    ></script>
+  </head>
+
+  <body>
+    <slot />
+  </body>
+</html>

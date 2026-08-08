@@ -1,0 +1,17 @@
+---
+import { festival } from "../data/festival";
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <strong>{festival.name}</strong>
+      <div class="footer-small">{festival.date}</div>
+      <div class="footer-small">{festival.location}</div>
+    </div>
+
+    <div class="footer-small">
+      {festival.strapline}
+    </div>
+  </div>
+</footer>

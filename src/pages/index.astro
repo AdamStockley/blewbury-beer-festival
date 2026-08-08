@@ -1,17 +1,96 @@
 ---
-
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { festival, highlights, news } from "../data/festival";
+import "../styles/global.css";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+  <Header />
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <p class="eyebrow">Save the date</p>
+
+        <h1>{festival.name}</h1>
+
+        <p class="hero-date">{festival.date}</p>
+        <p class="hero-location">{festival.location}</p>
+
+        <p class="hero-tagline">
+          Beer • Cider • Food • Live Entertainment • Good Causes
+        </p>
+
+        <div class="button-row">
+          <a class="button" href="/plan-your-day">Plan Your Day</a>
+          <a class="button secondary" href="/volunteer">Get Involved</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">The festival</p>
+          <h2>A very good reason to spend a Saturday drinking beer.</h2>
+          <p>{festival.intro}</p>
+        </div>
+
+        <div class="cards">
+          {
+            highlights.map((item) => (
+              <article class="card">
+                <div class="card-icon">{item.icon}</div>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+                <a href={item.href}>{item.linkText} →</a>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="good-causes">
+      <div class="container">
+        <p class="eyebrow">Good causes</p>
+        <div class="section-heading">
+          <h2>{festival.strapline}</h2>
+        </div>
+
+        <p>
+          Blewbury Beer Festival is a community event which raises money for
+          worthwhile causes. We'll publish details of the organisations
+          supported by the 2026 festival as they're confirmed.
+        </p>
+
+        <p>
+          <a class="button secondary" href="/causes">Our good causes</a>
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Latest</p>
+          <h2>Festival news</h2>
+        </div>
+
+        {
+          news.map((item) => (
+            <article class="news-item">
+              <div class="news-date">{item.date}</div>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

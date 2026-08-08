@@ -6,17 +6,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from commands import (  # noqa: E402
-    audit,
-    docs,
-    import_wp,
-    optimise_images,
-    refactor_homepage,
-    release,
-)
+from commands import audit, docs, import_wp, optimise_images, refactor_homepage, release, venue
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -32,6 +24,7 @@ def build_parser() -> argparse.ArgumentParser:
     release.register(subparsers)
     audit.register(subparsers)
     refactor_homepage.register(subparsers)
+    venue.register(subparsers)
 
     return parser
 

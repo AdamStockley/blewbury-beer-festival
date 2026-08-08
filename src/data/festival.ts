@@ -4,8 +4,16 @@ export const festival = {
   date: "Saturday 3 October 2026",
   dateISO: "2026-10-03T12:00:00+01:00",
   shortDate: "3 October 2026",
-  location: "Blewbury, Oxfordshire",
-  venue: "Blewbury, Oxfordshire",
+  location: "Blewbury Village Hall, Blewbury, Oxfordshire",
+  venue: "Blewbury Village Hall",
+  address: {
+    street: "Church End",
+    locality: "Blewbury",
+    town: "Didcot",
+    region: "Oxfordshire",
+    postcode: "OX11 9QQ",
+    country: "GB",
+  },
   strapline: "Supporting good causes through the consumption of beer…",
   intro:
     "Great beer, live entertainment, good food and a village full of people having a very good Saturday — all while raising money for worthwhile causes.",

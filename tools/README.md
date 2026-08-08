@@ -1,37 +1,25 @@
 # Blewbury Beer Festival Developer Tools
 
-Developer utilities are exposed through one CLI:
+Use:
 
 ```bash
 python3 tools/cli.py --help
 ```
 
-Available commands:
+Current commands include:
 
 ```text
 docs
+audit
+release
+refactor-homepage
+venue
 import-wordpress
 optimise-images
-release
-audit
-refactor-homepage
 ```
 
-Examples:
+For the confirmed venue and Visit page:
 
 ```bash
-python3 tools/cli.py docs
-python3 tools/cli.py docs --check
-python3 tools/cli.py audit
-python3 tools/cli.py release
-python3 tools/cli.py refactor-homepage
-python3 tools/cli.py refactor-homepage --check
+python3 tools/cli.py venue
 ```
-
-## Design principle
-
-Use Python tooling for multi-file generation and transformations.
-
-Keep shell commands small and use them mainly for Git, package management and build operations.
-
-Avoid large shell heredoc scripts.

@@ -1,0 +1,99 @@
+.visit-page { background: var(--cream); }
+
+.page-hero { padding: 10rem 0 5rem; }
+
+.page-hero-visit {
+  background:
+    radial-gradient(circle at 85% 25%, rgba(217,154,41,0.26), transparent 24rem),
+    linear-gradient(135deg, var(--burgundy-dark), var(--burgundy));
+  color: white;
+}
+
+.page-hero h1 {
+  max-width: 950px;
+  margin-bottom: 2rem;
+  font-size: clamp(4rem, 9vw, 8rem);
+  line-height: 0.84;
+}
+
+.page-hero-lead {
+  margin: 0;
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  color: rgba(255,255,255,0.8);
+}
+
+.visit-details { padding: 5rem 0; }
+
+.visit-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 0.8fr;
+  gap: 6rem;
+}
+
+.visit-primary h2 {
+  margin-bottom: 2rem;
+  font-size: clamp(2.8rem, 5vw, 5rem);
+}
+
+.venue-address {
+  font-style: normal;
+  font-size: 1.2rem;
+  line-height: 1.65;
+}
+
+.visit-actions { margin-top: 2rem; }
+
+.visit-note {
+  padding: 2rem;
+  align-self: start;
+  border-top: 1px solid var(--border-dark);
+  border-bottom: 1px solid var(--border-dark);
+}
+
+.visit-note h3 {
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  line-height: 1;
+}
+
+.visit-note p:not(.eyebrow),
+.visit-info-card p:not(.eyebrow) {
+  color: var(--muted);
+}
+
+.visit-info { padding: 1rem 0 6rem; }
+
+.visit-info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--border-dark);
+  border-left: 1px solid var(--border-dark);
+}
+
+.visit-info-card {
+  min-height: 250px;
+  padding: 2rem;
+  border-right: 1px solid var(--border-dark);
+  border-bottom: 1px solid var(--border-dark);
+}
+
+.visit-info-card h3 {
+  margin-bottom: 1rem;
+  font-size: 1.7rem;
+}
+
+@media (max-width: 950px) {
+  .visit-details-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .visit-info-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 720px) {
+  .page-hero { padding: 8rem 0 4rem; }
+  .visit-details { padding: 4rem 0; }
+  .visit-info { padding-bottom: 4rem; }
+  .visit-info-grid { grid-template-columns: 1fr; }
+  .visit-info-card { min-height: auto; }
+}

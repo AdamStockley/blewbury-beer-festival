@@ -2,22 +2,108 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import { festival } from "../data/festival";
 import "../styles/global.css";
 ---
 
-<BaseLayout title="Plan Your Day | Blewbury Beer Festival 2026">
+<BaseLayout
+  title="Plan Your Visit | Blewbury Beer Festival 2026"
+  description="Plan your visit to Blewbury Beer Festival at Blewbury Village Hall on Saturday 3 October 2026."
+>
   <Header />
 
-  <main class="placeholder">
-    <div class="container">
-      <div class="placeholder-box">
-        <p class="eyebrow">2026 Festival</p>
-        <h1>Plan Your Day</h1>
-        <p>Everything you'll need to know for Saturday 3 October 2026 — timings, location, travel, accessibility, payment information and practical FAQs.</p>
-        <p>More information will be added here as plans are confirmed.</p>
-        <a href="/">← Back to the festival homepage</a>
+  <main class="visit-page">
+    <section class="page-hero page-hero-visit">
+      <div class="container">
+        <p class="eyebrow eyebrow-gold">SATURDAY 3 OCTOBER 2026</p>
+        <h1>Plan your visit.</h1>
+        <p class="page-hero-lead">
+          {festival.venue}<br />
+          {festival.address.street}<br />
+          {festival.address.locality}, {festival.address.postcode}
+        </p>
       </div>
-    </div>
+    </section>
+
+    <section class="visit-details">
+      <div class="container visit-details-grid">
+        <div class="visit-primary">
+          <p class="eyebrow">VENUE</p>
+          <h2>Blewbury Village Hall</h2>
+
+          <address class="venue-address">
+            Church End<br />
+            Blewbury<br />
+            Didcot<br />
+            Oxfordshire<br />
+            OX11 9QQ
+          </address>
+
+          <div class="visit-actions">
+            <a
+              class="button button-dark"
+              href="https://www.google.com/maps/search/?api=1&query=Blewbury+Village+Hall+OX11+9QQ"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Open in Google Maps ↗
+            </a>
+          </div>
+        </div>
+
+        <div class="visit-note">
+          <p class="eyebrow">GOOD TO KNOW</p>
+          <h3>We're still filling in the practical details.</h3>
+          <p>
+            The venue and date are confirmed. Opening times, parking
+            arrangements, accessibility information and other practical
+            details will be added as the festival plans are finalised.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="visit-info">
+      <div class="container">
+        <div class="visit-info-grid">
+          <article class="visit-info-card">
+            <p class="eyebrow">OPENING TIMES</p>
+            <h3>Coming soon</h3>
+            <p>Festival opening and closing times will be published here once confirmed.</p>
+          </article>
+
+          <article class="visit-info-card">
+            <p class="eyebrow">PARKING</p>
+            <h3>Details to follow</h3>
+            <p>We'll publish the recommended parking arrangements before the festival.</p>
+          </article>
+
+          <article class="visit-info-card">
+            <p class="eyebrow">ACCESSIBILITY</p>
+            <h3>Details to follow</h3>
+            <p>Accessibility information for the festival setup will be added once arrangements are confirmed.</p>
+          </article>
+
+          <article class="visit-info-card">
+            <p class="eyebrow">GETTING HERE</p>
+            <h3>Blewbury, Oxfordshire</h3>
+            <p>Information for walking, cycling and public transport will be added closer to the event.</p>
+          </article>
+
+          <article class="visit-info-card">
+            <p class="eyebrow">PAYMENT</p>
+            <h3>To be confirmed</h3>
+            <p>We'll confirm payment arrangements for the bar and food vendors before festival day.</p>
+          </article>
+
+          <article class="visit-info-card">
+            <p class="eyebrow">QUESTIONS?</p>
+            <h3>More FAQs coming</h3>
+            <p>We'll add the common practical questions here as plans are finalised.</p>
+          </article>
+        </div>
+      </div>
+    </section>
   </main>
 
   <Footer />

@@ -1,0 +1,40 @@
+---
+const features = [
+  {
+    kicker: "BEER & CIDER",
+    title: "What's on the bar?",
+    text: "We're choosing the 2026 line-up now. Breweries and drinks will appear as they're confirmed.",
+    href: "/drinks",
+    link: "See the drinks",
+  },
+  {
+    kicker: "LIVE MUSIC",
+    title: "Who's playing?",
+    text: "The entertainment programme is taking shape. We'll add performers and timings as bookings are confirmed.",
+    href: "/entertainment",
+    link: "See the line-up",
+  },
+  {
+    kicker: "FOOD",
+    title: "What's cooking?",
+    text: "Food details are being finalised and will be published here as soon as they're confirmed.",
+    href: "/food",
+    link: "See the food",
+  },
+];
+---
+
+<section class="home-features">
+  <div class="container">
+    <div class="home-feature-grid">
+      {features.map((feature) => (
+        <a class="home-feature-card" href={feature.href}>
+          <p class="eyebrow">{feature.kicker}</p>
+          <h2>{feature.title}</h2>
+          <p>{feature.text}</p>
+          <span>{feature.link} →</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

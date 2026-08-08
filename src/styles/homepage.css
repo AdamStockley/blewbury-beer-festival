@@ -1,0 +1,228 @@
+/*
+ * Homepage-specific layout for the concise 2026 landing page.
+ * Imported by global.css.
+ */
+
+.hero-compact {
+  min-height: 76vh;
+}
+
+.hero-inner-compact {
+  min-height: 76vh;
+}
+
+.hero-main-compact {
+  padding: 2.5rem 0 2rem;
+}
+
+.hero-date-compact {
+  margin-top: -0.25rem;
+}
+
+.countdown-section-compact {
+  padding: 2.4rem 0;
+}
+
+.countdown-grid-compact {
+  align-items: center;
+}
+
+.countdown-grid-compact h2 {
+  font-size: clamp(2rem, 3.5vw, 3.6rem);
+}
+
+.home-features {
+  padding: 4.5rem 0;
+  background: var(--cream-light);
+}
+
+.home-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--border-dark);
+  border-bottom: 1px solid var(--border-dark);
+}
+
+.home-feature-card {
+  min-height: 300px;
+  padding: 2rem;
+  text-decoration: none;
+  border-right: 1px solid var(--border-dark);
+  display: flex;
+  flex-direction: column;
+}
+
+.home-feature-card:first-child {
+  padding-left: 0;
+}
+
+.home-feature-card:last-child {
+  border-right: 0;
+}
+
+.home-feature-card h2 {
+  font-size: clamp(2rem, 3.5vw, 3.6rem);
+  margin-bottom: 1rem;
+}
+
+.home-feature-card p:not(.eyebrow) {
+  color: var(--muted);
+  max-width: 32rem;
+}
+
+.home-feature-card span {
+  margin-top: auto;
+  font-weight: 850;
+}
+
+.home-causes {
+  padding: 5.5rem 0;
+  background: var(--green);
+  color: white;
+}
+
+.home-causes-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.8fr;
+  gap: 6rem;
+  align-items: end;
+}
+
+.home-causes h2 {
+  margin-bottom: 0;
+  font-size: clamp(3rem, 6vw, 6rem);
+}
+
+.home-causes-copy {
+  color: rgba(255,255,255,0.78);
+}
+
+.home-causes-strapline {
+  color: white;
+  font-size: 1.2rem;
+  font-style: italic;
+}
+
+.home-latest {
+  padding: 4.5rem 0;
+  background: #e8dbc5;
+}
+
+.home-latest-grid {
+  display: grid;
+  grid-template-columns: 0.65fr 1.35fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+.home-latest h2 {
+  font-size: clamp(2.6rem, 4.5vw, 4.4rem);
+  margin-bottom: 0;
+}
+
+.home-latest-card {
+  border-top: 1px solid var(--border-dark);
+  padding-top: 1.5rem;
+}
+
+.home-latest-card .news-meta {
+  margin-bottom: 1.2rem;
+}
+
+.home-latest-card h3 {
+  margin-bottom: 0.75rem;
+  font-size: clamp(1.7rem, 3vw, 2.6rem);
+}
+
+.home-latest-card p {
+  color: var(--muted);
+  max-width: 42rem;
+}
+
+.home-volunteer {
+  padding: 3.5rem 0;
+  background: var(--gold);
+}
+
+.home-volunteer-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 3rem;
+  align-items: center;
+}
+
+.home-volunteer h2 {
+  margin-bottom: 0.75rem;
+  font-size: clamp(2.4rem, 4vw, 4rem);
+}
+
+.home-volunteer p:not(.eyebrow) {
+  margin-bottom: 0;
+  max-width: 42rem;
+}
+
+@media (max-width: 950px) {
+  .hero-compact,
+  .hero-inner-compact {
+    min-height: 68vh;
+  }
+
+  .home-feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-feature-card,
+  .home-feature-card:first-child {
+    min-height: auto;
+    padding: 2rem 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--border-dark);
+  }
+
+  .home-feature-card:last-child {
+    border-bottom: 0;
+  }
+
+  .home-feature-card span {
+    margin-top: 1rem;
+  }
+
+  .home-causes-grid,
+  .home-latest-grid,
+  .home-volunteer-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .hero-compact,
+  .hero-inner-compact {
+    min-height: 620px;
+  }
+
+  .hero-main-compact {
+    padding: 2rem 0 1.5rem;
+  }
+
+  .countdown-section-compact {
+    padding: 2rem 0;
+  }
+
+  .countdown-grid-compact {
+    gap: 1.25rem;
+  }
+
+  .home-features,
+  .home-latest {
+    padding: 3.5rem 0;
+  }
+
+  .home-causes {
+    padding: 4rem 0;
+  }
+
+  .home-volunteer {
+    padding: 3rem 0;
+  }
+}

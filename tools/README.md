@@ -14,6 +14,7 @@ import-wordpress
 optimise-images
 release
 audit
+refactor-homepage
 ```
 
 Examples:
@@ -23,6 +24,8 @@ python3 tools/cli.py docs
 python3 tools/cli.py docs --check
 python3 tools/cli.py audit
 python3 tools/cli.py release
+python3 tools/cli.py refactor-homepage
+python3 tools/cli.py refactor-homepage --check
 ```
 
 ## Design principle

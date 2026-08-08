@@ -1,0 +1,62 @@
+---
+import { festival } from "../data/festival";
+---
+
+<section class="countdown-section countdown-section-compact">
+  <div class="container countdown-grid countdown-grid-compact">
+    <div>
+      <p class="eyebrow eyebrow-dark">COUNTING DOWN</p>
+      <h2>See you in October.</h2>
+    </div>
+
+    <div
+      class="countdown"
+      data-countdown={festival.dateISO}
+      aria-label="Countdown to Blewbury Beer Festival"
+    >
+      <div class="countdown-unit">
+        <strong data-days>--</strong>
+        <span>Days</span>
+      </div>
+
+      <div class="countdown-unit">
+        <strong data-hours>--</strong>
+        <span>Hours</span>
+      </div>
+
+      <div class="countdown-unit">
+        <strong data-minutes>--</strong>
+        <span>Minutes</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const el = document.querySelector("[data-countdown]");
+    if (!el) return;
+
+    const target = new Date(el.dataset.countdown).getTime();
+
+    const daysEl = el.querySelector("[data-days]");
+    const hoursEl = el.querySelector("[data-hours]");
+    const minutesEl = el.querySelector("[data-minutes]");
+
+    function update() {
+      const now = Date.now();
+      const remaining = Math.max(0, target - now);
+
+      const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((remaining / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((remaining / (1000 * 60)) % 60);
+
+      daysEl.textContent = String(days);
+      hoursEl.textContent = String(hours).padStart(2, "0");
+      minutesEl.textContent = String(minutes).padStart(2, "0");
+    }
+
+    update();
+    setInterval(update, 60000);
+  })();
+</script>

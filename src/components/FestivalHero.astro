@@ -1,0 +1,52 @@
+---
+import { festival } from "../data/festival";
+---
+
+<section class="hero hero-compact">
+  <div class="hero-decoration hero-decoration-one"></div>
+  <div class="hero-decoration hero-decoration-two"></div>
+
+  <div class="container hero-inner hero-inner-compact">
+    <div class="hero-topline">
+      <span>{festival.location}</span>
+      <span>Saturday 3 October 2026</span>
+    </div>
+
+    <div class="hero-main hero-main-compact">
+      <p class="hero-kicker">SAVE THE DATE</p>
+
+      <h1>
+        Blewbury
+        <span>Beer Festival</span>
+      </h1>
+
+      <div class="hero-date hero-date-compact">
+        <span class="hero-day">SAT</span>
+        <strong>03</strong>
+        <div>
+          <span>OCTOBER</span>
+          <span>2026</span>
+        </div>
+      </div>
+
+      <p class="hero-description">
+        Good beer. Good music. Good company.<br />
+        All in support of good causes.
+      </p>
+
+      <div class="button-row">
+        <a class="button button-light" href="/plan-your-day">
+          Plan your visit
+        </a>
+
+        <a class="text-link-light" href="/drinks">
+          What's on the bar? <span>→</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-bottom">
+      <p>{festival.strapline}</p>
+    </div>
+  </div>
+</section>

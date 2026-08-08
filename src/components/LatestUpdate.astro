@@ -1,0 +1,22 @@
+---
+import { news } from "../data/festival";
+
+const latest = news[0];
+---
+
+<section class="home-latest">
+  <div class="container home-latest-grid">
+    <div>
+      <p class="eyebrow">LATEST</p>
+      <h2>Festival news</h2>
+    </div>
+
+    {latest && (
+      <article class="home-latest-card">
+        <div class="news-meta">{latest.date}</div>
+        <h3>{latest.title}</h3>
+        <p>{latest.text}</p>
+      </article>
+    )}
+  </div>
+</section>

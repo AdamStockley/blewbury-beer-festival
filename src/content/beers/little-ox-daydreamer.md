@@ -3,6 +3,7 @@ brewery: "Little Ox Brewery"
 name: "Daydreamer"
 style: "Session Pale"
 abv: 3.6
+description: "Light-bodied session pale bursting with tropical fruit and zesty hops."
 volumePints: 72
 format: "cask"
 sortOrder: 40

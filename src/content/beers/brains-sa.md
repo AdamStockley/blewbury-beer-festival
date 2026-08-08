@@ -3,6 +3,7 @@ brewery: "Brains Brewery"
 name: "SA"
 style: "Premium Bitter"
 abv: 4.2
+description: "Copper-coloured premium bitter with nutty malt and a dry finish."
 volumePints: 72
 format: "cask"
 sortOrder: 110

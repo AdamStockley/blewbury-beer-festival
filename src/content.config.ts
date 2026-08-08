@@ -3,10 +3,7 @@ import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 
 const festival = defineCollection({
-  loader: glob({
-    base: "./src/content/festival",
-    pattern: "**/*.{md,mdx}",
-  }),
+  loader: glob({ base: "./src/content/festival", pattern: "**/*.{md,mdx}" }),
   schema: z.object({
     name: z.string(),
     year: z.number().int(),
@@ -24,10 +21,7 @@ const festival = defineCollection({
 });
 
 const news = defineCollection({
-  loader: glob({
-    base: "./src/content/news",
-    pattern: "**/*.{md,mdx}",
-  }),
+  loader: glob({ base: "./src/content/news", pattern: "**/*.{md,mdx}" }),
   schema: z.object({
     title: z.string(),
     summary: z.string(),
@@ -39,18 +33,19 @@ const news = defineCollection({
 });
 
 const beers = defineCollection({
-  loader: glob({
-    base: "./src/content/beers",
-    pattern: "**/*.{md,mdx}",
-  }),
+  loader: glob({ base: "./src/content/beers", pattern: "**/*.{md,mdx}" }),
   schema: z.object({
     brewery: z.string(),
     name: z.string(),
     style: z.string(),
     abv: z.number().min(0).max(20),
+    description: z.string().optional(),
+    graphic: z.string().optional(),
+
+    // Organiser-only information. Stored but not displayed publicly.
     volumePints: z.number().int().positive(),
     format: z.enum(["cask", "keg", "pin"]),
-    tastingNotes: z.string().optional(),
+
     vegan: z.boolean().optional(),
     glutenFree: z.boolean().optional(),
     featured: z.boolean().default(false),
@@ -60,29 +55,55 @@ const beers = defineCollection({
 });
 
 const ciders = defineCollection({
-  loader: glob({
-    base: "./src/content/ciders",
-    pattern: "**/*.{md,mdx}",
-  }),
+  loader: glob({ base: "./src/content/ciders", pattern: "**/*.{md,mdx}" }),
   schema: z.object({
     producer: z.string(),
     name: z.string(),
     style: z.string(),
     abv: z.number().min(0).max(20),
+    description: z.string().optional(),
+    graphic: z.string().optional(),
+
+    // Organiser-only information. Stored but not displayed publicly.
     volumePints: z.number().int().positive(),
     format: z.enum(["cask", "keg", "pin"]),
-    tastingNotes: z.string().optional(),
+
     featured: z.boolean().default(false),
     status: z.enum(["planned", "confirmed", "unavailable"]).default("confirmed"),
     sortOrder: z.number().int().optional(),
   }),
 });
 
-const entertainment = defineCollection({
-  loader: glob({
-    base: "./src/content/entertainment",
-    pattern: "**/*.{md,mdx}",
+const wines = defineCollection({
+  loader: glob({ base: "./src/content/wines", pattern: "**/*.{md,mdx}" }),
+  schema: z.object({
+    producer: z.string(),
+    name: z.string(),
+    style: z.string().optional(),
+    abv: z.number().min(0).max(30).optional(),
+    description: z.string().optional(),
+    graphic: z.string().optional(),
+    status: z.enum(["planned", "confirmed", "unavailable"]).default("confirmed"),
+    sortOrder: z.number().int().optional(),
   }),
+});
+
+const gins = defineCollection({
+  loader: glob({ base: "./src/content/gins", pattern: "**/*.{md,mdx}" }),
+  schema: z.object({
+    producer: z.string(),
+    name: z.string(),
+    style: z.string().optional(),
+    abv: z.number().min(0).max(60).optional(),
+    description: z.string().optional(),
+    graphic: z.string().optional(),
+    status: z.enum(["planned", "confirmed", "unavailable"]).default("confirmed"),
+    sortOrder: z.number().int().optional(),
+  }),
+});
+
+const entertainment = defineCollection({
+  loader: glob({ base: "./src/content/entertainment", pattern: "**/*.{md,mdx}" }),
   schema: z.object({
     name: z.string(),
     kind: z.enum(["music", "entertainment", "other"]).default("music"),
@@ -97,10 +118,7 @@ const entertainment = defineCollection({
 });
 
 const food = defineCollection({
-  loader: glob({
-    base: "./src/content/food",
-    pattern: "**/*.{md,mdx}",
-  }),
+  loader: glob({ base: "./src/content/food", pattern: "**/*.{md,mdx}" }),
   schema: z.object({
     vendor: z.string(),
     description: z.string(),
@@ -115,10 +133,7 @@ const food = defineCollection({
 });
 
 const goodCauses = defineCollection({
-  loader: glob({
-    base: "./src/content/good-causes",
-    pattern: "**/*.{md,mdx}",
-  }),
+  loader: glob({ base: "./src/content/good-causes", pattern: "**/*.{md,mdx}" }),
   schema: z.object({
     name: z.string(),
     description: z.string(),
@@ -130,10 +145,7 @@ const goodCauses = defineCollection({
 });
 
 const sponsors = defineCollection({
-  loader: glob({
-    base: "./src/content/sponsors",
-    pattern: "**/*.{md,mdx}",
-  }),
+  loader: glob({ base: "./src/content/sponsors", pattern: "**/*.{md,mdx}" }),
   schema: z.object({
     name: z.string(),
     website: z.string().url().optional(),
@@ -149,6 +161,8 @@ export const collections = {
   news,
   beers,
   ciders,
+  wines,
+  gins,
   entertainment,
   food,
   goodCauses,

@@ -1,23 +1,132 @@
 ---
+import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/global.css";
+import "../styles/drinks.css";
+
+const beers = await getCollection("beers");
+const ciders = await getCollection("ciders");
+
+beers.sort(
+  (a, b) =>
+    (a.data.sortOrder ?? 9999) - (b.data.sortOrder ?? 9999) ||
+    a.data.brewery.localeCompare(b.data.brewery) ||
+    a.data.name.localeCompare(b.data.name)
+);
+
+ciders.sort(
+  (a, b) =>
+    (a.data.sortOrder ?? 9999) - (b.data.sortOrder ?? 9999) ||
+    a.data.producer.localeCompare(b.data.producer) ||
+    a.data.name.localeCompare(b.data.name)
+);
+
+const confirmedBeers = beers.filter((item) => item.data.status === "confirmed");
+const confirmedCiders = ciders.filter((item) => item.data.status === "confirmed");
 ---
 
-<BaseLayout title="Beer, Cider & Drinks | Blewbury Beer Festival 2026">
+<BaseLayout
+  title="Beer & Cider | Blewbury Beer Festival 2026"
+  description="See the confirmed beer and cider line-up for Blewbury Beer Festival on Saturday 3 October 2026."
+>
   <Header />
 
-  <main class="placeholder">
-    <div class="container">
-      <div class="placeholder-box">
-        <p class="eyebrow">2026 Festival</p>
-        <h1>Beer, Cider & Drinks</h1>
-        <p>We're currently selecting the drinks for the 2026 festival. Breweries, beers, ciders and other drinks will appear here as they're confirmed.</p>
-        <p>More information will be added here as plans are confirmed.</p>
-        <a href="/">← Back to the festival homepage</a>
+  <main class="drinks-page">
+    <section class="drinks-hero">
+      <div class="container drinks-hero-inner">
+        <p class="eyebrow eyebrow-gold">2026 DRINKS</p>
+        <h1>What's on the bar?</h1>
+        <p>
+          The confirmed beer and cider line-up for Saturday 3 October at
+          Blewbury Village Hall.
+        </p>
       </div>
-    </div>
+    </section>
+
+    <section class="drinks-intro">
+      <div class="container drinks-intro-grid">
+        <div>
+          <p class="eyebrow">THE BEER</p>
+          <h2>{confirmedBeers.length} beers confirmed.</h2>
+        </div>
+
+        <div>
+          <p>
+            A mix of cask and keg, from pale and golden ales through to bitter,
+            porter and stout. Details can still change before festival day, but
+            this is the line-up currently planned for 2026.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="drinks-list-section">
+      <div class="container">
+        <div class="drink-grid">
+          {confirmedBeers.map((beer) => (
+            <article class="drink-card">
+              <div class="drink-card-top">
+                <p class="drink-maker">{beer.data.brewery}</p>
+                <span class="drink-format">{beer.data.format}</span>
+              </div>
+
+              <h3>{beer.data.name}</h3>
+
+              <div class="drink-meta">
+                <span>{beer.data.style}</span>
+                <strong>{beer.data.abv.toFixed(1)}%</strong>
+              </div>
+
+              {beer.data.tastingNotes && (
+                <p class="drink-notes">{beer.data.tastingNotes}</p>
+              )}
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="cider-section">
+      <div class="container">
+        <div class="cider-heading">
+          <div>
+            <p class="eyebrow eyebrow-gold">CIDER</p>
+            <h2>And something for the cider drinkers.</h2>
+          </div>
+
+          <p>{confirmedCiders.length} ciders confirmed for 2026.</p>
+        </div>
+
+        <div class="cider-grid">
+          {confirmedCiders.map((cider) => (
+            <article class="cider-card">
+              <div>
+                <p class="drink-maker">{cider.data.producer}</p>
+                <h3>{cider.data.name}</h3>
+              </div>
+
+              <div class="cider-meta">
+                <span>{cider.data.style}</span>
+                <strong>{cider.data.abv.toFixed(1)}%</strong>
+                <span>{cider.data.format}</span>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="drinks-note">
+      <div class="container drinks-note-inner">
+        <p class="eyebrow">A SMALL DISCLAIMER</p>
+        <p>
+          Beer festival line-ups occasionally change. We'll keep this page
+          updated if anything changes before 3 October.
+        </p>
+      </div>
+    </section>
   </main>
 
   <Footer />

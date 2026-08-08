@@ -6,149 +6,425 @@ import Footer from "../components/Footer.astro";
 import "../styles/global.css";
 import "../styles/drinks.css";
 
-const allBeers = await getCollection("beers");
-const allCiders = await getCollection("ciders");
-
-const beers = allBeers
+const beers = (await getCollection("beers"))
   .filter((item) => item.data.status === "confirmed")
-  .sort((a, b) => (a.data.sortOrder ?? 9999) - (b.data.sortOrder ?? 9999));
+  .sort((a,b) => (a.data.sortOrder ?? 9999) - (b.data.sortOrder ?? 9999));
 
-const ciders = allCiders
+const ciders = (await getCollection("ciders"))
   .filter((item) => item.data.status === "confirmed")
-  .sort((a, b) => (a.data.sortOrder ?? 9999) - (b.data.sortOrder ?? 9999));
+  .sort((a,b) => (a.data.sortOrder ?? 9999) - (b.data.sortOrder ?? 9999));
+
+const wines = (await getCollection("wines"))
+  .filter((item) => item.data.status === "confirmed")
+  .sort((a,b) => (a.data.sortOrder ?? 9999) - (b.data.sortOrder ?? 9999));
+
+const gins = (await getCollection("gins"))
+  .filter((item) => item.data.status === "confirmed")
+  .sort((a,b) => (a.data.sortOrder ?? 9999) - (b.data.sortOrder ?? 9999));
+
+const drinks = [
+  ...beers.map((entry) => ({ entry, type: "beer", producer: entry.data.brewery, typeLabel: "Beer" })),
+  ...ciders.map((entry) => ({ entry, type: "cider", producer: entry.data.producer, typeLabel: "Cider" })),
+  ...wines.map((entry) => ({ entry, type: "wine", producer: entry.data.producer, typeLabel: "Wine" })),
+  ...gins.map((entry) => ({ entry, type: "gin", producer: entry.data.producer, typeLabel: "Gin" })),
+];
+
+const styleOptions = [...new Set(
+  drinks.map(({ entry }) => entry.data.style).filter(Boolean)
+)].sort((a, b) => a.localeCompare(b));
 ---
 
 <BaseLayout
   title="Drinks | Blewbury Beer Festival 2026"
-  description="Explore the confirmed beer and cider line-up for Blewbury Beer Festival 2026, with wine and gin selections coming soon."
+  description="Browse the 2026 drinks line-up for Blewbury Beer Festival and keep track of what you've tried."
 >
   <Header />
 
   <main class="drinks-page">
-    <section class="drinks-hero">
-      <div class="container">
-        <p class="eyebrow eyebrow-gold">2026 DRINKS</p>
-        <h1>What's on the bar?</h1>
-        <p class="drinks-hero-copy">
-          Beer, cider, wine and gin at Blewbury Village Hall on Saturday 3 October.
-          Here's what we can confirm so far.
-        </p>
-      </div>
-    </section>
-
-    <section class="drinks-section beer-section">
-      <div class="container">
-        <div class="drinks-section-heading">
-          <div>
-            <p class="eyebrow">BEER</p>
-            <h2>{beers.length} beers confirmed.</h2>
-          </div>
-          <p>
-            From crisp pale ales and pilsner through to bitter, porter and stout.
-            The line-up is designed to give you plenty to explore without making
-            choosing your next pint feel like homework.
+    <section class="drinks-heading-section">
+      <div class="container drinks-heading-grid">
+        <div>
+          <p class="eyebrow">2026 DRINKS</p>
+          <h1>Drinks</h1>
+          <p class="drinks-heading-copy">
+            Beers, ciders, wines and gins carefully selected for the 2026 festival.
           </p>
         </div>
 
-        <div class="drink-grid">
-          {beers.map((beer) => (
-            <article class="drink-card">
-              <div class="drink-art">
-                {beer.data.graphic ? (
-                  <img
-                    src={beer.data.graphic}
-                    alt={`${beer.data.name} artwork`}
-                    loading="lazy"
-                  />
-                ) : (
-                  <span aria-hidden="true">{beer.data.name.charAt(0)}</span>
-                )}
-              </div>
+        <aside class="passport-panel" aria-label="My Festival Passport">
+          <p class="passport-title">My Festival Passport</p>
 
-              <div class="drink-card-content">
-                <p class="drink-maker">{beer.data.brewery}</p>
-                <h3>{beer.data.name}</h3>
+          <div class="passport-progress" aria-hidden="true">
+            <div class="passport-progress-fill" data-passport-progress></div>
+          </div>
 
-                {beer.data.description && (
-                  <p class="drink-description">{beer.data.description}</p>
-                )}
+          <div class="passport-main-stat">
+            <strong><span data-tried-count>0</span> / {drinks.length} sampled</strong>
+          </div>
 
-                <div class="drink-meta">
-                  <span>{beer.data.style}</span>
-                  <strong>{beer.data.abv.toFixed(1)}%</strong>
+          <div class="passport-stats" aria-live="polite">
+            <span><b data-liked-count>0</b> enjoyed</span>
+            <span><b data-disliked-count>0</b> not for me</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="drinks-controls-section">
+      <div class="container">
+        <div class="drinks-controls">
+          <label class="drink-search">
+            <span class="sr-only">Search drinks</span>
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <input
+              class="filter-control"
+              type="search"
+              placeholder="Search drinks, breweries, styles, flavours…"
+              data-drink-search
+              autocomplete="off"
+            />
+          </label>
+
+          <label class="select-wrap">
+            <span class="sr-only">Filter by type</span>
+            <select class="filter-control" data-type-select>
+              <option value="all">All Types</option>
+              <option value="beer">Beer</option>
+              <option value="cider">Cider</option>
+              <option value="wine">Wine</option>
+              <option value="gin">Gin</option>
+            </select>
+          </label>
+
+          <label class="select-wrap">
+            <span class="sr-only">Filter by style</span>
+            <select class="filter-control" data-style-select>
+              <option value="all">All Styles</option>
+              {styleOptions.map((style) => (
+                <option value={style.toLowerCase()}>{style}</option>
+              ))}
+            </select>
+          </label>
+
+          <label class="select-wrap">
+            <span class="sr-only">Filter by ABV</span>
+            <select class="filter-control" data-abv-select>
+              <option value="all">All ABV</option>
+              <option value="under4">Under 4%</option>
+              <option value="4to5">4–5%</option>
+              <option value="over5">5%+</option>
+            </select>
+          </label>
+
+          <label class="select-wrap">
+            <span class="sr-only">Filter by tasting status</span>
+            <select class="filter-control" data-tasting-select>
+              <option value="all">All tastings</option>
+              <option value="liked">Liked</option>
+              <option value="disliked">Not for me</option>
+              <option value="untried">Not tried</option>
+            </select>
+          </label>
+
+          <button class="filter-control clear-filters" type="button" data-clear-filters>
+            ↻ Clear filters
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="drinks-list-section" id="drinks-list">
+      <div class="container">
+        <div class="drinks-result-line">
+          <p data-results-copy>Showing all {drinks.length} confirmed drinks.</p>
+        </div>
+
+        <div class="drink-list" data-drink-list>
+          {drinks.map(({ entry, type, producer, typeLabel }) => (
+            <article
+              class={`drink-row drink-row--${type}`}
+              data-drink-row
+              data-type={type}
+              data-style={(entry.data.style ?? "").toLowerCase()}
+              data-abv={entry.data.abv ?? ""}
+              data-search={`${producer} ${entry.data.name} ${entry.data.style ?? ""} ${entry.data.flavourTags?.join(" ") ?? ""}`.toLowerCase()}
+              data-drink-id={entry.id}
+            >
+              <a class="drink-row-link" href={`/drinks/${entry.id}`}>
+                <div class="drink-row-art">
+                  {entry.data.graphic ? (
+                    <img
+                      src={entry.data.graphic}
+                      alt={`${entry.data.name} artwork`}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div class="drink-row-placeholder" aria-hidden="true">
+                      <span>⌁</span>
+                      <small>Artwork<br />coming soon</small>
+                    </div>
+                  )}
                 </div>
+
+                <div class="drink-row-type">
+                  <span class={`type-pill type-pill--${type}`}>{typeLabel}</span>
+                </div>
+
+                <div class="drink-row-copy">
+                  <p class="drink-maker">{producer}</p>
+                  <h2>{entry.data.name}</h2>
+
+                  {entry.data.description && (
+                    <p class="drink-description">{entry.data.description}</p>
+                  )}
+
+                  {entry.data.flavourTags?.length > 0 && (
+                    <div class="flavour-tags" aria-label="Flavour notes">
+                      {entry.data.flavourTags.slice(0,3).map((tag) => (
+                        <span>{tag}</span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <div class="drink-row-meta">
+                  {entry.data.style && (
+                    <div class="meta-line">
+                      <span>{entry.data.style}</span>
+                    </div>
+                  )}
+
+                  {entry.data.abv !== undefined && (
+                    <div class="meta-line">
+                      <strong>{entry.data.abv.toFixed(1)}%</strong>
+                      <span class="abv-label">ABV</span>
+                    </div>
+                  )}
+                </div>
+              </a>
+
+              <div class="tasting-actions" aria-label={`Rate ${entry.data.name}`}>
+                <button
+                  class="tasting-button tasting-button--like"
+                  type="button"
+                  data-tasting-like={entry.id}
+                  aria-label={`I like ${entry.data.name}`}
+                  aria-pressed="false"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M7 10v10H4V10h3Zm3 10V9.5l3.6-5.1a1.5 1.5 0 0 1 2.7 1.1L16 10h3.2a2 2 0 0 1 2 2.4l-1.1 5.5A2.6 2.6 0 0 1 17.6 20H10Z" />
+                  </svg>
+                </button>
+
+                <button
+                  class="tasting-button tasting-button--dislike"
+                  type="button"
+                  data-tasting-dislike={entry.id}
+                  aria-label={`${entry.data.name} is not for me`}
+                  aria-pressed="false"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M7 14V4H4v10h3Zm3-10v10.5l3.6 5.1a1.5 1.5 0 0 0 2.7-1.1L16 14h3.2a2 2 0 0 0 2-2.4l-1.1-5.5A2.6 2.6 0 0 0 17.6 4H10Z" />
+                  </svg>
+                </button>
               </div>
             </article>
           ))}
         </div>
-      </div>
-    </section>
 
-    <section class="drinks-section cider-section">
-      <div class="container">
-        <div class="drinks-section-heading cider-heading">
-          <div>
-            <p class="eyebrow eyebrow-gold">CIDER</p>
-            <h2>Something for the cider drinkers.</h2>
+        <div class="drinks-empty" data-drinks-empty hidden>
+          <h2>No drinks match those filters.</h2>
+          <p>Try clearing one of the filters or searching for something else.</p>
+        </div>
+
+        {(wines.length === 0 || gins.length === 0) && (
+          <div class="coming-note">
+            {wines.length === 0 && <span>Wine selection coming soon</span>}
+            {gins.length === 0 && <span>Gin selection coming soon</span>}
           </div>
-          <p>{ciders.length} ciders are confirmed so far.</p>
+        )}
+
+        <div class="drinks-disclaimer">
+          <p class="eyebrow">PLEASE NOTE</p>
+          <p>
+            The drinks listed here are the line-up currently planned for the festival.
+            Beer, cider, wine and gin selections may occasionally change before or during
+            the event if a product becomes unavailable. We'll keep this page updated
+            whenever we can.
+          </p>
         </div>
 
-        <div class="cider-grid">
-          {ciders.map((cider) => (
-            <article class="cider-card">
-              <div>
-                <p class="drink-maker cider-maker">{cider.data.producer}</p>
-                <h3>{cider.data.name}</h3>
-                {cider.data.description && (
-                  <p class="cider-description">{cider.data.description}</p>
-                )}
-              </div>
-
-              <div class="cider-meta">
-                <span>{cider.data.style}</span>
-                <strong>{cider.data.abv.toFixed(1)}%</strong>
-              </div>
-            </article>
-          ))}
+        <div class="drinks-footnote">
+          <span aria-hidden="true">●</span>
+          <p>
+            <strong>ABV = Alcohol By Volume.</strong>
+            Please drink responsibly. Challenge 25 in operation.
+          </p>
         </div>
-      </div>
-    </section>
-
-    <section class="coming-drinks">
-      <div class="container coming-drinks-grid">
-        <article class="coming-drink-card wine-card">
-          <p class="eyebrow">WINE</p>
-          <h2>Wine selection coming soon.</h2>
-          <p>
-            We're still finalising the 2026 wine list. We'll add the confirmed
-            bottles here as soon as the selection is agreed.
-          </p>
-          <span class="coming-tag">Selection in progress</span>
-        </article>
-
-        <article class="coming-drink-card gin-card">
-          <p class="eyebrow">GIN</p>
-          <h2>The gin bar is taking shape.</h2>
-          <p>
-            The gin range hasn't been confirmed yet, but it will be. Check back
-            as we get closer to festival day.
-          </p>
-          <span class="coming-tag">Selection in progress</span>
-        </article>
-      </div>
-    </section>
-
-    <section class="drinks-disclaimer">
-      <div class="container drinks-disclaimer-inner">
-        <p class="eyebrow eyebrow-dark">GOOD TO KNOW</p>
-        <p>
-          Festival drinks can occasionally change before the day. We'll keep
-          this page up to date if the planned line-up changes.
-        </p>
       </div>
     </section>
   </main>
 
   <Footer />
+
+  <script is:inline>
+    (() => {
+      const STORAGE_KEY = "bbf-2026-drink-ratings";
+
+      const rows = [...document.querySelectorAll("[data-drink-row]")];
+      const TOTAL_DRINKS = rows.length;
+
+      const search = document.querySelector("[data-drink-search]");
+      const typeSelect = document.querySelector("[data-type-select]");
+      const styleSelect = document.querySelector("[data-style-select]");
+      const abvSelect = document.querySelector("[data-abv-select]");
+      const tastingSelect = document.querySelector("[data-tasting-select]");
+      const clearButton = document.querySelector("[data-clear-filters]");
+      const empty = document.querySelector("[data-drinks-empty]");
+      const resultCopy = document.querySelector("[data-results-copy]");
+
+      const triedCount = document.querySelector("[data-tried-count]");
+      const likedCount = document.querySelector("[data-liked-count]");
+      const dislikedCount = document.querySelector("[data-disliked-count]");
+      const progress = document.querySelector("[data-passport-progress]");
+
+      const likeButtons = [...document.querySelectorAll("[data-tasting-like]")];
+      const dislikeButtons = [...document.querySelectorAll("[data-tasting-dislike]")];
+
+      const loadRatings = () => {
+        try {
+          const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+          return parsed && typeof parsed === "object" ? parsed : {};
+        } catch {
+          return {};
+        }
+      };
+
+      const saveRatings = (ratings) => {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(ratings));
+      };
+
+      const renderRatings = () => {
+        const ratings = loadRatings();
+        const values = Object.values(ratings);
+
+        const liked = values.filter((value) => value === "liked").length;
+        const disliked = values.filter((value) => value === "disliked").length;
+        const tried = liked + disliked;
+
+        if (triedCount) triedCount.textContent = String(tried);
+        if (likedCount) likedCount.textContent = String(liked);
+        if (dislikedCount) dislikedCount.textContent = String(disliked);
+
+        if (progress) {
+          const percentage = TOTAL_DRINKS > 0
+            ? Math.min(100, (tried / TOTAL_DRINKS) * 100)
+            : 0;
+          progress.style.width = `${percentage}%`;
+        }
+
+        rows.forEach((row) => {
+          const id = row.dataset.drinkId;
+          row.dataset.tastingState = ratings[id] || "untried";
+        });
+
+        likeButtons.forEach((button) => {
+          const active = ratings[button.dataset.tastingLike] === "liked";
+          button.setAttribute("aria-pressed", String(active));
+        });
+
+        dislikeButtons.forEach((button) => {
+          const active = ratings[button.dataset.tastingDislike] === "disliked";
+          button.setAttribute("aria-pressed", String(active));
+        });
+      };
+
+      const setRating = (id, nextState) => {
+        const ratings = loadRatings();
+
+        if (ratings[id] === nextState) {
+          delete ratings[id];
+        } else {
+          ratings[id] = nextState;
+        }
+
+        saveRatings(ratings);
+        renderRatings();
+        applyFilters();
+      };
+
+      const matchesAbv = (raw, filter) => {
+        if (filter === "all") return true;
+        const abv = Number(raw);
+        if (Number.isNaN(abv)) return false;
+        if (filter === "under4") return abv < 4;
+        if (filter === "4to5") return abv >= 4 && abv < 5;
+        if (filter === "over5") return abv >= 5;
+        return true;
+      };
+
+      const applyFilters = () => {
+        const query = (search?.value || "").trim().toLowerCase();
+        const type = typeSelect?.value || "all";
+        const style = styleSelect?.value || "all";
+        const abv = abvSelect?.value || "all";
+        const tasting = tastingSelect?.value || "all";
+
+        let visible = 0;
+
+        rows.forEach((row) => {
+          const tastingState = row.dataset.tastingState || "untried";
+
+          const show =
+            (!query || row.dataset.search.includes(query)) &&
+            (type === "all" || row.dataset.type === type) &&
+            (style === "all" || row.dataset.style === style) &&
+            matchesAbv(row.dataset.abv, abv) &&
+            (tasting === "all" || tastingState === tasting);
+
+          row.hidden = !show;
+          if (show) visible++;
+        });
+
+        if (empty) empty.hidden = visible !== 0;
+
+        if (resultCopy) {
+          resultCopy.textContent =
+            visible === rows.length
+              ? `Showing all ${visible} confirmed drinks.`
+              : `Showing ${visible} of ${rows.length} confirmed drinks.`;
+        }
+      };
+
+      search?.addEventListener("input", applyFilters);
+      typeSelect?.addEventListener("change", applyFilters);
+      styleSelect?.addEventListener("change", applyFilters);
+      abvSelect?.addEventListener("change", applyFilters);
+      tastingSelect?.addEventListener("change", applyFilters);
+
+      clearButton?.addEventListener("click", () => {
+        if (search) search.value = "";
+        if (typeSelect) typeSelect.value = "all";
+        if (styleSelect) styleSelect.value = "all";
+        if (abvSelect) abvSelect.value = "all";
+        if (tastingSelect) tastingSelect.value = "all";
+        applyFilters();
+      });
+
+      likeButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          setRating(button.dataset.tastingLike, "liked");
+        });
+      });
+
+      dislikeButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          setRating(button.dataset.tastingDislike, "disliked");
+        });
+      });
+
+      renderRatings();
+      applyFilters();
+    })();
+  </script>
 </BaseLayout>

@@ -32,25 +32,32 @@ const news = defineCollection({
   }),
 });
 
+const commonDrinkFields = {
+  name: z.string(),
+  style: z.string().optional(),
+  abv: z.number().min(0).max(60).optional(),
+  description: z.string().optional(),
+  graphic: z.string().optional(),
+  producerLogo: z.string().optional(),
+  producerTown: z.string().optional(),
+  producerWebsite: z.string().url().optional(),
+  flavourTags: z.array(z.string()).default([]),
+  vegan: z.boolean().optional(),
+  glutenFree: z.boolean().optional(),
+  featured: z.boolean().default(false),
+  status: z.enum(["planned", "confirmed", "unavailable"]).default("confirmed"),
+  sortOrder: z.number().int().optional(),
+};
+
 const beers = defineCollection({
   loader: glob({ base: "./src/content/beers", pattern: "**/*.{md,mdx}" }),
   schema: z.object({
     brewery: z.string(),
-    name: z.string(),
-    style: z.string(),
-    abv: z.number().min(0).max(20),
-    description: z.string().optional(),
-    graphic: z.string().optional(),
+    ...commonDrinkFields,
 
-    // Organiser-only information. Stored but not displayed publicly.
+    // Organiser-only. Stored in content, never shown publicly.
     volumePints: z.number().int().positive(),
     format: z.enum(["cask", "keg", "pin"]),
-
-    vegan: z.boolean().optional(),
-    glutenFree: z.boolean().optional(),
-    featured: z.boolean().default(false),
-    status: z.enum(["planned", "confirmed", "unavailable"]).default("confirmed"),
-    sortOrder: z.number().int().optional(),
   }),
 });
 
@@ -58,19 +65,11 @@ const ciders = defineCollection({
   loader: glob({ base: "./src/content/ciders", pattern: "**/*.{md,mdx}" }),
   schema: z.object({
     producer: z.string(),
-    name: z.string(),
-    style: z.string(),
-    abv: z.number().min(0).max(20),
-    description: z.string().optional(),
-    graphic: z.string().optional(),
+    ...commonDrinkFields,
 
-    // Organiser-only information. Stored but not displayed publicly.
+    // Organiser-only. Stored in content, never shown publicly.
     volumePints: z.number().int().positive(),
     format: z.enum(["cask", "keg", "pin"]),
-
-    featured: z.boolean().default(false),
-    status: z.enum(["planned", "confirmed", "unavailable"]).default("confirmed"),
-    sortOrder: z.number().int().optional(),
   }),
 });
 
@@ -78,13 +77,7 @@ const wines = defineCollection({
   loader: glob({ base: "./src/content/wines", pattern: "**/*.{md,mdx}" }),
   schema: z.object({
     producer: z.string(),
-    name: z.string(),
-    style: z.string().optional(),
-    abv: z.number().min(0).max(30).optional(),
-    description: z.string().optional(),
-    graphic: z.string().optional(),
-    status: z.enum(["planned", "confirmed", "unavailable"]).default("confirmed"),
-    sortOrder: z.number().int().optional(),
+    ...commonDrinkFields,
   }),
 });
 
@@ -92,13 +85,7 @@ const gins = defineCollection({
   loader: glob({ base: "./src/content/gins", pattern: "**/*.{md,mdx}" }),
   schema: z.object({
     producer: z.string(),
-    name: z.string(),
-    style: z.string().optional(),
-    abv: z.number().min(0).max(60).optional(),
-    description: z.string().optional(),
-    graphic: z.string().optional(),
-    status: z.enum(["planned", "confirmed", "unavailable"]).default("confirmed"),
-    sortOrder: z.number().int().optional(),
+    ...commonDrinkFields,
   }),
 });
 

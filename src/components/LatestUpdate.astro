@@ -1,7 +1,5 @@
 ---
-import { news } from "../data/festival";
-
-const latest = news[0];
+const { latest } = Astro.props;
 ---
 
 <section class="home-latest">
@@ -11,12 +9,23 @@ const latest = news[0];
       <h2>Festival news</h2>
     </div>
 
-    {latest && (
+    {latest ? (
       <article class="home-latest-card">
-        <div class="news-meta">{latest.date}</div>
-        <h3>{latest.title}</h3>
-        <p>{latest.text}</p>
+        <div class="news-meta">
+          {latest.data.published.toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })}
+        </div>
+
+        <h3>{latest.data.title}</h3>
+        <p>{latest.data.summary}</p>
       </article>
+    ) : (
+      <div class="home-latest-card">
+        <p>More festival news coming soon.</p>
+      </div>
     )}
   </div>
 </section>

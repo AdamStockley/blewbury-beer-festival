@@ -1,0 +1,153 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import "../../styles/global.css";
+import "../../styles/drink-detail.css";
+
+export async function getStaticPaths() {
+  const groups = [
+    ["beer", await getCollection("beers")],
+    ["cider", await getCollection("ciders")],
+    ["wine", await getCollection("wines")],
+    ["gin", await getCollection("gins")],
+  ];
+
+  return groups.flatMap(([type, entries]) =>
+    entries
+      .filter((entry) => entry.data.status === "confirmed")
+      .map((entry) => ({
+        params: { slug: entry.id },
+        props: { entry, type },
+      }))
+  );
+}
+
+const { entry, type } = Astro.props;
+const producer = type === "beer" ? entry.data.brewery : entry.data.producer;
+---
+
+<BaseLayout
+  title={`${entry.data.name} | Drinks | Blewbury Beer Festival 2026`}
+  description={entry.data.description ?? `${entry.data.name} at Blewbury Beer Festival 2026.`}
+>
+  <Header />
+
+  <main class="drink-detail-page">
+    <section class="drink-detail-hero">
+      <div class="container drink-detail-grid">
+        <div class="drink-detail-art">
+          {entry.data.graphic ? (
+            <img src={entry.data.graphic} alt={`${entry.data.name} artwork`} />
+          ) : (
+            <div class="drink-detail-placeholder" aria-hidden="true">
+              {entry.data.name.charAt(0)}
+            </div>
+          )}
+        </div>
+
+        <div class="drink-detail-copy">
+          <p class="eyebrow eyebrow-gold">{String(type).toUpperCase()}</p>
+          <p class="drink-detail-producer">{producer}</p>
+          <h1>{entry.data.name}</h1>
+
+          <div class="drink-detail-meta">
+            {entry.data.style && <span>{entry.data.style}</span>}
+            {entry.data.abv !== undefined && <strong>{entry.data.abv.toFixed(1)}%</strong>}
+          </div>
+
+          {entry.data.description && (
+            <p class="drink-detail-description">{entry.data.description}</p>
+          )}
+
+          {entry.data.flavourTags?.length > 0 && (
+            <div class="flavour-tags detail-tags">
+              {entry.data.flavourTags.map((tag) => <span>{tag}</span>)}
+            </div>
+          )}
+
+          <button
+            class="favourite-button"
+            type="button"
+            data-favourite={entry.id}
+            aria-pressed="false"
+          >
+            <span aria-hidden="true">♡</span>
+            Add to my festival favourites
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="drink-detail-info">
+      <div class="container drink-info-grid">
+        <div>
+          <p class="eyebrow">MADE BY</p>
+          <h2>{producer}</h2>
+
+          {entry.data.producerTown && <p>{entry.data.producerTown}</p>}
+
+          {entry.data.producerWebsite && (
+            <p>
+              <a href={entry.data.producerWebsite} target="_blank" rel="noopener noreferrer">
+                Visit producer website ↗
+              </a>
+            </p>
+          )}
+        </div>
+
+        <div class="drink-qr-note">
+          <p class="eyebrow">AT THE FESTIVAL</p>
+          <h3>Found this from a QR code?</h3>
+          <p>
+            This page is designed to work as your pocket tasting guide. Add
+            drinks you enjoy to your favourites and keep exploring the bar.
+          </p>
+          <a href="/drinks">← Back to all drinks</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <script is:inline>
+    (() => {
+      const button = document.querySelector("[data-favourite]");
+      if (!button) return;
+
+      const id = button.dataset.favourite;
+      const key = "bbf-2026-favourite-drinks";
+
+      const load = () => {
+        try {
+          return JSON.parse(localStorage.getItem(key) || "[]");
+        } catch {
+          return [];
+        }
+      };
+
+      const render = () => {
+        const favourites = load();
+        const active = favourites.includes(id);
+        button.setAttribute("aria-pressed", String(active));
+        button.innerHTML = active
+          ? '<span aria-hidden="true">♥</span> Saved to my festival favourites'
+          : '<span aria-hidden="true">♡</span> Add to my festival favourites';
+      };
+
+      button.addEventListener("click", () => {
+        const favourites = load();
+        const next = favourites.includes(id)
+          ? favourites.filter((item) => item !== id)
+          : [...favourites, id];
+
+        localStorage.setItem(key, JSON.stringify(next));
+        render();
+      });
+
+      render();
+    })();
+  </script>
+</BaseLayout>

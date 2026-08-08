@@ -2,7 +2,12 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { festival, highlights, news } from "../data/festival";
+import {
+  festival,
+  festivalHighlights,
+  news,
+  quickFacts,
+} from "../data/festival";
 import "../styles/global.css";
 ---
 
@@ -10,87 +15,444 @@ import "../styles/global.css";
   <Header />
 
   <main>
+
+    <!-- HERO -->
     <section class="hero">
+
+      <div class="hero-decoration hero-decoration-one"></div>
+      <div class="hero-decoration hero-decoration-two"></div>
+
+      <div class="container hero-inner">
+
+        <div class="hero-topline">
+          <span>Blewbury, Oxfordshire</span>
+          <span>Est. for the love of beer</span>
+        </div>
+
+        <div class="hero-main">
+
+          <p class="hero-kicker">SAVE THE DATE</p>
+
+          <h1>
+            Blewbury
+            <span>Beer Festival</span>
+          </h1>
+
+          <div class="hero-date">
+            <span class="hero-day">SAT</span>
+            <strong>03</strong>
+            <div>
+              <span>OCTOBER</span>
+              <span>2026</span>
+            </div>
+          </div>
+
+          <p class="hero-description">
+            Beer. Cider. Food. Live entertainment.<br />
+            And a very good excuse to spend Saturday in Blewbury.
+          </p>
+
+          <div class="button-row">
+            <a class="button button-light" href="/plan-your-day">
+              Plan your visit
+            </a>
+
+            <a class="text-link-light" href="/drinks">
+              See what's coming
+              <span>→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-bottom">
+          <p>{festival.strapline}</p>
+
+          <div class="scroll-cue">
+            <span>Scroll for more</span>
+            <span>↓</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- COUNTDOWN -->
+    <section class="countdown-section">
+
+      <div class="container countdown-grid">
+
+        <div>
+          <p class="eyebrow eyebrow-dark">COUNTING DOWN</p>
+          <h2>See you in October.</h2>
+        </div>
+
+        <div
+          class="countdown"
+          data-countdown={festival.dateISO}
+          aria-label="Countdown to Blewbury Beer Festival"
+        >
+          <div class="countdown-unit">
+            <strong data-days>--</strong>
+            <span>Days</span>
+          </div>
+
+          <div class="countdown-unit">
+            <strong data-hours>--</strong>
+            <span>Hours</span>
+          </div>
+
+          <div class="countdown-unit">
+            <strong data-minutes>--</strong>
+            <span>Minutes</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- INTRO -->
+    <section class="festival-intro">
+
+      <div class="container intro-grid">
+
+        <div>
+          <p class="eyebrow">THE FESTIVAL</p>
+
+          <h2>
+            A village beer festival with its priorities firmly in order.
+          </h2>
+        </div>
+
+        <div class="intro-copy">
+          <p class="intro-lead">
+            {festival.intro}
+          </p>
+
+          <p>
+            We're currently putting together the 2026 festival. Beer,
+            entertainment, food, sponsors and beneficiaries will all appear
+            here as they're confirmed.
+          </p>
+
+          <p>
+            In the meantime, put <strong>Saturday 3 October</strong> in the
+            diary.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- QUICK FACTS -->
+    <section class="quick-facts">
+
+      <div class="container quick-facts-grid">
+
+        {
+          quickFacts.map((fact) => (
+            <div class="quick-fact">
+              <strong>{fact.value}</strong>
+              <span>{fact.label}</span>
+            </div>
+          ))
+        }
+
+      </div>
+    </section>
+
+
+    <!-- EXPERIENCE -->
+    <section class="experience">
+
       <div class="container">
-        <p class="eyebrow">Save the date</p>
 
-        <h1>{festival.name}</h1>
+        <div class="section-header-row">
 
-        <p class="hero-date">{festival.date}</p>
-        <p class="hero-location">{festival.location}</p>
+          <div>
+            <p class="eyebrow">YOUR SATURDAY</p>
+            <h2>Come for the beer.<br />Stay for everything else.</h2>
+          </div>
 
-        <p class="hero-tagline">
-          Beer • Cider • Food • Live Entertainment • Good Causes
-        </p>
+          <p class="section-side-copy">
+            Details are being announced over the coming weeks.
+            Here's what we're working on.
+          </p>
 
-        <div class="button-row">
-          <a class="button" href="/plan-your-day">Plan Your Day</a>
-          <a class="button secondary" href="/volunteer">Get Involved</a>
+        </div>
+
+        <div class="experience-list">
+
+          {
+            festivalHighlights.map((item) => (
+              <a class="experience-card" href={item.href}>
+
+                <span class="experience-number">
+                  {item.number}
+                </span>
+
+                <div class="experience-content">
+
+                  <p class="experience-kicker">
+                    {item.kicker}
+                  </p>
+
+                  <h3>{item.title}</h3>
+
+                  <p>{item.text}</p>
+
+                  <span class="experience-link">
+                    {item.linkText} →
+                  </span>
+
+                </div>
+
+                <div class="experience-art" aria-hidden="true">
+                  <span>{item.number}</span>
+                </div>
+
+              </a>
+            ))
+          }
+
         </div>
       </div>
     </section>
 
-    <section>
-      <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">The festival</p>
-          <h2>A very good reason to spend a Saturday drinking beer.</h2>
-          <p>{festival.intro}</p>
+
+    <!-- GOOD CAUSES -->
+    <section class="causes-band">
+
+      <div class="container causes-grid">
+
+        <div>
+          <p class="eyebrow eyebrow-gold">THE IMPORTANT BIT</p>
+
+          <h2>
+            Drinking beer.<br />
+            Doing good.
+          </h2>
         </div>
 
-        <div class="cards">
+        <div class="causes-copy">
+
+          <p class="causes-strapline">
+            {festival.strapline}
+          </p>
+
+          <p>
+            Blewbury Beer Festival exists to bring people together and raise
+            money for worthwhile causes. We'll introduce the organisations
+            benefiting from the 2026 festival as they're confirmed.
+          </p>
+
+          <a href="/causes" class="text-link-light">
+            Discover our good causes <span>→</span>
+          </a>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- FESTIVAL PHOTO PLACEHOLDER -->
+    <section class="memory-section">
+
+      <div class="container memory-grid">
+
+        <div class="memory-poster">
+
+          <div class="memory-poster-inner">
+
+            <p>BLEWBURY</p>
+
+            <strong>
+              GOOD<br />
+              BEER.<br />
+              GOOD<br />
+              PEOPLE.
+            </strong>
+
+            <span>03 · 10 · 26</span>
+
+          </div>
+
+        </div>
+
+        <div class="memory-copy">
+
+          <p class="eyebrow">THE ATMOSPHERE</p>
+
+          <h2>
+            Not just somewhere to buy a pint.
+          </h2>
+
+          <p>
+            Blewbury Beer Festival is about the whole day: catching up with
+            friends, discovering something new on the bar, listening to live
+            music and raising money for the community while you're doing it.
+          </p>
+
+          <p>
+            As we bring photographs across from previous festivals, this part
+            of the site will become a proper gallery of what the day feels like.
+          </p>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- NEWS -->
+    <section class="news-section">
+
+      <div class="container">
+
+        <div class="section-header-row">
+
+          <div>
+            <p class="eyebrow">LATEST</p>
+            <h2>Festival news</h2>
+          </div>
+
+          <p class="section-side-copy">
+            Announcements, beers, performers, food and everything else
+            happening between now and October.
+          </p>
+
+        </div>
+
+        <div class="news-grid">
+
           {
-            highlights.map((item) => (
-              <article class="card">
-                <div class="card-icon">{item.icon}</div>
+            news.map((item) => (
+              <article class="news-card">
+
+                <div class="news-meta">
+                  {item.date}
+                </div>
+
                 <h3>{item.title}</h3>
+
                 <p>{item.text}</p>
-                <a href={item.href}>{item.linkText} →</a>
+
+                <span class="news-arrow">→</span>
+
               </article>
             ))
           }
+
+          <article class="news-card news-card-placeholder">
+
+            <div class="news-meta">
+              COMING SOON
+            </div>
+
+            <h3>
+              First beers announced
+            </h3>
+
+            <p>
+              The first breweries and beers will appear here once
+              selections are confirmed.
+            </p>
+
+          </article>
+
+          <article class="news-card news-card-placeholder">
+
+            <div class="news-meta">
+              COMING SOON
+            </div>
+
+            <h3>
+              2026 entertainment
+            </h3>
+
+            <p>
+              We'll reveal this year's entertainment as bookings are
+              confirmed.
+            </p>
+
+          </article>
+
         </div>
       </div>
     </section>
 
-    <section class="good-causes">
-      <div class="container">
-        <p class="eyebrow">Good causes</p>
-        <div class="section-heading">
-          <h2>{festival.strapline}</h2>
+
+    <!-- VOLUNTEER -->
+    <section class="volunteer-band">
+
+      <div class="container volunteer-inner">
+
+        <div>
+
+          <p class="eyebrow eyebrow-dark">
+            GET INVOLVED
+          </p>
+
+          <h2>
+            Festivals don't run themselves.
+          </h2>
+
+          <p>
+            Blewbury Beer Festival is a community event and volunteers make
+            it happen. If you'd like to lend a hand, we'd love to hear from you.
+          </p>
+
         </div>
 
-        <p>
-          Blewbury Beer Festival is a community event which raises money for
-          worthwhile causes. We'll publish details of the organisations
-          supported by the 2026 festival as they're confirmed.
-        </p>
+        <a class="button button-dark" href="/volunteer">
+          Volunteer for 2026 →
+        </a>
 
-        <p>
-          <a class="button secondary" href="/causes">Our good causes</a>
-        </p>
       </div>
     </section>
 
-    <section>
-      <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">Latest</p>
-          <h2>Festival news</h2>
-        </div>
-
-        {
-          news.map((item) => (
-            <article class="news-item">
-              <div class="news-date">{item.date}</div>
-              <h3>{item.title}</h3>
-              <p>{item.text}</p>
-            </article>
-          ))
-        }
-      </div>
-    </section>
   </main>
 
   <Footer />
+
+  <script is:inline>
+    (() => {
+      const el = document.querySelector("[data-countdown]");
+      if (!el) return;
+
+      const target = new Date(el.dataset.countdown).getTime();
+
+      const daysEl = el.querySelector("[data-days]");
+      const hoursEl = el.querySelector("[data-hours]");
+      const minutesEl = el.querySelector("[data-minutes]");
+
+      function update() {
+        const now = Date.now();
+        const remaining = Math.max(0, target - now);
+
+        const days = Math.floor(
+          remaining / (1000 * 60 * 60 * 24)
+        );
+
+        const hours = Math.floor(
+          (remaining / (1000 * 60 * 60)) % 24
+        );
+
+        const minutes = Math.floor(
+          (remaining / (1000 * 60)) % 60
+        );
+
+        daysEl.textContent = String(days);
+        hoursEl.textContent = String(hours).padStart(2, "0");
+        minutesEl.textContent = String(minutes).padStart(2, "0");
+      }
+
+      update();
+      setInterval(update, 60000);
+    })();
+  </script>
+
 </BaseLayout>

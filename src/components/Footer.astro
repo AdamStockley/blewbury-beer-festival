@@ -3,15 +3,21 @@ import { festival } from "../data/festival";
 ---
 
 <footer class="site-footer">
-  <div class="container footer-grid">
+  <div class="container footer-top">
     <div>
-      <strong>{festival.name}</strong>
-      <div class="footer-small">{festival.date}</div>
-      <div class="footer-small">{festival.location}</div>
+      <div class="footer-logo">BBF</div>
+      <h2>{festival.name}</h2>
+      <p>{festival.date}</p>
+      <p>{festival.location}</p>
     </div>
 
-    <div class="footer-small">
-      {festival.strapline}
+    <div class="footer-line">
+      <p>{festival.strapline}</p>
     </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <span>Blewbury Beer Festival 2026</span>
+    <span>A community event in Blewbury, Oxfordshire</span>
   </div>
 </footer>

@@ -2,41 +2,61 @@ export const festival = {
   name: "Blewbury Beer Festival",
   year: 2026,
   date: "Saturday 3 October 2026",
+  dateISO: "2026-10-03T12:00:00+01:00",
   shortDate: "3 October 2026",
   location: "Blewbury, Oxfordshire",
+  venue: "Blewbury, Oxfordshire",
   strapline: "Supporting good causes through the consumption of beer…",
   intro:
-    "A relaxed village beer festival bringing together great drinks, food and live entertainment while raising money for good causes.",
+    "Great beer, live entertainment, good food and a village full of people having a very good Saturday — all while raising money for worthwhile causes.",
 };
 
-export const highlights = [
+export const festivalHighlights = [
   {
-    icon: "🍺",
-    title: "Beer & Cider",
-    text: "We're putting together the 2026 drinks selection now. Breweries, beers and ciders will be added as they're confirmed.",
+    kicker: "DRINK",
+    title: "A properly good beer festival",
+    text: "A carefully chosen range of real ales, ciders and other drinks. The 2026 selection is currently being put together.",
     href: "/drinks",
-    linkText: "Explore the drinks",
+    linkText: "See what's pouring",
+    number: "01",
   },
   {
-    icon: "🎵",
-    title: "Live Entertainment",
-    text: "The 2026 entertainment programme is taking shape. We'll announce performers and timings here as soon as they're confirmed.",
+    kicker: "LISTEN",
+    title: "Live entertainment",
+    text: "Music and entertainment throughout the festival. We'll publish the 2026 performers and timings as they're confirmed.",
     href: "/entertainment",
-    linkText: "See entertainment",
+    linkText: "See the line-up",
+    number: "02",
   },
   {
-    icon: "🍴",
-    title: "Food",
-    text: "Food details are still being finalised. Expect something good to accompany the beer.",
+    kicker: "EAT",
+    title: "Food worth staying for",
+    text: "Because several hours of beer tasting demands something decent to eat. Food announcements are coming soon.",
     href: "/food",
-    linkText: "Food information",
+    linkText: "What's cooking",
+    number: "03",
   },
 ];
 
 export const news = [
   {
     date: "8 August 2026",
-    title: "Blewbury Beer Festival returns this October",
-    text: "Planning is underway for the next Blewbury Beer Festival on Saturday 3 October 2026.",
+    title: "We're back.",
+    text: "Blewbury Beer Festival returns on Saturday 3 October 2026. Planning is already well underway.",
+  },
+];
+
+export const quickFacts = [
+  {
+    value: "03",
+    label: "October 2026",
+  },
+  {
+    value: "1",
+    label: "Very good Saturday",
+  },
+  {
+    value: "£££",
+    label: "Raised for good causes",
   },
 ];

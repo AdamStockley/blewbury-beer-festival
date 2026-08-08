@@ -48,9 +48,30 @@ const beers = defineCollection({
     name: z.string(),
     style: z.string(),
     abv: z.number().min(0).max(20),
+    volumePints: z.number().int().positive(),
+    format: z.enum(["cask", "keg", "pin"]),
     tastingNotes: z.string().optional(),
     vegan: z.boolean().optional(),
     glutenFree: z.boolean().optional(),
+    featured: z.boolean().default(false),
+    status: z.enum(["planned", "confirmed", "unavailable"]).default("confirmed"),
+    sortOrder: z.number().int().optional(),
+  }),
+});
+
+const ciders = defineCollection({
+  loader: glob({
+    base: "./src/content/ciders",
+    pattern: "**/*.{md,mdx}",
+  }),
+  schema: z.object({
+    producer: z.string(),
+    name: z.string(),
+    style: z.string(),
+    abv: z.number().min(0).max(20),
+    volumePints: z.number().int().positive(),
+    format: z.enum(["cask", "keg", "pin"]),
+    tastingNotes: z.string().optional(),
     featured: z.boolean().default(false),
     status: z.enum(["planned", "confirmed", "unavailable"]).default("confirmed"),
     sortOrder: z.number().int().optional(),
@@ -127,6 +148,7 @@ export const collections = {
   festival,
   news,
   beers,
+  ciders,
   entertainment,
   food,
   goodCauses,

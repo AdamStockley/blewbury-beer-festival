@@ -1,0 +1,80 @@
+.entertainment-page {
+  background: var(--cream-light);
+}
+
+.entertainment-heading {
+  padding: 8.5rem 0 2rem;
+}
+
+.entertainment-heading h1 {
+  margin-bottom: 0.7rem;
+  font-size: clamp(3.8rem, 8vw, 7rem);
+  line-height: 0.9;
+}
+
+.entertainment-intro {
+  max-width: 640px;
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.entertainment-schedule {
+  padding: 1rem 0 5rem;
+}
+
+.schedule-list {
+  border-top: 1px solid var(--border-dark);
+}
+
+.schedule-item {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 2rem;
+  padding: 1.6rem 0;
+  border-bottom: 1px solid var(--border-dark);
+}
+
+.schedule-time {
+  color: var(--burgundy);
+  font-size: 0.9rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.schedule-copy h2 {
+  margin-bottom: 0.35rem;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  line-height: 1;
+}
+
+.schedule-copy p {
+  max-width: 680px;
+  margin-bottom: 0.5rem;
+  color: var(--muted);
+}
+
+.schedule-copy a {
+  color: var(--burgundy);
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.schedule-more {
+  margin-top: 1.4rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 720px) {
+  .entertainment-heading {
+    padding-top: 7rem;
+  }
+
+  .schedule-item {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+}

@@ -1,23 +1,95 @@
 ---
+import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/global.css";
+import "../styles/entertainment.css";
+
+const acts = (await getCollection("entertainment"))
+  .filter((item) => item.data.status === "confirmed")
+  .sort((a, b) => {
+    const aTime = a.data.startTime ?? "99:99";
+    const bTime = b.data.startTime ?? "99:99";
+
+    if (aTime !== bTime) return aTime.localeCompare(bTime);
+    return (a.data.sortOrder ?? 9999) - (b.data.sortOrder ?? 9999);
+  });
+
+const formatTime = (value) => {
+  if (!value) return null;
+
+  const [hour, minute] = value.split(":");
+  const h = Number(hour);
+  const suffix = h >= 12 ? "pm" : "am";
+  const displayHour = h % 12 || 12;
+
+  return minute === "00"
+    ? `${displayHour}${suffix}`
+    : `${displayHour}:${minute}${suffix}`;
+};
 ---
 
-<BaseLayout title="Live Entertainment | Blewbury Beer Festival 2026">
+<BaseLayout
+  title="Music | Blewbury Beer Festival 2026"
+  description="See the live music and entertainment schedule for Blewbury Beer Festival 2026."
+>
   <Header />
 
-  <main class="placeholder">
-    <div class="container">
-      <div class="placeholder-box">
-        <p class="eyebrow">2026 Festival</p>
-        <h1>Live Entertainment</h1>
-        <p>The 2026 entertainment programme is currently being put together. Performers and timings will appear here as they're announced.</p>
-        <p>More information will be added here as plans are confirmed.</p>
-        <a href="/">← Back to the festival homepage</a>
+  <main class="entertainment-page">
+    <section class="entertainment-heading">
+      <div class="container">
+        <p class="eyebrow">WHAT'S ON</p>
+        <h1>Live Music</h1>
+        <p class="entertainment-intro">
+          A little live music alongside the beer. Here’s what’s confirmed so far.
+        </p>
       </div>
-    </div>
+    </section>
+
+    <section class="entertainment-schedule">
+      <div class="container">
+        <div class="schedule-list">
+          {acts.map((act) => {
+            const start = formatTime(act.data.startTime);
+            const end = formatTime(act.data.endTime);
+
+            const timeLabel = start
+              ? end
+                ? `${start}–${end}`
+                : act.data.name === "The Lords of Mischief"
+                  ? `${start}–close`
+                  : start
+              : "Time TBC";
+
+            return (
+              <article class="schedule-item">
+                <div class="schedule-time">{timeLabel}</div>
+
+                <div class="schedule-copy">
+                  <h2>{act.data.name}</h2>
+                  <p>{act.data.description}</p>
+
+                  {act.data.website && (
+                    <a
+                      href={act.data.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Find out more ↗
+                    </a>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+
+        <p class="schedule-more">
+          More music may be added as the festival programme develops.
+        </p>
+      </div>
+    </section>
   </main>
 
   <Footer />

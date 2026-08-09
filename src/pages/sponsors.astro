@@ -1,0 +1,131 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+import "../styles/sponsors.css";
+
+const sponsors = (await getCollection("sponsors"))
+  .filter((item) => item.data.status === "confirmed");
+
+const initials = (name) =>
+  name
+    .replace(/\([^)]*\)/g, "")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part.charAt(0))
+    .join("")
+    .toUpperCase();
+---
+
+<BaseLayout
+  title="Barrel Sponsors | Blewbury Beer Festival 2026"
+  description="Meet the local businesses sponsoring beer and cider barrels at Blewbury Beer Festival 2026."
+>
+  <Header />
+
+  <main class="sponsors-page">
+    <section class="sponsors-heading">
+      <div class="container">
+        <p class="eyebrow">SUPPORTING THE FESTIVAL</p>
+        <h1>Barrel Sponsors</h1>
+
+        <p class="sponsors-intro">
+          Our beer and cider barrels are sponsored by local businesses whose
+          support helps make Blewbury Beer Festival possible and allows us to
+          raise more money for local good causes.
+        </p>
+      </div>
+    </section>
+
+    <section class="sponsors-content">
+      <div class="container">
+        <div class="sponsor-grid" data-sponsor-grid>
+          {sponsors.map((sponsor) => (
+            <article class="sponsor-card" data-sponsor-card>
+              <div class="sponsor-art">
+                {sponsor.data.logo ? (
+                  <img
+                    src={sponsor.data.logo}
+                    alt={`${sponsor.data.name} logo`}
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="sponsor-fallback" aria-hidden="true">
+                    {initials(sponsor.data.name)}
+                  </div>
+                )}
+              </div>
+
+              <div class="sponsor-copy">
+                <p class="sponsor-label">2026 BARREL SPONSOR</p>
+                <h2>{sponsor.data.name}</h2>
+                <p>{sponsor.data.description}</p>
+
+                {sponsor.data.website && (
+                  <a
+                    href={sponsor.data.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="sponsor-link"
+                  >
+                    Visit website ↗
+                  </a>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <section class="sponsor-cta">
+          <div class="sponsor-cta-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48">
+              <path d="M14 8c6-2 14-2 20 0" />
+              <path d="M14 40c6 2 14 2 20 0" />
+              <path d="M14 8c-2 8-2 24 0 32" />
+              <path d="M34 8c2 8 2 24 0 32" />
+              <path d="M12 17h24" />
+              <path d="M11 31h26" />
+            </svg>
+          </div>
+
+          <div>
+            <p class="sponsor-label">SUPPORT THE FESTIVAL</p>
+            <h2>Sponsor a Barrel</h2>
+
+            <p>
+              Would your business like to support Blewbury Beer Festival?
+              Barrel sponsorship gives local businesses recognition at the
+              festival while helping us raise money for local good causes.
+            </p>
+
+            <a class="sponsor-cta-button" href="/sponsor-a-barrel">
+              Sponsor a Barrel
+            </a>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <script is:inline>
+    (() => {
+      const grid = document.querySelector("[data-sponsor-grid]");
+      if (!grid) return;
+
+      const cards = [...grid.querySelectorAll("[data-sponsor-card]")];
+
+      for (let i = cards.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [cards[i], cards[j]] = [cards[j], cards[i]];
+      }
+
+      cards.forEach((card) => grid.appendChild(card));
+    })();
+  </script>
+</BaseLayout>

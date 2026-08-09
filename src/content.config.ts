@@ -37,6 +37,15 @@ const commonDrinkFields = {
   style: z.string().optional(),
   abv: z.number().min(0).max(60).optional(),
   description: z.string().optional(),
+
+  // Rich detail-page content shared by all drink categories.
+  extendedDescription: z.string().optional(),
+  origin: z.string().optional(),
+  ingredients: z.array(z.string()).default([]),
+  character: z.array(z.string()).default([]),
+  bestServed: z.string().optional(),
+  highlights: z.array(z.string()).default([]),
+
   graphic: z.string().optional(),
   producerLogo: z.string().optional(),
   producerTown: z.string().optional(),
@@ -135,11 +144,11 @@ const sponsors = defineCollection({
   loader: glob({ base: "./src/content/sponsors", pattern: "**/*.{md,mdx}" }),
   schema: z.object({
     name: z.string(),
+    description: z.string(),
     website: z.string().url().optional(),
     logo: z.string().optional(),
-    tier: z.string().optional(),
     featured: z.boolean().default(false),
-    sortOrder: z.number().int().optional(),
+    status: z.enum(["prospective", "confirmed", "inactive"]).default("confirmed"),
   }),
 });
 

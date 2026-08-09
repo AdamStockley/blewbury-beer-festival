@@ -1,23 +1,144 @@
 ---
+import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/global.css";
+import "../styles/food.css";
+
+const confirmedFood = (await getCollection("food"))
+  .filter((item) => item.data.status === "confirmed")
+  .sort((a, b) => (a.data.sortOrder ?? 9999) - (b.data.sortOrder ?? 9999));
+
+const supplier = confirmedFood[0] ?? null;
 ---
 
-<BaseLayout title="Food | Blewbury Beer Festival 2026">
+<BaseLayout
+  title="Food | Blewbury Beer Festival 2026"
+  description="Food information for Blewbury Beer Festival 2026."
+>
   <Header />
 
-  <main class="placeholder">
-    <div class="container">
-      <div class="placeholder-box">
-        <p class="eyebrow">2026 Festival</p>
-        <h1>Food</h1>
-        <p>Details of food available at the 2026 festival are still being finalised.</p>
-        <p>More information will be added here as plans are confirmed.</p>
-        <a href="/">← Back to the festival homepage</a>
+  <main class="food-page">
+    <section class="food-hero">
+      <div class="container food-hero-grid">
+        <div>
+          <p class="eyebrow">2026 FOOD</p>
+          <h1>Festival Food</h1>
+          <p class="food-hero-copy">
+            Great beer deserves great food. We’re currently finalising our 2026
+            food partner, with freshly prepared food planned throughout the
+            afternoon and evening.
+          </p>
+        </div>
+
+        <div class="food-hero-icon" aria-hidden="true">
+          <svg viewBox="0 0 120 120">
+            <path d="M36 18v34" />
+            <path d="M28 18v24c0 8 4 12 8 12s8-4 8-12V18" />
+            <path d="M36 52v50" />
+            <path d="M76 18v84" />
+            <path d="M76 18c12 9 16 24 16 38H76" />
+          </svg>
+        </div>
       </div>
-    </div>
+    </section>
+
+    <section class="food-content">
+      <div class="container">
+        <div class="food-info-grid">
+          <article class="food-info-card">
+            <div class="food-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M5 15h14" />
+                <path d="M7 15a5 5 0 0 1 10 0" />
+                <path d="M12 10V7" />
+                <path d="M10 7h4" />
+                <path d="M4 18h16" />
+              </svg>
+            </div>
+
+            <div>
+              <p class="food-card-label">AT THE FESTIVAL</p>
+              <h2>Food served throughout the event</h2>
+              <ul class="food-feature-list">
+                <li>Hot food available</li>
+                <li>Vegetarian options planned</li>
+                <li>Soft drinks available</li>
+              </ul>
+            </div>
+          </article>
+
+          {supplier ? (
+            <article class="food-supplier-card">
+              <p class="food-card-label">2026 FOOD PARTNER</p>
+              <h2>{supplier.data.vendor}</h2>
+              <p>{supplier.data.description}</p>
+
+              <div class="food-dietary-flags">
+                {supplier.data.vegetarian && <span>Vegetarian options</span>}
+                {supplier.data.vegan && <span>Vegan options</span>}
+                {supplier.data.glutenFree && <span>Gluten-free options</span>}
+              </div>
+
+              {supplier.data.website && (
+                <a
+                  href={supplier.data.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="food-link"
+                >
+                  Visit food partner website ↗
+                </a>
+              )}
+            </article>
+          ) : (
+            <article class="food-supplier-card food-supplier-card--tbc">
+              <div class="food-card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M12 10v6" />
+                  <path d="M12 7h.01" />
+                </svg>
+              </div>
+
+              <div>
+                <p class="food-card-label">2026 FOOD PARTNER</p>
+                <h2>Coming soon</h2>
+                <p>
+                  We’re putting the finishing touches to the food offering for
+                  this year’s festival.
+                </p>
+                <p>
+                  Once confirmed, you’ll find the supplier, menu and dietary
+                  information here.
+                </p>
+
+                <span class="food-coming-pill">Menu coming soon</span>
+              </div>
+            </article>
+          )}
+        </div>
+
+        <div class="food-planning-note">
+          <div class="food-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 21s7-5.4 7-11a7 7 0 1 0-14 0c0 5.6 7 11 7 11Z" />
+              <circle cx="12" cy="10" r="2.5" />
+            </svg>
+          </div>
+
+          <div>
+            <p class="food-card-label">PLANNING YOUR VISIT?</p>
+            <p>
+              Food will be available during the festival, so there’s no need to
+              leave if you’re staying on for the live music. We’ll update this
+              page as soon as the full details are confirmed.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <Footer />

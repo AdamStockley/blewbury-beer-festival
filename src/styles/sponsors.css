@@ -1,0 +1,155 @@
+.sponsors-page {
+  background: var(--cream-light);
+}
+
+.sponsors-heading {
+  padding: 8.5rem 0 2.5rem;
+}
+
+.sponsors-heading h1 {
+  margin-bottom: 0.8rem;
+  font-size: clamp(3.8rem, 8vw, 7rem);
+  line-height: 0.9;
+}
+
+.sponsors-intro {
+  max-width: 760px;
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 1.08rem;
+}
+
+.sponsors-content {
+  padding: 1rem 0 5rem;
+}
+
+.sponsor-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.sponsor-card {
+  overflow: hidden;
+  border: 1px solid rgba(90,24,32,0.14);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.4);
+}
+
+.sponsor-art {
+  min-height: 180px;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(90,24,32,0.10);
+  background: rgba(255,248,235,0.72);
+}
+
+.sponsor-art img {
+  width: 100%;
+  max-width: 220px;
+  max-height: 130px;
+  object-fit: contain;
+}
+
+.sponsor-fallback {
+  width: 92px;
+  height: 92px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(90,24,32,0.28);
+  border-radius: 50%;
+  color: var(--burgundy);
+  font-size: 1.15rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.sponsor-copy {
+  padding: 1.4rem;
+}
+
+.sponsor-label {
+  margin-bottom: 0.45rem;
+  color: var(--burgundy);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+}
+
+.sponsor-copy h2,
+.sponsor-cta h2 {
+  margin-bottom: 0.7rem;
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 1;
+}
+
+.sponsor-copy p,
+.sponsor-cta p {
+  color: var(--muted);
+}
+
+.sponsor-link {
+  color: var(--burgundy);
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.sponsor-cta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.3rem;
+  margin-top: 1.2rem;
+  padding: 1.6rem;
+  border: 1px solid rgba(90,24,32,0.16);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 90% 15%, rgba(217,154,41,0.14), transparent 18rem),
+    rgba(255,255,255,0.42);
+}
+
+.sponsor-cta-icon {
+  width: 54px;
+  height: 54px;
+  color: var(--burgundy);
+}
+
+.sponsor-cta-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sponsor-cta-button {
+  display: inline-flex;
+  margin-top: 0.4rem;
+  padding: 0.72rem 1rem;
+  border: 1px solid var(--burgundy);
+  border-radius: 999px;
+  background: var(--burgundy);
+  color: white;
+  font-size: 0.84rem;
+  font-weight: 850;
+  text-decoration: none;
+}
+
+@media (max-width: 900px) {
+  .sponsor-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .sponsors-heading {
+    padding-top: 7rem;
+  }
+
+  .sponsor-cta {
+    grid-template-columns: 1fr;
+  }
+}

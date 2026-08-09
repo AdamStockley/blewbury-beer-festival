@@ -1,0 +1,209 @@
+.food-page {
+  background: var(--cream-light);
+}
+
+.food-hero {
+  padding: 8.5rem 0 3rem;
+  background:
+    radial-gradient(circle at 82% 28%, rgba(217,154,41,0.12), transparent 20rem),
+    var(--cream-light);
+}
+
+.food-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4rem;
+  align-items: center;
+}
+
+.food-hero h1 {
+  margin-bottom: 0.8rem;
+  font-size: clamp(3.8rem, 8vw, 7rem);
+  line-height: 0.9;
+}
+
+.food-hero-copy {
+  max-width: 720px;
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 1.08rem;
+}
+
+.food-hero-icon {
+  width: 150px;
+  height: 150px;
+  display: grid;
+  place-items: center;
+  color: rgba(90,24,32,0.22);
+}
+
+.food-hero-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.food-content {
+  padding: 1rem 0 5rem;
+}
+
+.food-info-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 1rem;
+}
+
+.food-info-card,
+.food-supplier-card,
+.food-planning-note {
+  border: 1px solid rgba(90,24,32,0.14);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.38);
+}
+
+.food-info-card,
+.food-supplier-card {
+  padding: 1.5rem;
+}
+
+.food-info-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+}
+
+.food-supplier-card--tbc {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+}
+
+.food-card-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  color: var(--burgundy);
+}
+
+.food-card-icon svg {
+  width: 30px;
+  height: 30px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.food-card-label {
+  margin-bottom: 0.45rem;
+  color: var(--burgundy);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+}
+
+.food-info-card h2,
+.food-supplier-card h2 {
+  margin-bottom: 0.7rem;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1;
+}
+
+.food-feature-list {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--muted);
+}
+
+.food-feature-list li {
+  position: relative;
+  padding-left: 1rem;
+}
+
+.food-feature-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.food-supplier-card p {
+  max-width: 720px;
+  color: var(--muted);
+}
+
+.food-coming-pill,
+.food-dietary-flags span {
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid rgba(90,24,32,0.16);
+  border-radius: 999px;
+  background: rgba(255,248,235,0.75);
+  color: var(--burgundy);
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.food-dietary-flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.food-link {
+  color: var(--burgundy);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.food-planning-note {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: start;
+  margin-top: 1rem;
+  padding: 1.25rem 1.4rem;
+}
+
+.food-planning-note p:last-child {
+  max-width: 780px;
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+@media (max-width: 760px) {
+  .food-hero {
+    padding-top: 7rem;
+  }
+
+  .food-hero-grid,
+  .food-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .food-hero-icon {
+    display: none;
+  }
+
+  .food-info-card,
+  .food-supplier-card--tbc,
+  .food-planning-note {
+    grid-template-columns: 1fr;
+  }
+}

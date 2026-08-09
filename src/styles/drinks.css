@@ -39,15 +39,23 @@
 }
 
 .passport-panel {
-  min-width: 275px;
-  padding: 1rem 1.1rem;
+  width: min(100%, 510px);
+  padding: 1.15rem;
   border: 1px solid rgba(90,24,32,0.14);
-  border-radius: 12px;
-  background: rgba(255,255,255,0.35);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.4);
+}
+
+.passport-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: baseline;
+  margin-bottom: 0.8rem;
 }
 
 .passport-title {
-  margin-bottom: 0.55rem;
+  margin-bottom: 0;
   color: var(--burgundy);
   font-size: 0.74rem;
   font-weight: 900;
@@ -55,36 +63,109 @@
   text-transform: uppercase;
 }
 
+.passport-total {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.passport-total strong {
+  color: var(--burgundy);
+}
+
+.passport-categories {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.passport-category {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) minmax(80px, 0.9fr) auto;
+  gap: 0.75rem;
+  align-items: center;
+  width: 100%;
+  padding: 0.65rem 0.7rem;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.passport-category:hover {
+  background: rgba(90,24,32,0.055);
+  border-color: rgba(90,24,32,0.10);
+  transform: translateX(2px);
+}
+
+.passport-category-copy {
+  display: grid;
+  gap: 0.05rem;
+}
+
+.passport-category-copy strong {
+  color: var(--burgundy);
+  font-size: 0.9rem;
+}
+
+.passport-category-copy span {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.passport-category-copy b {
+  color: var(--ink);
+}
+
 .passport-progress {
+  display: block;
   height: 6px;
-  margin-bottom: 0.7rem;
   overflow: hidden;
   border-radius: 999px;
   background: rgba(90,24,32,0.10);
 }
 
 .passport-progress-fill {
+  display: block;
   width: 0;
   height: 100%;
   background: var(--burgundy);
   transition: width 180ms ease;
 }
 
-.passport-main-stat {
-  margin-bottom: 0.4rem;
+.passport-chevron {
+  display: grid;
+  place-items: center;
   color: var(--burgundy);
 }
 
-.passport-main-stat strong {
-  font-size: 1.05rem;
+.passport-chevron svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .passport-stats {
   display: flex;
   flex-wrap: wrap;
   gap: 0.8rem;
+  margin-top: 0.85rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(90,24,32,0.10);
   color: var(--muted);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
 }
 
 .passport-stats b {
@@ -571,5 +652,25 @@ select.filter-control {
 
   .drink-description {
     font-size: 0.86rem;
+  }
+}
+
+
+@media (max-width: 720px) {
+  .passport-heading {
+    display: block;
+  }
+
+  .passport-total {
+    margin-top: 0.2rem;
+  }
+
+  .passport-category {
+    grid-template-columns: 1fr auto;
+  }
+
+  .passport-category .passport-progress {
+    grid-column: 1 / 3;
+    width: 100%;
   }
 }

@@ -32,6 +32,12 @@ const drinks = [
 const styleOptions = [...new Set(
   drinks.map(({ entry }) => entry.data.style).filter(Boolean)
 )].sort((a, b) => a.localeCompare(b));
+
+const passportTotals = {
+  beerCider: beers.length + ciders.length,
+  wine: wines.length,
+  gin: gins.length,
+};
 ---
 
 <BaseLayout
@@ -45,21 +51,99 @@ const styleOptions = [...new Set(
       <div class="container drinks-heading-grid">
         <div>
           <p class="eyebrow">2026 DRINKS</p>
-          <h1>Drinks</h1>
+          <h1>Festival Drinks</h1>
           <p class="drinks-heading-copy">
-            Beers, ciders, wines and gins carefully selected for the 2026 festival.
+            Discover this year's beers, ciders, wines and gins. Rate each one
+            as you go and build your own tasting passport.
           </p>
         </div>
 
-        <aside class="passport-panel" aria-label="My Festival Passport">
-          <p class="passport-title">My Festival Passport</p>
-
-          <div class="passport-progress" aria-hidden="true">
-            <div class="passport-progress-fill" data-passport-progress></div>
+        <aside class="passport-panel" aria-label="My Festival Tasting Passport">
+          <div class="passport-heading">
+            <p class="passport-title">My Festival Tasting Passport</p>
+            <p class="passport-total" aria-live="polite">
+              <strong data-overall-tried>0</strong> sampled today
+            </p>
           </div>
 
-          <div class="passport-main-stat">
-            <strong><span data-tried-count>0</span> / {drinks.length} sampled</strong>
+          <div class="passport-categories">
+            <button
+              class="passport-category"
+              type="button"
+              data-passport-filter="beer-cider"
+              aria-label="Show beer and cider"
+            >
+              <span class="passport-category-copy">
+                <strong>Beer &amp; Cider</strong>
+                <span>
+                  <b data-category-tried="beer-cider">0</b>
+                  / {passportTotals.beerCider} sampled
+                </span>
+              </span>
+              <span class="passport-progress" aria-hidden="true">
+                <span
+                  class="passport-progress-fill"
+                  data-category-progress="beer-cider"
+                ></span>
+              </span>
+              <span class="passport-chevron" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="m9 6 6 6-6 6" />
+                </svg>
+              </span>
+            </button>
+
+            <button
+              class="passport-category"
+              type="button"
+              data-passport-filter="wine"
+              aria-label="Show wines"
+            >
+              <span class="passport-category-copy">
+                <strong>Wine</strong>
+                <span>
+                  <b data-category-tried="wine">0</b>
+                  / {passportTotals.wine} sampled
+                </span>
+              </span>
+              <span class="passport-progress" aria-hidden="true">
+                <span
+                  class="passport-progress-fill"
+                  data-category-progress="wine"
+                ></span>
+              </span>
+              <span class="passport-chevron" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="m9 6 6 6-6 6" />
+                </svg>
+              </span>
+            </button>
+
+            <button
+              class="passport-category"
+              type="button"
+              data-passport-filter="gin"
+              aria-label="Show gins"
+            >
+              <span class="passport-category-copy">
+                <strong>Gin</strong>
+                <span>
+                  <b data-category-tried="gin">0</b>
+                  / {passportTotals.gin} sampled
+                </span>
+              </span>
+              <span class="passport-progress" aria-hidden="true">
+                <span
+                  class="passport-progress-fill"
+                  data-category-progress="gin"
+                ></span>
+              </span>
+              <span class="passport-chevron" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="m9 6 6 6-6 6" />
+                </svg>
+              </span>
+            </button>
           </div>
 
           <div class="passport-stats" aria-live="polite">
@@ -89,6 +173,7 @@ const styleOptions = [...new Set(
             <span class="sr-only">Filter by type</span>
             <select class="filter-control" data-type-select>
               <option value="all">All Types</option>
+              <option value="beer-cider">Beer &amp; Cider</option>
               <option value="beer">Beer</option>
               <option value="cider">Cider</option>
               <option value="wine">Wine</option>
@@ -283,10 +368,13 @@ const styleOptions = [...new Set(
       const empty = document.querySelector("[data-drinks-empty]");
       const resultCopy = document.querySelector("[data-results-copy]");
 
-      const triedCount = document.querySelector("[data-tried-count]");
+      const overallTried = document.querySelector("[data-overall-tried]");
       const likedCount = document.querySelector("[data-liked-count]");
       const dislikedCount = document.querySelector("[data-disliked-count]");
-      const progress = document.querySelector("[data-passport-progress]");
+
+      const categoryTried = [...document.querySelectorAll("[data-category-tried]")];
+      const categoryProgress = [...document.querySelectorAll("[data-category-progress]")];
+      const passportFilters = [...document.querySelectorAll("[data-passport-filter]")];
 
       const likeButtons = [...document.querySelectorAll("[data-tasting-like]")];
       const dislikeButtons = [...document.querySelectorAll("[data-tasting-dislike]")];
@@ -312,20 +400,46 @@ const styleOptions = [...new Set(
         const disliked = values.filter((value) => value === "disliked").length;
         const tried = liked + disliked;
 
-        if (triedCount) triedCount.textContent = String(tried);
+        if (overallTried) overallTried.textContent = String(tried);
         if (likedCount) likedCount.textContent = String(liked);
         if (dislikedCount) dislikedCount.textContent = String(disliked);
-
-        if (progress) {
-          const percentage = TOTAL_DRINKS > 0
-            ? Math.min(100, (tried / TOTAL_DRINKS) * 100)
-            : 0;
-          progress.style.width = `${percentage}%`;
-        }
 
         rows.forEach((row) => {
           const id = row.dataset.drinkId;
           row.dataset.tastingState = ratings[id] || "untried";
+        });
+
+        const categoryRows = {
+          "beer-cider": rows.filter(
+            (row) => row.dataset.type === "beer" || row.dataset.type === "cider"
+          ),
+          wine: rows.filter((row) => row.dataset.type === "wine"),
+          gin: rows.filter((row) => row.dataset.type === "gin"),
+        };
+
+        Object.entries(categoryRows).forEach(([category, items]) => {
+          const sampled = items.filter(
+            (row) => ratings[row.dataset.drinkId] === "liked" ||
+                     ratings[row.dataset.drinkId] === "disliked"
+          ).length;
+
+          const count = categoryTried.find(
+            (element) => element.dataset.categoryTried === category
+          );
+
+          if (count) count.textContent = String(sampled);
+
+          const bar = categoryProgress.find(
+            (element) => element.dataset.categoryProgress === category
+          );
+
+          if (bar) {
+            const percentage = items.length > 0
+              ? Math.min(100, (sampled / items.length) * 100)
+              : 0;
+
+            bar.style.width = `${percentage}%`;
+          }
         });
 
         likeButtons.forEach((button) => {
@@ -377,7 +491,14 @@ const styleOptions = [...new Set(
 
           const show =
             (!query || row.dataset.search.includes(query)) &&
-            (type === "all" || row.dataset.type === type) &&
+            (
+              type === "all" ||
+              row.dataset.type === type ||
+              (
+                type === "beer-cider" &&
+                (row.dataset.type === "beer" || row.dataset.type === "cider")
+              )
+            ) &&
             (style === "all" || row.dataset.style === style) &&
             matchesAbv(row.dataset.abv, abv) &&
             (tasting === "all" || tastingState === tasting);
@@ -409,6 +530,22 @@ const styleOptions = [...new Set(
         if (abvSelect) abvSelect.value = "all";
         if (tastingSelect) tastingSelect.value = "all";
         applyFilters();
+      });
+
+      passportFilters.forEach((button) => {
+        button.addEventListener("click", () => {
+          if (!typeSelect) return;
+
+          typeSelect.value = button.dataset.passportFilter;
+          applyFilters();
+
+          document
+            .querySelector(".drinks-controls-section")
+            ?.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+        });
       });
 
       likeButtons.forEach((button) => {

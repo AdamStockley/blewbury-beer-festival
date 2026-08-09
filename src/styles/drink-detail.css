@@ -91,9 +91,18 @@
   border-color: rgba(255,255,255,0.3);
 }
 
-.favourite-button {
+.detail-tasting-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   margin-top: 2rem;
-  padding: 0.9rem 1.15rem;
+}
+
+.detail-tasting-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.85rem 1.1rem;
   border: 1px solid rgba(255,255,255,0.45);
   border-radius: 999px;
   background: transparent;
@@ -101,12 +110,34 @@
   font: inherit;
   font-weight: 850;
   cursor: pointer;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
 }
 
-.favourite-button[aria-pressed="true"] {
+.detail-tasting-button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255,255,255,0.75);
+}
+
+.detail-tasting-button svg {
+  width: 1.2rem;
+  height: 1.2rem;
+  fill: currentColor;
+}
+
+.detail-tasting-button--like[aria-pressed="true"] {
   background: var(--gold);
   border-color: var(--gold);
   color: var(--brown);
+}
+
+.detail-tasting-button--dislike[aria-pressed="true"] {
+  background: rgba(255,255,255,0.92);
+  border-color: white;
+  color: var(--burgundy-dark);
 }
 
 .drink-detail-info {

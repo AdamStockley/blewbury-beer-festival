@@ -67,15 +67,33 @@ const producer = type === "beer" ? entry.data.brewery : entry.data.producer;
             </div>
           )}
 
-          <button
-            class="favourite-button"
-            type="button"
-            data-favourite={entry.id}
-            aria-pressed="false"
-          >
-            <span aria-hidden="true">♡</span>
-            Add to my festival favourites
-          </button>
+          <div class="detail-tasting-actions" aria-label={`Rate ${entry.data.name}`}>
+            <button
+              class="detail-tasting-button detail-tasting-button--like"
+              type="button"
+              data-tasting-like={entry.id}
+              aria-label={`I like ${entry.data.name}`}
+              aria-pressed="false"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 10v10H4V10h3Zm3 10V9.5l3.6-5.1a1.5 1.5 0 0 1 2.7 1.1L16 10h3.2a2 2 0 0 1 2 2.4l-1.1 5.5A2.6 2.6 0 0 1 17.6 20H10Z" />
+              </svg>
+              <span>I liked this</span>
+            </button>
+
+            <button
+              class="detail-tasting-button detail-tasting-button--dislike"
+              type="button"
+              data-tasting-dislike={entry.id}
+              aria-label={`${entry.data.name} is not for me`}
+              aria-pressed="false"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 14V4H4v10h3Zm3-10v10.5l3.6 5.1a1.5 1.5 0 0 0 2.7-1.1L16 14h3.2a2 2 0 0 0 2-2.4l-1.1-5.5A2.6 2.6 0 0 0 17.6 4H10Z" />
+              </svg>
+              <span>Not for me</span>
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -101,8 +119,9 @@ const producer = type === "beer" ? entry.data.brewery : entry.data.producer;
           <p class="eyebrow">AT THE FESTIVAL</p>
           <h3>Found this from a QR code?</h3>
           <p>
-            This page is designed to work as your pocket tasting guide. Add
-            drinks you enjoy to your favourites and keep exploring the bar.
+            This page is designed to work as your pocket tasting guide. Mark
+            each drink as liked or not for you and your Festival Passport will
+            remember your choices as you explore the bar.
           </p>
           <a href="/drinks">← Back to all drinks</a>
         </div>
@@ -114,40 +133,62 @@ const producer = type === "beer" ? entry.data.brewery : entry.data.producer;
 
   <script is:inline>
     (() => {
-      const button = document.querySelector("[data-favourite]");
-      if (!button) return;
+      const STORAGE_KEY = "bbf-2026-drink-ratings";
 
-      const id = button.dataset.favourite;
-      const key = "bbf-2026-favourite-drinks";
+      const likeButton = document.querySelector("[data-tasting-like]");
+      const dislikeButton = document.querySelector("[data-tasting-dislike]");
 
-      const load = () => {
+      if (!likeButton || !dislikeButton) return;
+
+      const id = likeButton.dataset.tastingLike;
+
+      const loadRatings = () => {
         try {
-          return JSON.parse(localStorage.getItem(key) || "[]");
+          const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+          return parsed && typeof parsed === "object" ? parsed : {};
         } catch {
-          return [];
+          return {};
         }
       };
 
-      const render = () => {
-        const favourites = load();
-        const active = favourites.includes(id);
-        button.setAttribute("aria-pressed", String(active));
-        button.innerHTML = active
-          ? '<span aria-hidden="true">♥</span> Saved to my festival favourites'
-          : '<span aria-hidden="true">♡</span> Add to my festival favourites';
+      const saveRatings = (ratings) => {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(ratings));
       };
 
-      button.addEventListener("click", () => {
-        const favourites = load();
-        const next = favourites.includes(id)
-          ? favourites.filter((item) => item !== id)
-          : [...favourites, id];
+      const renderRating = () => {
+        const ratings = loadRatings();
+        likeButton.setAttribute(
+          "aria-pressed",
+          String(ratings[id] === "liked")
+        );
+        dislikeButton.setAttribute(
+          "aria-pressed",
+          String(ratings[id] === "disliked")
+        );
+      };
 
-        localStorage.setItem(key, JSON.stringify(next));
-        render();
+      const setRating = (nextState) => {
+        const ratings = loadRatings();
+
+        if (ratings[id] === nextState) {
+          delete ratings[id];
+        } else {
+          ratings[id] = nextState;
+        }
+
+        saveRatings(ratings);
+        renderRating();
+      };
+
+      likeButton.addEventListener("click", () => {
+        setRating("liked");
       });
 
-      render();
+      dislikeButton.addEventListener("click", () => {
+        setRating("disliked");
+      });
+
+      renderRating();
     })();
   </script>
 </BaseLayout>

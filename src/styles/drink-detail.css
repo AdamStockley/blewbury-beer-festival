@@ -197,3 +197,127 @@
     padding: 4rem 0;
   }
 }
+
+/* --------------------------------
+   UNIVERSAL DRINK DISCOVERY
+-------------------------------- */
+
+.drink-discover-section {
+  padding: 4.75rem 0;
+  background: var(--cream);
+  border-bottom: 1px solid var(--border-dark);
+}
+
+.drink-discover-heading {
+  margin-bottom: 1.8rem;
+}
+
+.drink-discover-heading h2 {
+  margin-bottom: 0;
+  font-size: clamp(2.6rem, 5vw, 4.8rem);
+}
+
+.drink-discover-story {
+  max-width: 920px;
+  margin-bottom: 2rem;
+}
+
+.drink-discover-story p {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(1.08rem, 1.8vw, 1.3rem);
+  line-height: 1.65;
+}
+
+.drink-discover-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.drink-discover-card {
+  padding: 1.35rem 1.45rem;
+  border: 1px solid rgba(90,24,32,0.14);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.34);
+}
+
+.drink-discover-label {
+  margin-bottom: 0.55rem;
+  color: var(--burgundy);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+}
+
+.drink-discover-card > p:last-child {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 0.96rem;
+  line-height: 1.55;
+}
+
+.drink-detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.drink-detail-tags span {
+  padding: 0.38rem 0.62rem;
+  border: 1px solid rgba(90,24,32,0.14);
+  border-radius: 999px;
+  background: rgba(255,248,235,0.75);
+  color: var(--ink);
+  font-size: 0.76rem;
+  font-weight: 750;
+}
+
+.drink-highlights {
+  margin-top: 1rem;
+  padding: 1.35rem 1.45rem;
+  border-top: 1px solid rgba(90,24,32,0.14);
+  border-bottom: 1px solid rgba(90,24,32,0.14);
+}
+
+.drink-highlights ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 1.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.drink-highlights li {
+  position: relative;
+  padding-left: 1rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.drink-highlights li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+@media (max-width: 720px) {
+  .drink-discover-section {
+    padding: 3.5rem 0;
+  }
+
+  .drink-discover-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .drink-highlights ul {
+    display: grid;
+    gap: 0.55rem;
+  }
+}

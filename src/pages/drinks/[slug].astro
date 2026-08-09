@@ -26,6 +26,24 @@ export async function getStaticPaths() {
 
 const { entry, type } = Astro.props;
 const producer = type === "beer" ? entry.data.brewery : entry.data.producer;
+
+const ingredientLabel =
+  type === "wine"
+    ? "GRAPES"
+    : type === "gin"
+      ? "BOTANICALS"
+      : type === "cider"
+        ? "MADE FROM"
+        : "BREWED WITH";
+
+const originLabel =
+  type === "beer"
+    ? "BREWED IN"
+    : type === "cider"
+      ? "MADE IN"
+      : type === "gin"
+        ? "DISTILLED IN"
+        : "ORIGIN";
 ---
 
 <BaseLayout
@@ -56,10 +74,6 @@ const producer = type === "beer" ? entry.data.brewery : entry.data.producer;
             {entry.data.style && <span>{entry.data.style}</span>}
             {entry.data.abv !== undefined && <strong>{entry.data.abv.toFixed(1)}%</strong>}
           </div>
-
-          {entry.data.description && (
-            <p class="drink-detail-description">{entry.data.description}</p>
-          )}
 
           {entry.data.flavourTags?.length > 0 && (
             <div class="flavour-tags detail-tags">
@@ -97,6 +111,75 @@ const producer = type === "beer" ? entry.data.brewery : entry.data.producer;
         </div>
       </div>
     </section>
+
+    {
+      (
+        entry.data.extendedDescription ||
+        entry.data.origin ||
+        entry.data.ingredients?.length ||
+        entry.data.character?.length ||
+        entry.data.bestServed ||
+        entry.data.highlights?.length
+      ) && (
+        <section class="drink-discover-section">
+          <div class="container">
+            <div class="drink-discover-heading">
+              <p class="eyebrow">DISCOVER</p>
+              <h2>About this drink</h2>
+            </div>
+
+            {entry.data.extendedDescription && (
+              <div class="drink-discover-story">
+                <p>{entry.data.extendedDescription}</p>
+              </div>
+            )}
+
+            <div class="drink-discover-grid">
+              {entry.data.origin && (
+                <article class="drink-discover-card">
+                  <p class="drink-discover-label">{originLabel}</p>
+                  <p>{entry.data.origin}</p>
+                </article>
+              )}
+
+              {entry.data.ingredients?.length > 0 && (
+                <article class="drink-discover-card">
+                  <p class="drink-discover-label">{ingredientLabel}</p>
+                  <div class="drink-detail-tags">
+                    {entry.data.ingredients.map((item) => <span>{item}</span>)}
+                  </div>
+                </article>
+              )}
+
+              {entry.data.character?.length > 0 && (
+                <article class="drink-discover-card">
+                  <p class="drink-discover-label">CHARACTER</p>
+                  <div class="drink-detail-tags">
+                    {entry.data.character.map((item) => <span>{item}</span>)}
+                  </div>
+                </article>
+              )}
+
+              {entry.data.bestServed && (
+                <article class="drink-discover-card">
+                  <p class="drink-discover-label">BEST SERVED</p>
+                  <p>{entry.data.bestServed}</p>
+                </article>
+              )}
+            </div>
+
+            {entry.data.highlights?.length > 0 && (
+              <div class="drink-highlights">
+                <p class="drink-discover-label">GOOD TO KNOW</p>
+                <ul>
+                  {entry.data.highlights.map((item) => <li>{item}</li>)}
+                </ul>
+              </div>
+            )}
+          </div>
+        </section>
+      )
+    }
 
     <section class="drink-detail-info">
       <div class="container drink-info-grid">

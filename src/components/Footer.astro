@@ -3,21 +3,45 @@ import { festival } from "../data/festival";
 ---
 
 <footer class="site-footer">
-  <div class="container footer-top">
-    <div>
-      <div class="footer-logo">BBF</div>
-      <h2>{festival.name}</h2>
-      <p>{festival.date}</p>
-      <p>{festival.location}</p>
+  <div class="container footer-top footer-top--polished">
+    <div class="footer-brand">
+      <img
+        class="footer-brand-mark"
+        src="/images/brand/blewbury-beer-festival-badge.png"
+        alt="Blewbury Beer Festival"
+        width="120"
+        height="120"
+        loading="lazy"
+      />
+
+      <div>
+        <h2>{festival.name}</h2>
+        <p>{festival.date}</p>
+        <p>{festival.venue}</p>
+      </div>
     </div>
 
-    <div class="footer-line">
-      <p>{festival.strapline}</p>
-    </div>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <div>
+        <p class="eyebrow eyebrow-gold">VISIT</p>
+        <a href="/drinks">Drinks</a>
+        <a href="/entertainment">Music</a>
+        <a href="/food">Food</a>
+        <a href="/plan-your-day">Plan Your Visit</a>
+      </div>
+
+      <div>
+        <p class="eyebrow eyebrow-gold">SUPPORT</p>
+        <a href="/sponsors">Barrel Sponsors</a>
+        <a href="/sponsor-a-barrel">Sponsor a Barrel</a>
+        <a href="/causes">Good Causes</a>
+        <a href="/contact">Contact</a>
+      </div>
+    </nav>
   </div>
 
   <div class="container footer-bottom">
-    <span>Blewbury Beer Festival 2026</span>
-    <span>A community event in Blewbury, Oxfordshire</span>
+    <span>© 2026 Blewbury Beer Festival</span>
+    <span>Run by local volunteers in support of local good causes.</span>
   </div>
 </footer>

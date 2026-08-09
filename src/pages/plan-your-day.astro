@@ -8,7 +8,7 @@ import "../styles/global.css";
 
 <BaseLayout
   title="Plan Your Visit | Blewbury Beer Festival 2026"
-  description="Plan your visit to Blewbury Beer Festival at Blewbury Village Hall on Saturday 3 October 2026."
+  description="Everything you need to know before visiting Blewbury Beer Festival at Blewbury Village Hall on Saturday 3 October 2026."
 >
   <Header />
 
@@ -18,17 +18,44 @@ import "../styles/global.css";
         <p class="eyebrow eyebrow-gold">SATURDAY 3 OCTOBER 2026</p>
         <h1>Plan your visit.</h1>
         <p class="page-hero-lead">
-          {festival.venue}<br />
-          {festival.address.street}<br />
-          {festival.address.locality}, {festival.address.postcode}
+          Everything you need to know before joining us at
+          {festival.venue} in Blewbury.
         </p>
+      </div>
+    </section>
+
+    <section class="visit-summary">
+      <div class="container visit-summary-grid">
+        <div class="visit-summary-item">
+          <span class="visit-summary-label">WHEN</span>
+          <strong>Saturday 3 October</strong>
+          <span>From 2pm until 10pm latest</span>
+        </div>
+
+        <div class="visit-summary-item">
+          <span class="visit-summary-label">WHERE</span>
+          <strong>Blewbury Village Hall</strong>
+          <span>Church End · OX11 9QQ</span>
+        </div>
+
+        <div class="visit-summary-item">
+          <span class="visit-summary-label">ADMISSION</span>
+          <strong>Pay on the door</strong>
+          <span>Includes one drinks token · Under 18s free</span>
+        </div>
+
+        <div class="visit-summary-item">
+          <span class="visit-summary-label">PAYMENT</span>
+          <strong>Card & contactless</strong>
+          <span>No cash</span>
+        </div>
       </div>
     </section>
 
     <section class="visit-details">
       <div class="container visit-details-grid">
         <div class="visit-primary">
-          <p class="eyebrow">VENUE</p>
+          <p class="eyebrow">GETTING HERE</p>
           <h2>Blewbury Village Hall</h2>
 
           <address class="venue-address">
@@ -52,12 +79,25 @@ import "../styles/global.css";
         </div>
 
         <div class="visit-note">
-          <p class="eyebrow">GOOD TO KNOW</p>
-          <h3>We're still filling in the practical details.</h3>
+          <p class="eyebrow">PARKING</p>
+          <h3>Please park considerately.</h3>
+
           <p>
-            The venue and date are confirmed. Opening times, parking
-            arrangements, accessibility information and other practical
-            details will be added as the festival plans are finalised.
+            Parking at the Village Hall is limited and prioritised for disabled
+            visitors. Please park sensibly on nearby village streets, with
+            consideration for our neighbours, or use the car parks at Tickers
+            Folly or Blewbury Tennis Club.
+          </p>
+
+          <div class="visit-mini-features">
+            <span>Free parking</span>
+            <span>Disabled parking at Village Hall</span>
+            <span>Cycle parking</span>
+            <span>EV charging at Village Hall</span>
+          </div>
+
+          <p class="visit-small-note">
+            Overnight motorhome parking is not available.
           </p>
         </div>
       </div>
@@ -67,39 +107,92 @@ import "../styles/global.css";
       <div class="container">
         <div class="visit-info-grid">
           <article class="visit-info-card">
-            <p class="eyebrow">OPENING TIMES</p>
-            <h3>Coming soon</h3>
-            <p>Festival opening and closing times will be published here once confirmed.</p>
+            <p class="eyebrow">ADMISSION</p>
+            <h3>Pay on the day</h3>
+
+            <p>
+              Admission is payable on the door and includes one complimentary
+              drinks token. Under 18s are admitted free when accompanied by a
+              responsible adult.
+            </p>
+
+            <p>
+              Alcoholic drinks are purchased using festival tokens.
+            </p>
+
+            <a class="visit-card-link" href="/drinks">
+              How the drinks tokens work →
+            </a>
           </article>
 
           <article class="visit-info-card">
-            <p class="eyebrow">PARKING</p>
-            <h3>Details to follow</h3>
-            <p>We'll publish the recommended parking arrangements before the festival.</p>
+            <p class="eyebrow">FAMILIES & ACCESS</p>
+            <h3>Everyone's welcome</h3>
+
+            <p>
+              Children are welcome throughout the festival when supervised by a
+              responsible adult.
+            </p>
+
+            <p>
+              The venue is wheelchair friendly, with step-free access,
+              accessible toilets and no significant slopes.
+            </p>
+
+            <p>
+              Trained first aiders will be on site throughout the event.
+            </p>
           </article>
 
           <article class="visit-info-card">
-            <p class="eyebrow">ACCESSIBILITY</p>
-            <h3>Details to follow</h3>
-            <p>Accessibility information for the festival setup will be added once arrangements are confirmed.</p>
+            <p class="eyebrow">DOGS</p>
+            <h3>Four-legged visitors</h3>
+
+            <p>
+              Well-behaved dogs are welcome on leads in the outdoor festival
+              areas.
+            </p>
+
+            <p>
+              Dogs are not permitted inside the Village Hall, including the
+              indoor bar and entertainment areas.
+            </p>
           </article>
 
           <article class="visit-info-card">
-            <p class="eyebrow">GETTING HERE</p>
-            <h3>Blewbury, Oxfordshire</h3>
-            <p>Information for walking, cycling and public transport will be added closer to the event.</p>
+            <p class="eyebrow">GOOD TO KNOW</p>
+            <h3>Festival information</h3>
+
+            <ul class="visit-list">
+              <li>Card, contactless, Apple Pay and Google Pay accepted</li>
+              <li>No cash payments</li>
+              <li>No outside alcohol</li>
+              <li>Smoking and vaping outdoors only</li>
+              <li>Free Wi-Fi available</li>
+              <li>Lost property enquiries at the Festival Information Point</li>
+            </ul>
           </article>
 
-          <article class="visit-info-card">
-            <p class="eyebrow">PAYMENT</p>
-            <h3>To be confirmed</h3>
-            <p>We'll confirm payment arrangements for the bar and food vendors before festival day.</p>
-          </article>
+          <article class="visit-info-card visit-info-card--wide">
+            <p class="eyebrow">WHILE YOU'RE IN BLEWBURY</p>
+            <h3>Make a day of it.</h3>
 
-          <article class="visit-info-card">
-            <p class="eyebrow">QUESTIONS?</p>
-            <h3>More FAQs coming</h3>
-            <p>We'll add the common practical questions here as plans are finalised.</p>
+            <p>
+              Blewbury is fortunate to have two welcoming village pubs, both a
+              short walk from the festival. If you're arriving early, staying
+              locally or visiting the village another day, we'd encourage you
+              to support them too.
+            </p>
+
+            <div class="visit-pubs">
+              <strong>The Blueberry</strong>
+              <strong>The Red Lion</strong>
+            </div>
+
+            <p class="visit-neighbour-note">
+              Please help us remain a great village event by parking
+              considerately and respecting our neighbours.
+            </p>
           </article>
         </div>
       </div>

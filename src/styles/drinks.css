@@ -707,3 +707,73 @@ select.filter-control {
     width: 100%;
   }
 }
+
+/* -----------------------------
+   TOKEN GUIDE
+----------------------------- */
+
+.token-guide-section {
+  padding: 0.6rem 0 1rem;
+}
+
+.token-guide {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(340px, 1.1fr);
+  gap: 2rem;
+  padding: 1.4rem;
+  border: 1px solid rgba(90,24,32,0.14);
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 8% 20%, rgba(217,154,41,0.10), transparent 14rem),
+    rgba(255,255,255,0.32);
+}
+
+.token-guide h2 {
+  margin-bottom: 0.6rem;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1;
+}
+
+.token-guide-copy > p:not(.eyebrow) {
+  max-width: 620px;
+  color: var(--muted);
+}
+
+.token-price-note {
+  margin-bottom: 0;
+  font-size: 0.8rem;
+  font-weight: 750;
+}
+
+.token-guide-table {
+  border-top: 1px solid rgba(90,24,32,0.13);
+}
+
+.token-guide-table > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid rgba(90,24,32,0.13);
+  font-size: 0.84rem;
+}
+
+.token-guide-table span {
+  color: var(--muted);
+}
+
+.token-guide-table strong {
+  flex: 0 0 auto;
+  color: var(--burgundy);
+}
+
+@media (max-width: 760px) {
+  .token-guide {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .token-guide-table > div {
+    gap: 1rem;
+  }
+}

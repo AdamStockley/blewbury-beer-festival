@@ -1,24 +1,42 @@
 ---
 const {
   title = "Blewbury Beer Festival 2026",
-  description = "Blewbury Beer Festival returns on Saturday 3 October 2026. Beer, cider, food, live music and good causes in Blewbury, Oxfordshire."
+  description = "Blewbury Beer Festival returns on Saturday 3 October 2026. Great drinks, food and live music in Blewbury, Oxfordshire, raising money for local good causes.",
+  image = "/images/social/blewbury-beer-festival-2026.png",
 } = Astro.props;
+
+const site = Astro.site ?? new URL("https://blewbury-beer-festival.co.uk");
+const canonicalURL = new URL(Astro.url.pathname, site);
+const socialImage = new URL(image, site);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:site_name" content="Blewbury Beer Festival" />
+    <meta property="og:locale" content="en_GB" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+
+    <meta name="theme-color" content="#5a1820" />
 
     <script
       type="application/ld+json"
@@ -26,20 +44,25 @@ const {
         "@context": "https://schema.org",
         "@type": "Festival",
         name: "Blewbury Beer Festival 2026",
-        startDate: "2026-10-03",
+        url: "https://blewbury-beer-festival.co.uk/",
+        description,
+        startDate: "2026-10-03T14:00:00+01:00",
+        endDate: "2026-10-03T22:00:00+01:00",
         eventStatus: "https://schema.org/EventScheduled",
         eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+        image: socialImage.toString(),
         location: {
           "@type": "Place",
           name: "Blewbury Village Hall",
           address: {
             "@type": "PostalAddress",
+            streetAddress: "Church End",
             addressLocality: "Blewbury",
             addressRegion: "Oxfordshire",
+            postalCode: "OX11 9QQ",
             addressCountry: "GB"
           }
-        },
-        description
+        }
       })}
     ></script>
   </head>

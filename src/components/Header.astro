@@ -24,9 +24,37 @@ const { variant = "standard" } = Astro.props;
       <a href="/plan-your-day">Plan Your Visit</a>
       <a href="/sponsors">Barrel Sponsors</a>
       <a href="/causes">Good Causes</a>
-      <a href="/volunteer" class="nav-cta">Volunteer</a>
+      <a href="/contact">Contact</a>
     </nav>
+
+    <button
+      class="mobile-menu-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="mobile-navigation"
+      aria-label="Open navigation menu"
+      data-mobile-menu-toggle
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </div>
+
+  <nav
+    class="mobile-navigation"
+    id="mobile-navigation"
+    aria-label="Mobile navigation"
+    data-mobile-navigation
+  >
+    <a href="/drinks">Drinks</a>
+    <a href="/entertainment">Music</a>
+    <a href="/food">Food</a>
+    <a href="/plan-your-day">Plan Your Visit</a>
+    <a href="/sponsors">Barrel Sponsors</a>
+    <a href="/causes">Good Causes</a>
+    <a href="/contact">Contact</a>
+  </nav>
 </header>
 
 <script is:inline>
@@ -53,14 +81,56 @@ const { variant = "standard" } = Astro.props;
       observer.observe(hero);
     };
 
+    const initialiseMobileMenu = () => {
+      const toggle = document.querySelector("[data-mobile-menu-toggle]");
+      const menu = document.querySelector("[data-mobile-navigation]");
+
+      if (!toggle || !menu) return;
+
+      const closeMenu = () => {
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.setAttribute("aria-label", "Open navigation menu");
+        menu.classList.remove("is-open");
+        document.body.classList.remove("mobile-menu-open");
+      };
+
+      toggle.addEventListener("click", () => {
+        const isOpen = toggle.getAttribute("aria-expanded") === "true";
+
+        toggle.setAttribute("aria-expanded", String(!isOpen));
+        toggle.setAttribute(
+          "aria-label",
+          isOpen ? "Open navigation menu" : "Close navigation menu"
+        );
+
+        menu.classList.toggle("is-open", !isOpen);
+        document.body.classList.toggle("mobile-menu-open", !isOpen);
+      });
+
+      menu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", closeMenu);
+      });
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 720) {
+          closeMenu();
+        }
+      });
+    };
+
+    const initialiseHeader = () => {
+      initialiseSmartHeader();
+      initialiseMobileMenu();
+    };
+
     if (document.readyState === "loading") {
       document.addEventListener(
         "DOMContentLoaded",
-        initialiseSmartHeader,
+        initialiseHeader,
         { once: true }
       );
     } else {
-      initialiseSmartHeader();
+      initialiseHeader();
     }
   })();
 </script>

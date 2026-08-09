@@ -1,0 +1,31 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+---
+
+<BaseLayout
+  title="Page Not Found | Blewbury Beer Festival"
+  description="The page you were looking for could not be found."
+>
+  <Header />
+
+  <main class="error-page">
+    <div class="container error-page-inner">
+      <p class="eyebrow">404</p>
+      <h1>Looks like this barrel is empty.</h1>
+      <p>
+        The page you're looking for isn't here, but there's plenty more of the
+        festival to explore.
+      </p>
+
+      <div class="button-row">
+        <a class="button button-dark" href="/">Back to the festival</a>
+        <a href="/drinks">See the drinks →</a>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

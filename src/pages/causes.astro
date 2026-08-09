@@ -1,23 +1,112 @@
 ---
+import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/global.css";
+import "../styles/causes.css";
+
+const causes = (await getCollection("good-causes"))
+  .sort((a, b) => (a.data.sortOrder ?? 9999) - (b.data.sortOrder ?? 9999));
 ---
 
-<BaseLayout title="Good Causes | Blewbury Beer Festival 2026">
+<BaseLayout
+  title="Good Causes | Blewbury Beer Festival 2026"
+  description="Blewbury Beer Festival raises money for local good causes. Meet the organisations supported by the 2026 festival."
+>
   <Header />
 
-  <main class="placeholder">
-    <div class="container">
-      <div class="placeholder-box">
-        <p class="eyebrow">2026 Festival</p>
-        <h1>Good Causes</h1>
-        <p>Blewbury Beer Festival raises money for good causes. We'll introduce the 2026 beneficiaries here when they're confirmed.</p>
-        <p>More information will be added here as plans are confirmed.</p>
-        <a href="/">← Back to the festival homepage</a>
+  <main class="causes-page">
+    <section class="causes-hero">
+      <div class="container causes-hero-grid">
+        <div>
+          <p class="eyebrow">MORE THAN GREAT BEER</p>
+          <h1>Good Causes</h1>
+
+          <p class="causes-intro">
+            Blewbury Beer Festival is a community event, and raising money for
+            good causes is an important part of what we do.
+          </p>
+        </div>
+
+        <div class="causes-mark" aria-hidden="true">
+          <svg viewBox="0 0 120 120">
+            <path d="M60 96S25 75 25 46c0-13 9-22 21-22 7 0 12 3 14 9 3-6 8-9 15-9 12 0 21 9 21 22 0 29-36 50-36 50Z" />
+            <path d="M39 57h42" />
+            <path d="M60 36v42" />
+          </svg>
+        </div>
       </div>
-    </div>
+    </section>
+
+    <section class="causes-content">
+      <div class="container">
+        {causes.length > 0 ? (
+          <>
+            <div class="causes-grid">
+              {causes.map((cause) => (
+                <article class="cause-card">
+                  <p class="cause-label">SUPPORTED CAUSE</p>
+                  <h2>{cause.data.name}</h2>
+                  <p>{cause.data.description}</p>
+
+                  {cause.data.website && (
+                    <a
+                      href={cause.data.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Find out more ↗
+                    </a>
+                  )}
+                </article>
+              ))}
+            </div>
+
+            <div class="causes-note">
+              <div class="causes-note-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M4 12h16" />
+                  <path d="M12 4v16" />
+                  <circle cx="12" cy="12" r="9" />
+                </svg>
+              </div>
+
+              <p>
+                More information about the money raised and how it is distributed
+                will be added after the festival.
+              </p>
+            </div>
+          </>
+        ) : (
+          <div class="causes-placeholder">
+            <div class="causes-placeholder-copy">
+              <p class="cause-label">2026 BENEFICIARIES</p>
+              <h2>Our good causes are being confirmed</h2>
+
+              <p>
+                The organisations supported by this year’s festival are still
+                being finalised. We’ll introduce them here as soon as the
+                committee has confirmed the 2026 beneficiaries.
+              </p>
+
+              <p>
+                Whether you sponsor a barrel or simply pay your admission on
+                the day and enjoy a few drinks in a great atmosphere, you're
+                helping us stage a fantastic community event while raising
+                money for worthwhile local causes.
+              </p>
+            </div>
+
+            <div class="causes-placeholder-mark" aria-hidden="true">
+              <svg viewBox="0 0 80 80">
+                <path d="M40 66S16 51 16 32c0-9 6-15 14-15 5 0 9 2 10 6 2-4 6-6 11-6 8 0 14 6 14 15 0 19-25 34-25 34Z" />
+              </svg>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
   </main>
 
   <Footer />

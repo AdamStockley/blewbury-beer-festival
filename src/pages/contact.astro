@@ -1,0 +1,225 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import outputs from "../../amplify_outputs.json";
+import "../styles/global.css";
+import "../styles/contact.css";
+
+const apiEndpoint =
+  outputs.custom?.sponsorshipApi?.endpoint?.replace(/\/$/, "") ?? "";
+
+const turnstileSiteKey =
+  import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
+---
+
+<BaseLayout
+  title="Contact | Blewbury Beer Festival 2026"
+  description="Get in touch with the Blewbury Beer Festival organising team."
+>
+  <Header />
+
+  <main class="contact-page">
+    <section class="contact-hero">
+      <div class="container">
+        <p class="eyebrow">GET IN TOUCH</p>
+        <h1>Contact us.</h1>
+        <p>
+          Have a question about the festival? Send us a message and one of the
+          organising team will get back to you.
+        </p>
+      </div>
+    </section>
+
+    <section class="contact-content">
+      <div class="container contact-layout">
+        <div class="contact-copy">
+          <p class="eyebrow">BLEWBURY BEER FESTIVAL</p>
+          <h2>We're happy to help.</h2>
+          <p>
+            For general festival enquiries, accessibility questions or anything
+            else not covered elsewhere on the site, use the form.
+          </p>
+
+          <p>
+            For barrel sponsorship enquiries, please use our dedicated
+            sponsorship form instead.
+          </p>
+
+          <a class="contact-secondary-link" href="/sponsor-a-barrel">
+            Sponsor a Barrel →
+          </a>
+        </div>
+
+        <div class="contact-panel">
+          <form
+            class="contact-form"
+            data-contact-form
+            data-api-endpoint={apiEndpoint}
+          >
+            <div class="form-honeypot" aria-hidden="true">
+              <label>
+                Website
+                <input
+                  type="text"
+                  name="website"
+                  tabindex="-1"
+                  autocomplete="off"
+                />
+              </label>
+            </div>
+
+            <div class="form-field">
+              <label for="name">Your name</label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                maxlength="150"
+                autocomplete="name"
+                required
+              />
+            </div>
+
+            <div class="form-field">
+              <label for="email">Email address</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                maxlength="254"
+                autocomplete="email"
+                required
+              />
+            </div>
+
+            <div class="form-field">
+              <label for="subject">Subject</label>
+              <input
+                id="subject"
+                name="subject"
+                type="text"
+                maxlength="180"
+                required
+              />
+            </div>
+
+            <div class="form-field">
+              <label for="message">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="7"
+                maxlength="3000"
+                required
+              ></textarea>
+            </div>
+
+            <div class="turnstile-wrap">
+              {turnstileSiteKey ? (
+                <div
+                  class="cf-turnstile"
+                  data-sitekey={turnstileSiteKey}
+                  data-action="contact"
+                  data-theme="light"
+                ></div>
+              ) : (
+                <p class="form-configuration-warning">
+                  Verification is not configured.
+                </p>
+              )}
+            </div>
+
+            <button class="contact-submit" type="submit" data-submit-button>
+              Send message
+            </button>
+
+            <div
+              class="form-status"
+              data-form-status
+              role="status"
+              aria-live="polite"
+              hidden
+            ></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <script
+    is:inline
+    src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+    async
+    defer
+  ></script>
+
+  <script is:inline>
+    (() => {
+      const form = document.querySelector("[data-contact-form]");
+      if (!form) return;
+
+      const status = form.querySelector("[data-form-status]");
+      const submit = form.querySelector("[data-submit-button]");
+      const endpoint = form.dataset.apiEndpoint;
+
+      const showStatus = (message, state) => {
+        status.hidden = false;
+        status.textContent = message;
+        status.dataset.state = state;
+      };
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const data = new FormData(form);
+        const token = data.get("cf-turnstile-response");
+
+        if (!token) {
+          showStatus("Please complete the verification.", "error");
+          return;
+        }
+
+        submit.disabled = true;
+        submit.textContent = "Sending…";
+
+        try {
+          const response = await fetch(`${endpoint}/contact-enquiry`, {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({
+              name: data.get("name"),
+              email: data.get("email"),
+              subject: data.get("subject"),
+              message: data.get("message"),
+              website: data.get("website"),
+              turnstileToken: token,
+            }),
+          });
+
+          const result = await response.json();
+
+          if (!response.ok || !result.ok) {
+            throw new Error(result.message || "Unable to send message.");
+          }
+
+          form.reset();
+          window.turnstile?.reset();
+
+          showStatus(result.message, "success");
+        } catch (error) {
+          showStatus(
+            error instanceof Error ? error.message : "Unable to send message.",
+            "error"
+          );
+          window.turnstile?.reset();
+        } finally {
+          submit.disabled = false;
+          submit.textContent = "Send message";
+        }
+      });
+    })();
+  </script>
+</BaseLayout>

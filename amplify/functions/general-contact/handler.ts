@@ -3,7 +3,7 @@ import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
 const ses = new SESv2Client({ region: "eu-west-2" });
 
 const ALLOWED_HOSTNAMES = new Set([
-  "main.d2nfagz8x81avw.amplifyapp.com",
+  "main.d2nh6jvn6p8uji.amplifyapp.com",
   "blewbury-beer-festival.co.uk",
   "www.blewbury-beer-festival.co.uk",
 ]);

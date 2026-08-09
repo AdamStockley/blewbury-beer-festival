@@ -9,6 +9,9 @@ import GoodCausesBand from "../components/GoodCausesBand.astro";
 import LatestUpdate from "../components/LatestUpdate.astro";
 import VolunteerCTA from "../components/VolunteerCTA.astro";
 import "../styles/global.css";
+import { getEntry } from "astro:content";
+
+const latestNews = await getEntry("news", "2026-08-08-were-back");
 ---
 
 <BaseLayout>
@@ -19,7 +22,7 @@ import "../styles/global.css";
     <CountdownStrip />
     <FeatureGrid />
     <GoodCausesBand />
-    <LatestUpdate />
+    <LatestUpdate latest={latestNews} />
     <VolunteerCTA />
   </main>
 

@@ -1,4 +1,16 @@
-<header class="site-header">
+---
+interface Props {
+  variant?: "hero" | "standard";
+}
+
+const { variant = "standard" } = Astro.props;
+---
+
+<header
+  class={`site-header site-header--${variant}`}
+  data-site-header
+  data-header-variant={variant}
+>
   <div class="container nav">
     <a class="brand" href="/" aria-label="Blewbury Beer Festival home">
       <span class="brand-mark">BBF</span>
@@ -6,7 +18,7 @@
     </a>
 
     <nav class="nav-links" aria-label="Main navigation">
-      <a href="/drinks">Beer</a>
+      <a href="/drinks">Drinks</a>
       <a href="/entertainment">Music</a>
       <a href="/food">Food</a>
       <a href="/plan-your-day">Plan Your Visit</a>
@@ -15,3 +27,39 @@
     </nav>
   </div>
 </header>
+
+<script is:inline>
+  (() => {
+    const initialiseSmartHeader = () => {
+      const header = document.querySelector("[data-site-header]");
+      if (!header || header.dataset.headerVariant !== "hero") return;
+
+      const hero = document.querySelector(".hero");
+      if (!hero) return;
+
+      header.classList.remove("is-scrolled");
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          header.classList.toggle("is-scrolled", !entry.isIntersecting);
+        },
+        {
+          root: null,
+          threshold: 0,
+        }
+      );
+
+      observer.observe(hero);
+    };
+
+    if (document.readyState === "loading") {
+      document.addEventListener(
+        "DOMContentLoaded",
+        initialiseSmartHeader,
+        { once: true }
+      );
+    } else {
+      initialiseSmartHeader();
+    }
+  })();
+</script>

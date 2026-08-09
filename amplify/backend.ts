@@ -28,7 +28,7 @@ const httpApi = new HttpApi(apiStack, "SponsorshipContactApi", {
   corsPreflight: {
     allowOrigins: [
       "http://localhost:4321",
-      "https://main.d2nfagz8x81avw.amplifyapp.com",
+      "https://main.d2nh6jvn6p8uji.amplifyapp.com",
       "https://blewbury-beer-festival.co.uk",
       "https://www.blewbury-beer-festival.co.uk",
     ],

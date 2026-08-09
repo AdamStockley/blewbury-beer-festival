@@ -293,7 +293,7 @@ select.filter-control {
 .drink-row-link {
   min-height: 122px;
   display: grid;
-  grid-template-columns: 190px 76px minmax(0, 1fr) minmax(180px, 0.34fr) 110px;
+  grid-template-columns: 190px minmax(0, 1fr) minmax(180px, 0.34fr) 110px;
   align-items: stretch;
   color: inherit;
   text-decoration: none;
@@ -341,30 +341,67 @@ select.filter-control {
 }
 
 .drink-row-type {
-  display: grid;
-  place-items: center;
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 0.55rem;
 }
 
 .type-pill {
-  display: inline-block;
-  padding: 0.45rem 0.55rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  max-width: 100%;
+  padding: 0.34rem 0.52rem;
+  border: 1px solid transparent;
   border-radius: 4px;
-  color: white;
-  font-size: 0.66rem;
+  font-size: 0.62rem;
   font-weight: 900;
+  line-height: 1;
   letter-spacing: 0.03em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
-.type-pill--beer { background: #d99a29; }
-.type-pill--cider { background: #8ba05a; }
-.type-pill--wine { background: #b64664; }
-.type-pill--gin { background: #5f99b9; }
+/* Shared drink-type palette */
+.type-pill--beer {
+  background: #d99a29;
+  color: white;
+}
+
+.type-pill--cider {
+  background: #8ba05a;
+  color: white;
+}
+
+.type-pill--gin {
+  background: #5f99b9;
+  color: white;
+}
+
+/* Wine sub-types use the same component and dimensions */
+.type-pill--white {
+  background: #edf5ec;
+  border-color: #cfe2cf;
+  color: #426347;
+}
+
+.type-pill--sparkling {
+  background: #e7f3e8;
+  border-color: #c3ddc7;
+  color: #3e6545;
+}
+
+.type-pill--red {
+  background: var(--burgundy);
+  border-color: var(--burgundy);
+  color: white;
+}
 
 .drink-row-copy {
   min-width: 0;
   align-self: center;
-  padding: 1rem 1.1rem 1rem 0;
+  padding: 1rem 1.25rem;
 }
 
 .drink-maker {
@@ -563,7 +600,7 @@ select.filter-control {
   }
 
   .drink-row-link {
-    grid-template-columns: 150px 70px minmax(0,1fr) 170px 95px;
+    grid-template-columns: 150px minmax(0,1fr) 170px 95px;
   }
 }
 
@@ -598,7 +635,6 @@ select.filter-control {
     grid-template-columns: 110px 1fr 76px;
     grid-template-areas:
       "art copy actions"
-      "type copy actions"
       "meta meta meta";
     min-height: 0;
   }
@@ -614,10 +650,7 @@ select.filter-control {
   }
 
   .drink-row-type {
-    grid-area: type;
-    align-self: stretch;
-    border-right: 1px solid rgba(90,24,32,0.10);
-    padding-bottom: 0.8rem;
+    margin-bottom: 0.5rem;
   }
 
   .drink-row-copy {

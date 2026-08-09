@@ -23,10 +23,42 @@ const gins = (await getCollection("gins"))
   .sort((a,b) => (a.data.sortOrder ?? 9999) - (b.data.sortOrder ?? 9999));
 
 const drinks = [
-  ...beers.map((entry) => ({ entry, type: "beer", producer: entry.data.brewery, typeLabel: "Beer" })),
-  ...ciders.map((entry) => ({ entry, type: "cider", producer: entry.data.producer, typeLabel: "Cider" })),
-  ...wines.map((entry) => ({ entry, type: "wine", producer: entry.data.producer, typeLabel: "Wine" })),
-  ...gins.map((entry) => ({ entry, type: "gin", producer: entry.data.producer, typeLabel: "Gin" })),
+  ...beers.map((entry) => ({
+    entry,
+    type: "beer",
+    producer: entry.data.brewery,
+    typeLabel: "Beer",
+    pillTone: "beer",
+  })),
+
+  ...ciders.map((entry) => ({
+    entry,
+    type: "cider",
+    producer: entry.data.producer,
+    typeLabel: "Cider",
+    pillTone: "cider",
+  })),
+
+  ...wines.map((entry) => {
+    const isSparkling = entry.data.style === "Sparkling";
+    const isRed = ["Merlot", "Red Rhône Blend"].includes(entry.data.style ?? "");
+
+    return {
+      entry,
+      type: "wine",
+      producer: entry.data.producer,
+      typeLabel: isSparkling ? "Sparkling" : isRed ? "Red" : "White",
+      pillTone: isSparkling ? "sparkling" : isRed ? "red" : "white",
+    };
+  }),
+
+  ...gins.map((entry) => ({
+    entry,
+    type: "gin",
+    producer: entry.data.producer,
+    typeLabel: "Gin",
+    pillTone: "gin",
+  })),
 ];
 
 const styleOptions = [...new Set(
@@ -225,7 +257,7 @@ const passportTotals = {
         </div>
 
         <div class="drink-list" data-drink-list>
-          {drinks.map(({ entry, type, producer, typeLabel }) => (
+          {drinks.map(({ entry, type, producer, typeLabel, pillTone }) => (
             <article
               class={`drink-row drink-row--${type}`}
               data-drink-row
@@ -251,11 +283,11 @@ const passportTotals = {
                   )}
                 </div>
 
-                <div class="drink-row-type">
-                  <span class={`type-pill type-pill--${type}`}>{typeLabel}</span>
-                </div>
-
                 <div class="drink-row-copy">
+                  <div class="drink-row-type">
+                    <span class={`type-pill type-pill--${pillTone}`}>{typeLabel}</span>
+                  </div>
+
                   <p class="drink-maker">{producer}</p>
                   <h2>{entry.data.name}</h2>
 

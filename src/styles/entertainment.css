@@ -78,3 +78,20 @@
     gap: 0.4rem;
   }
 }
+
+
+.schedule-act-image {
+  display: block;
+  width: min(100%, 520px);
+  max-height: 260px;
+  margin: 0 0 1.25rem;
+  border-radius: 12px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+@media (max-width: 720px) {
+  .schedule-act-image {
+    max-height: 220px;
+  }
+}

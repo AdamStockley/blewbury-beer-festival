@@ -104,6 +104,7 @@ const entertainment = defineCollection({
     name: z.string(),
     kind: z.enum(["music", "entertainment", "other"]).default("music"),
     description: z.string(),
+    image: z.string().optional(),
     startTime: z.string().optional(),
     endTime: z.string().optional(),
     website: z.string().url().optional(),

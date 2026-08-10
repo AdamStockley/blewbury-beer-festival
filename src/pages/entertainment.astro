@@ -67,6 +67,15 @@ const formatTime = (value) => {
                 <div class="schedule-time">{timeLabel}</div>
 
                 <div class="schedule-copy">
+                  {act.data.image && (
+                    <img
+                      class="schedule-act-image"
+                      src={act.data.image}
+                      alt={`${act.data.name} logo`}
+                      loading="lazy"
+                    />
+                  )}
+
                   <h2>{act.data.name}</h2>
                   <p>{act.data.description}</p>
 

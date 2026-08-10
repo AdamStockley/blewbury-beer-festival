@@ -31,6 +31,8 @@
 
 .sponsor-card {
   overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr;
   border: 1px solid rgba(90,24,32,0.14);
   border-radius: 14px;
   background: rgba(255,255,255,0.4);
@@ -66,6 +68,8 @@
 }
 
 .sponsor-copy {
+  display: flex;
+  flex-direction: column;
   padding: 1.4rem;
 }
 
@@ -80,7 +84,7 @@
 .sponsor-copy h2,
 .sponsor-cta h2 {
   margin-bottom: 0.7rem;
-  font-size: clamp(2rem, 3vw, 3rem);
+  font-size: clamp(1.6rem, 2.4vw, 2.4rem);
   line-height: 1;
 }
 
@@ -90,6 +94,8 @@
 }
 
 .sponsor-link {
+  margin-top: auto;
+  padding-top: 1rem;
   color: var(--burgundy);
   font-size: 0.86rem;
   font-weight: 800;

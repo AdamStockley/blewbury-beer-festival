@@ -7,7 +7,7 @@ export const festival = {
   location: "Blewbury Village Hall, Blewbury, Oxfordshire",
   venue: "Blewbury Village Hall",
   address: {
-    street: "Church End",
+    street: "Heather Way",
     locality: "Blewbury",
     town: "Didcot",
     region: "Oxfordshire",

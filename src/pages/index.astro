@@ -8,9 +8,14 @@ import FeatureGrid from "../components/FeatureGrid.astro";
 import GoodCausesBand from "../components/GoodCausesBand.astro";
 import LatestUpdate from "../components/LatestUpdate.astro";
 import "../styles/global.css";
-import { getEntry } from "astro:content";
+import { getCollection } from "astro:content";
 
-const latestNews = await getEntry("news", "2026-08-08-were-back");
+const latestNews = (await getCollection("news"))
+  .filter((entry) => !entry.data.draft)
+  .sort(
+    (a, b) =>
+      b.data.published.getTime() - a.data.published.getTime()
+  )[0];
 ---
 
 <BaseLayout>

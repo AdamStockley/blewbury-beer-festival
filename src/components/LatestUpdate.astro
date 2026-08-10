@@ -1,5 +1,13 @@
 ---
 const { latest } = Astro.props;
+
+const published = latest
+  ? latest.data.published.toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    })
+  : null;
 ---
 
 <section class="home-latest">
@@ -7,20 +15,19 @@ const { latest } = Astro.props;
     <div>
       <p class="eyebrow">LATEST</p>
       <h2>Festival news</h2>
+      <a class="home-news-all-link" href="/news">Read all news →</a>
     </div>
 
     {latest ? (
       <article class="home-latest-card">
-        <div class="news-meta">
-          {latest.data.published.toLocaleDateString("en-GB", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-          })}
-        </div>
-
-        <h3>{latest.data.title}</h3>
+        <div class="news-meta">{published}</div>
+        <h3>
+          <a href={`/news/${latest.id}`}>{latest.data.title}</a>
+        </h3>
         <p>{latest.data.summary}</p>
+        <a class="home-news-read-link" href={`/news/${latest.id}`}>
+          Read article →
+        </a>
       </article>
     ) : (
       <div class="home-latest-card">

@@ -1,0 +1,61 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import "../../styles/global.css";
+import "../../styles/news.css";
+
+const news = (await getCollection("news"))
+  .filter((entry) => !entry.data.draft)
+  .sort(
+    (a, b) =>
+      b.data.published.getTime() - a.data.published.getTime()
+  );
+
+const formatDate = (date) =>
+  date.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+---
+
+<BaseLayout
+  title="News | Blewbury Beer Festival 2026"
+  description="Latest news and updates from Blewbury Beer Festival 2026."
+>
+  <Header />
+
+  <main class="news-page">
+    <section class="news-heading">
+      <div class="container">
+        <p class="eyebrow">LATEST</p>
+        <h1>Festival News</h1>
+        <p class="news-intro">
+          Announcements, updates and everything happening in the run-up to
+          Blewbury Beer Festival 2026.
+        </p>
+      </div>
+    </section>
+
+    <section class="news-list-section">
+      <div class="container">
+        <div class="news-list">
+          {news.map((entry) => (
+            <article class="news-card">
+              <p class="news-date">{formatDate(entry.data.published)}</p>
+              <h2>{entry.data.title}</h2>
+              <p>{entry.data.summary}</p>
+              <a class="news-link" href={`/news/${entry.id}`}>
+                Read article →
+              </a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

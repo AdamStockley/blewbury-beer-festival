@@ -1,0 +1,53 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import "../../styles/global.css";
+import "../../styles/news.css";
+
+export async function getStaticPaths() {
+  const entries = (await getCollection("news"))
+    .filter((entry) => !entry.data.draft);
+
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const published = entry.data.published.toLocaleDateString("en-GB", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+---
+
+<BaseLayout
+  title={`${entry.data.title} | Blewbury Beer Festival 2026`}
+  description={entry.data.summary}
+>
+  <Header />
+
+  <main class="news-article-page">
+    <article class="container news-article">
+      <p class="eyebrow">FESTIVAL NEWS</p>
+      <p class="news-date">{published}</p>
+
+      <h1>{entry.data.title}</h1>
+
+      <div class="news-article-body">
+        <Content />
+      </div>
+
+      <a class="news-back-link" href="/news">
+        ← Back to all news
+      </a>
+    </article>
+  </main>
+
+  <Footer />
+</BaseLayout>

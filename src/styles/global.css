@@ -172,28 +172,32 @@ h2 {
 .brand {
   display: flex;
   align-items: center;
-  gap: 0.9rem;
+  gap: 0.75rem;
   text-decoration: none;
   font-weight: 850;
 }
 
 .brand-mark {
-  transition:
-    color 200ms ease,
-    border-color 200ms ease;
-
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border: 2px solid currentColor;
+  display: block;
+  width: 60px;
+  height: 60px;
+  flex: 0 0 60px;
+  border: 0;
   border-radius: 50%;
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
+  object-fit: contain;
 }
 
 .brand-name {
   font-size: 1rem;
+  font-weight: 850;
+}
+
+@media (max-width: 720px) {
+  .brand-mark {
+    width: 50px;
+    height: 50px;
+    flex-basis: 50px;
+  }
 }
 
 .nav-links {
@@ -855,20 +859,6 @@ h2 {
   padding-bottom: 5rem;
 }
 
-.footer-logo {
-  display: grid;
-  place-items: center;
-
-  width: 72px;
-  height: 72px;
-  margin-bottom: 1.5rem;
-
-  border: 2px solid var(--gold-light);
-  border-radius: 50%;
-
-  color: var(--gold-light);
-  font-weight: 900;
-}
 
 .footer-top h2 {
   font-size: clamp(2.6rem, 5vw, 5rem);
@@ -1159,27 +1149,6 @@ h2 {
   }
 }
 
-/* 2026 brand mark */
-.brand-mark {
-  flex: 0 0 auto;
-  width: 46px;
-  height: 46px;
-  display: block;
-  border: 0;
-  border-radius: 50%;
-  object-fit: contain;
-}
-
-@media (max-width: 720px) {
-  .brand-mark {
-    width: 42px;
-    height: 42px;
-  }
-
-  .brand-name {
-    font-size: 0.9rem;
-  }
-}
 
 .footer-top--polished {
   align-items: start;
@@ -1192,9 +1161,12 @@ h2 {
 }
 
 .footer-brand-mark {
-  width: 108px;
-  height: 108px;
-  flex: 0 0 auto;
+  width: 128px;
+  height: 128px;
+  flex: 0 0 128px;
+  display: block;
+  border-radius: 50%;
+  object-fit: contain;
 }
 
 .footer-brand h2 {
@@ -1233,8 +1205,9 @@ h2 {
   }
 
   .footer-brand-mark {
-    width: 82px;
-    height: 82px;
+    width: 96px;
+    height: 96px;
+    flex-basis: 96px;
   }
 
   .footer-links {
@@ -1289,71 +1262,8 @@ h2 {
   color: var(--muted);
 }
 
-.brand-mark {
-  width: 42px;
-  height: 42px;
-  flex: 0 0 auto;
-  display: block;
-  border: 0;
-  border-radius: 50%;
-}
-
-.brand-name {
-  font-weight: 850;
-}
 
 
 
-.brand-mark {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border: 2px solid currentColor;
-  border-radius: 50%;
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  font-weight: 800;
-}
 
-.brand-name {
-  font-size: 1rem;
-  font-weight: 850;
-}
 
-.brand-mark {
-  width: 48px;
-  height: 48px;
-  display: block;
-  flex: 0 0 auto;
-  border: 0;
-  border-radius: 50%;
-  object-fit: contain;
-}
-
-@media (max-width: 720px) {
-  .brand-mark {
-    width: 42px;
-    height: 42px;
-  }
-}
-
-/* Final header logo sizing */
-.brand {
-  gap: 0.75rem;
-}
-
-.brand-mark {
-  width: 60px;
-  height: 60px;
-  flex: 0 0 60px;
-  object-fit: contain;
-}
-
-@media (max-width: 720px) {
-  .brand-mark {
-    width: 50px;
-    height: 50px;
-    flex-basis: 50px;
-  }
-}

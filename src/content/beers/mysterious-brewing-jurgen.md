@@ -3,6 +3,7 @@ brewery: "Mysterious Brewing"
 name: "Jurgen"
 style: "Pilsner"
 abv: 4.5
+graphic: "/images/drinks/jurgen.png"
 description: "Light, crisp German-style pilsner with classic cracker and noble hop character."
 producerTown: "Bramley, Hampshire"
 producerWebsite: "https://mysteriousbrewing.com/"

@@ -3,6 +3,7 @@ brewery: "Sharp's Brewery"
 name: "Twin Coast"
 style: "Session Pale Ale"
 abv: 3.9
+graphic: "/images/drinks/twin-coast.jpg"
 description: "Crisp session pale with bright citrus and refreshing bitterness."
 producerTown: "Rock, Cornwall"
 producerWebsite: "https://www.sharpsbrewery.co.uk/"

@@ -3,6 +3,7 @@ brewery: "Tap Social"
 name: "Embers"
 style: "Ruby Ale"
 abv: 4.5
+graphic: "/images/drinks/embers.jpg"
 description: "Warming ruby ale with caramel, biscuit and berry flavours."
 producerTown: "Oxford, Oxfordshire"
 producerWebsite: "https://www.tapsocialmovement.com/"

@@ -3,6 +3,7 @@ brewery: "Brains Brewery"
 name: "SA"
 style: "Premium Bitter"
 abv: 4.2
+graphic: "/images/drinks/brains-sa.jpg"
 description: "Copper-coloured premium bitter with nutty malt and a dry finish."
 producerTown: "Cardiff, Wales"
 producerWebsite: "https://www.sabrain.com/"

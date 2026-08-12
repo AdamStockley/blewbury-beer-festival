@@ -134,6 +134,7 @@ const goodCauses = defineCollection({
   schema: z.object({
     name: z.string(),
     description: z.string(),
+    image: z.string().optional(),
     website: z.string().url().optional(),
     featured: z.boolean().default(false),
     year: z.number().int().optional(),

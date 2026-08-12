@@ -6,13 +6,13 @@ import Footer from "../components/Footer.astro";
 import "../styles/global.css";
 import "../styles/causes.css";
 
-const causes = (await getCollection("good-causes"))
+const causes = (await getCollection("goodCauses"))
   .sort((a, b) => (a.data.sortOrder ?? 9999) - (b.data.sortOrder ?? 9999));
 ---
 
 <BaseLayout
   title="Good Causes | Blewbury Beer Festival 2026"
-  description="Blewbury Beer Festival raises money for local good causes. Meet the organisations supported by the 2026 festival."
+  description="Blewbury Beer Festival raises money for good causes. Meet the projects and organisations supported by the 2026 festival."
 >
   <Header />
 
@@ -46,19 +46,31 @@ const causes = (await getCollection("good-causes"))
             <div class="causes-grid">
               {causes.map((cause) => (
                 <article class="cause-card">
-                  <p class="cause-label">SUPPORTED CAUSE</p>
+                  {cause.data.image && (
+                    <div class="cause-card-image">
+                      <img
+                        src={cause.data.image}
+                        alt={`${cause.data.name}`}
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+
+                  <div class="cause-card-copy">
+                    <p class="cause-label">2026 BENEFICIARY</p>
                   <h2>{cause.data.name}</h2>
                   <p>{cause.data.description}</p>
 
-                  {cause.data.website && (
-                    <a
-                      href={cause.data.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Find out more ↗
-                    </a>
-                  )}
+                    {cause.data.website && (
+                      <a
+                        href={cause.data.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Find out more ↗
+                      </a>
+                    )}
+                  </div>
                 </article>
               ))}
             </div>

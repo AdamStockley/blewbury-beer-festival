@@ -39,7 +39,7 @@ export const festivalHighlights = [
   {
     kicker: "EAT",
     title: "Food worth staying for",
-    text: "Because several hours of beer tasting demands something decent to eat. Food announcements are coming soon.",
+    text: "Blewbury School PTA will serve burgers, bratwurst and vegetarian three-bean chilli nachos from 2pm until approximately 5pm, or while stocks last.",
     href: "/food",
     linkText: "What's cooking",
     number: "03",

@@ -1,21 +1,14 @@
 ---
-import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/global.css";
 import "../styles/food.css";
-
-const confirmedFood = (await getCollection("food"))
-  .filter((item) => item.data.status === "confirmed")
-  .sort((a, b) => (a.data.sortOrder ?? 9999) - (b.data.sortOrder ?? 9999));
-
-const supplier = confirmedFood[0] ?? null;
 ---
 
 <BaseLayout
   title="Food | Blewbury Beer Festival 2026"
-  description="Food information for Blewbury Beer Festival 2026."
+  description="Burgers, bratwurst and vegetarian three-bean chilli nachos from Blewbury School PTA at Blewbury Beer Festival 2026."
 >
   <Header />
 
@@ -26,9 +19,9 @@ const supplier = confirmedFood[0] ?? null;
           <p class="eyebrow">2026 FOOD</p>
           <h1>Festival Food</h1>
           <p class="food-hero-copy">
-            Great beer deserves great food. We’re currently finalising our 2026
-            food partner, with freshly prepared food planned throughout the
-            afternoon and evening.
+            Great beer deserves great food. Blewbury School PTA will be serving
+            burgers, bratwurst and three-bean chilli nachos, with main food
+            service from 2pm until approximately 5pm, or while stocks last.
           </p>
         </div>
 
@@ -60,64 +53,49 @@ const supplier = confirmedFood[0] ?? null;
 
             <div>
               <p class="food-card-label">AT THE FESTIVAL</p>
-              <h2>Food served throughout the event</h2>
+              <h2>Main food served from 2pm</h2>
               <ul class="food-feature-list">
-                <li>Hot food available</li>
-                <li>Vegetarian options planned</li>
-                <li>Soft drinks available</li>
+                <li>Burgers</li>
+                <li>Bratwurst</li>
+                <li>Three-bean chilli nachos (vegetarian)</li>
+                <li>Soft drinks and snacks</li>
               </ul>
             </div>
           </article>
 
-          {supplier ? (
-            <article class="food-supplier-card">
-              <p class="food-card-label">2026 FOOD PARTNER</p>
-              <h2>{supplier.data.vendor}</h2>
-              <p>{supplier.data.description}</p>
+          <article class="food-supplier-card food-supplier-card--with-logo">
+            <img
+              class="food-school-logo"
+              src="/images/food/blewbury-primary-school-logo.png"
+              alt="Blewbury C of E Primary School"
+              width="591"
+              height="591"
+            />
 
-              <div class="food-dietary-flags">
-                {supplier.data.vegetarian && <span>Vegetarian options</span>}
-                {supplier.data.vegan && <span>Vegan options</span>}
-                {supplier.data.glutenFree && <span>Gluten-free options</span>}
-              </div>
+            <div class="food-supplier-copy">
+              <p class="food-card-label">2026 FOOD TEAM</p>
+              <h2>Blewbury School PTA</h2>
+              <p>
+                The PTA will be running the kitchen this year. Main food service
+                will continue until approximately 5pm, or while stocks last.
+              </p>
+              <p>
+                Blewbury School PTA is a registered charity run by parents,
+                guardians and school staff. Its events bring the school community
+                together and raise funds to support every child at the school —
+                so you can do good just by having a burger.
+              </p>
 
-              {supplier.data.website && (
-                <a
-                  href={supplier.data.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="food-link"
-                >
-                  Visit food partner website ↗
-                </a>
-              )}
-            </article>
-          ) : (
-            <article class="food-supplier-card food-supplier-card--tbc">
-              <div class="food-card-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="9" />
-                  <path d="M12 10v6" />
-                  <path d="M12 7h.01" />
-                </svg>
-              </div>
-
-              <div>
-                <p class="food-card-label">2026 FOOD PARTNER</p>
-                <h2>Coming soon</h2>
-                <p>
-                  We’re putting the finishing touches to the food offering for
-                  this year’s festival.
-                </p>
-                <p>
-                  Once confirmed, you’ll find the supplier, menu and dietary
-                  information here.
-                </p>
-
-                <span class="food-coming-pill">Menu coming soon</span>
-              </div>
-            </article>
-          )}
+              <a
+                href="https://www.blewbury.oxon.sch.uk/page/?title=PTA&amp;pid=49"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="food-link"
+              >
+                Find out more about Blewbury School PTA ↗
+              </a>
+            </div>
+          </article>
         </div>
 
         <div class="food-planning-note">
@@ -131,9 +109,8 @@ const supplier = confirmedFood[0] ?? null;
           <div>
             <p class="food-card-label">PLANNING YOUR VISIT?</p>
             <p>
-              Food will be available during the festival, so there’s no need to
-              leave if you’re staying on for the live music. We’ll update this
-              page as soon as the full details are confirmed.
+              Soft drinks and snacks may remain available later, subject to
+              volunteer availability.
             </p>
           </div>
         </div>

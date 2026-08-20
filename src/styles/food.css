@@ -145,6 +145,24 @@
   color: var(--muted);
 }
 
+.food-supplier-card--with-logo {
+  display: grid;
+  grid-template-areas: "copy logo";
+  grid-template-columns: minmax(0, 1fr) 100px;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.food-supplier-copy {
+  grid-area: copy;
+}
+
+.food-school-logo {
+  grid-area: logo;
+  width: 100px;
+  height: auto;
+}
+
 .food-coming-pill,
 .food-dietary-flags span {
   display: inline-flex;
@@ -205,5 +223,16 @@
   .food-supplier-card--tbc,
   .food-planning-note {
     grid-template-columns: 1fr;
+  }
+
+  .food-supplier-card--with-logo {
+    grid-template-areas:
+      "logo"
+      "copy";
+    grid-template-columns: 1fr;
+  }
+
+  .food-school-logo {
+    width: 88px;
   }
 }

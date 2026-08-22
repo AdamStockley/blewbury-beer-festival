@@ -42,8 +42,10 @@ const originLabel =
     : type === "cider"
       ? "MADE IN"
       : type === "gin"
-        ? "DISTILLED IN"
+      ? "DISTILLED IN"
         : "ORIGIN";
+
+const bestServedLabel = type === "gin" ? "GARNISH" : "BEST SERVED";
 ---
 
 <BaseLayout
@@ -54,59 +56,63 @@ const originLabel =
 
   <main class="drink-detail-page">
     <section class="drink-detail-hero">
-      <div class="container drink-detail-grid">
-        <div class="drink-detail-art">
-          {entry.data.graphic ? (
-            <img src={entry.data.graphic} alt={`${entry.data.name} artwork`} />
-          ) : (
-            <div class="drink-detail-placeholder" aria-hidden="true">
-              {entry.data.name.charAt(0)}
-            </div>
-          )}
-        </div>
+      <div class="container">
+        <a class="drink-detail-back" href="/drinks">← Back to all drinks</a>
 
-        <div class="drink-detail-copy">
-          <p class="eyebrow eyebrow-gold">{String(type).toUpperCase()}</p>
-          <p class="drink-detail-producer">{producer}</p>
-          <h1>{entry.data.name}</h1>
-
-          <div class="drink-detail-meta">
-            {entry.data.style && <span>{entry.data.style}</span>}
-            {entry.data.abv !== undefined && <strong>{entry.data.abv.toFixed(1)}%</strong>}
+        <div class="drink-detail-grid">
+          <div class="drink-detail-art">
+            {entry.data.graphic ? (
+              <img src={entry.data.graphic} alt={`${entry.data.name} artwork`} />
+            ) : (
+              <div class="drink-detail-placeholder" aria-hidden="true">
+                {entry.data.name.charAt(0)}
+              </div>
+            )}
           </div>
 
-          {entry.data.flavourTags?.length > 0 && (
-            <div class="flavour-tags detail-tags">
-              {entry.data.flavourTags.map((tag) => <span>{tag}</span>)}
+          <div class="drink-detail-copy">
+            <p class="eyebrow eyebrow-gold">{String(type).toUpperCase()}</p>
+            <p class="drink-detail-producer">{producer}</p>
+            <h1>{entry.data.name}</h1>
+
+            <div class="drink-detail-meta">
+              {entry.data.style && <span>{entry.data.style}</span>}
+              {entry.data.abv !== undefined && <strong>{entry.data.abv.toFixed(1)}%</strong>}
             </div>
-          )}
 
-          <div class="detail-tasting-actions" aria-label={`Rate ${entry.data.name}`}>
-            <button
-              class="detail-tasting-button detail-tasting-button--like"
-              type="button"
-              data-tasting-like={entry.id}
-              aria-label={`I like ${entry.data.name}`}
-              aria-pressed="false"
-            >
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M7 10v10H4V10h3Zm3 10V9.5l3.6-5.1a1.5 1.5 0 0 1 2.7 1.1L16 10h3.2a2 2 0 0 1 2 2.4l-1.1 5.5A2.6 2.6 0 0 1 17.6 20H10Z" />
-              </svg>
-              <span>I liked this</span>
-            </button>
+            {entry.data.flavourTags?.length > 0 && (
+              <div class="flavour-tags detail-tags">
+                {entry.data.flavourTags.map((tag) => <span>{tag}</span>)}
+              </div>
+            )}
 
-            <button
-              class="detail-tasting-button detail-tasting-button--dislike"
-              type="button"
-              data-tasting-dislike={entry.id}
-              aria-label={`${entry.data.name} is not for me`}
-              aria-pressed="false"
-            >
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M7 14V4H4v10h3Zm3-10v10.5l3.6 5.1a1.5 1.5 0 0 0 2.7-1.1L16 14h3.2a2 2 0 0 0 2-2.4l-1.1-5.5A2.6 2.6 0 0 0 17.6 4H10Z" />
-              </svg>
-              <span>Not for me</span>
-            </button>
+            <div class="detail-tasting-actions" aria-label={`Rate ${entry.data.name}`}>
+              <button
+                class="detail-tasting-button detail-tasting-button--like"
+                type="button"
+                data-tasting-like={entry.id}
+                aria-label={`I like ${entry.data.name}`}
+                aria-pressed="false"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M7 10v10H4V10h3Zm3 10V9.5l3.6-5.1a1.5 1.5 0 0 1 2.7 1.1L16 10h3.2a2 2 0 0 1 2 2.4l-1.1 5.5A2.6 2.6 0 0 1 17.6 20H10Z" />
+                </svg>
+                <span>I liked this</span>
+              </button>
+
+              <button
+                class="detail-tasting-button detail-tasting-button--dislike"
+                type="button"
+                data-tasting-dislike={entry.id}
+                aria-label={`${entry.data.name} is not for me`}
+                aria-pressed="false"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M7 14V4H4v10h3Zm3-10v10.5l3.6 5.1a1.5 1.5 0 0 0 2.7-1.1L16 14h3.2a2 2 0 0 0 2-2.4l-1.1-5.5A2.6 2.6 0 0 0 17.6 4H10Z" />
+                </svg>
+                <span>Not for me</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -162,7 +168,7 @@ const originLabel =
 
               {entry.data.bestServed && (
                 <article class="drink-discover-card">
-                  <p class="drink-discover-label">BEST SERVED</p>
+                  <p class="drink-discover-label">{bestServedLabel}</p>
                   <p>{entry.data.bestServed}</p>
                 </article>
               )}

@@ -382,10 +382,10 @@ const passportTotals = {
           <p>Try clearing one of the filters or searching for something else.</p>
         </div>
 
-        {(wines.length === 0 || gins.length === 0) && (
+        {(wines.length === 0 || gins.length < 6) && (
           <div class="coming-note">
             {wines.length === 0 && <span>Wine selection coming soon</span>}
-            {gins.length === 0 && <span>Gin selection coming soon</span>}
+            {gins.length < 6 && <span>Details of the final gin are still to come</span>}
           </div>
         )}
 

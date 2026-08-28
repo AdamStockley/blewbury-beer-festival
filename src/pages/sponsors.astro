@@ -48,11 +48,27 @@ const initials = (name) =>
             <article class="sponsor-card" data-sponsor-card>
               <div class="sponsor-art">
                 {sponsor.data.logo ? (
-                  <img
-                    src={sponsor.data.logo}
-                    alt={`${sponsor.data.name} logo`}
-                    loading="lazy"
-                  />
+                  sponsor.data.website ? (
+                    <a
+                      class="sponsor-logo-link"
+                      href={sponsor.data.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Visit ${sponsor.data.name} website`}
+                    >
+                      <img
+                        src={sponsor.data.logo}
+                        alt={`${sponsor.data.name} logo`}
+                        loading="lazy"
+                      />
+                    </a>
+                  ) : (
+                    <img
+                      src={sponsor.data.logo}
+                      alt={`${sponsor.data.name} logo`}
+                      loading="lazy"
+                    />
+                  )
                 ) : (
                   <div class="sponsor-fallback" aria-hidden="true">
                     {initials(sponsor.data.name)}

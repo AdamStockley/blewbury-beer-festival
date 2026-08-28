@@ -54,6 +54,12 @@
   object-fit: contain;
 }
 
+.sponsor-logo-link {
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+
 .sponsor-fallback {
   width: 92px;
   height: 92px;
@@ -94,8 +100,13 @@
 }
 
 .sponsor-link {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
   margin-top: auto;
-  padding-top: 1rem;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--burgundy);
+  border-radius: 999px;
   color: var(--burgundy);
   font-size: 0.86rem;
   font-weight: 800;

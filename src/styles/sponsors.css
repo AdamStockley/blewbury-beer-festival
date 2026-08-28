@@ -99,7 +99,7 @@
   color: var(--muted);
 }
 
-.sponsor-link {
+.sponsor-website-button {
   width: fit-content;
   display: inline-flex;
   align-items: center;

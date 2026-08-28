@@ -14,9 +14,33 @@
 
 .entertainment-intro {
   max-width: 640px;
-  margin-bottom: 0;
+  margin-bottom: 1.5rem;
   color: var(--muted);
   font-size: 1.05rem;
+}
+
+.stage-sponsor {
+  width: fit-content;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(90,24,32,0.14);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.42);
+  color: var(--burgundy);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.09em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.stage-sponsor img {
+  width: 180px;
+  max-height: 58px;
+  object-fit: contain;
 }
 
 .entertainment-schedule {
@@ -76,6 +100,11 @@
   .schedule-item {
     grid-template-columns: 1fr;
     gap: 0.4rem;
+  }
+
+  .stage-sponsor {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
 

@@ -61,7 +61,9 @@ const initials = (name) =>
               </div>
 
               <div class="sponsor-copy">
-                <p class="sponsor-label">2026 BARREL SPONSOR</p>
+                <p class="sponsor-label">
+                  {sponsor.data.sponsorLabel ?? "2026 BARREL SPONSOR"}
+                </p>
                 <h2>{sponsor.data.name}</h2>
                 <p>{sponsor.data.description}</p>
 

@@ -149,6 +149,7 @@ const sponsors = defineCollection({
     description: z.string(),
     website: z.string().url().optional(),
     logo: z.string().optional(),
+    sponsorLabel: z.string().optional(),
     featured: z.boolean().default(false),
     status: z.enum(["prospective", "confirmed", "inactive"]).default("confirmed"),
   }),

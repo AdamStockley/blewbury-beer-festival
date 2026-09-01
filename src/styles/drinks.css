@@ -538,7 +538,7 @@ select.filter-control {
 }
 
 .local-wines-heading h2,
-.standard-drinks-heading h2 {
+.drink-category-heading h2 {
   margin-bottom: 0;
   font-size: clamp(2.4rem, 5vw, 4.6rem);
 }
@@ -567,11 +567,15 @@ select.filter-control {
   gap: 0.55rem;
 }
 
-.standard-drinks-heading {
+.drink-category-section {
   margin: 2.2rem 0 1rem;
 }
 
-.standard-drinks-heading .eyebrow {
+.drink-category-heading {
+  margin-bottom: 1rem;
+}
+
+.drink-category-heading .eyebrow {
   margin-bottom: 0.35rem;
 }
 

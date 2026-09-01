@@ -40,39 +40,40 @@ const mapWine = (entry) => {
   };
 };
 
-const beerCiderDrinks = [
-  ...beers.map((entry) => ({
+const beerDrinks = beers.map((entry) => ({
     entry,
     type: "beer",
     producer: entry.data.brewery,
     typeLabel: "Beer",
     pillTone: "beer",
-  })),
+  }));
 
-  ...ciders.map((entry) => ({
+const ciderDrinks = ciders.map((entry) => ({
     entry,
     type: "cider",
     producer: entry.data.producer,
     typeLabel: "Cider",
     pillTone: "cider",
-  })),
+  }));
 
-];
+const festivalWineDrinks = standardWines.map(mapWine);
 
-const wineGinDrinks = [
-  ...standardWines.map(mapWine),
-
-  ...gins.map((entry) => ({
+const ginDrinks = gins.map((entry) => ({
     entry,
     type: "gin",
     producer: entry.data.producer,
     typeLabel: "Gin",
     pillTone: "gin",
-  })),
-];
+  }));
 
 const localWineDrinks = localWines.map(mapWine);
-const drinks = [...beerCiderDrinks, ...localWineDrinks, ...wineGinDrinks];
+const drinks = [
+  ...beerDrinks,
+  ...ciderDrinks,
+  ...localWineDrinks,
+  ...festivalWineDrinks,
+  ...ginDrinks,
+];
 
 const styleOptions = [...new Set(
   drinks.map(({ entry }) => entry.data.style).filter(Boolean)
@@ -296,16 +297,26 @@ const passportTotals = {
           <p data-results-copy>Showing all {drinks.length} confirmed drinks.</p>
         </div>
 
-        <div class="standard-drinks-heading">
-          <p class="eyebrow">THE FESTIVAL LINE-UP</p>
-          <h2>Beers, ciders, wines &amp; gins</h2>
-        </div>
+        <section class="drink-category-section" data-drink-section>
+          <div class="drink-category-heading">
+            <p class="eyebrow">THE FESTIVAL LINE-UP</p>
+            <h2>Beers</h2>
+          </div>
+          <div class="drink-list">
+            {beerDrinks.map((drink) => <DrinkRow {...drink} />)}
+          </div>
+        </section>
 
-        <div class="drink-list" data-drink-list>
-          {beerCiderDrinks.map((drink) => <DrinkRow {...drink} />)}
-        </div>
+        <section class="drink-category-section" data-drink-section>
+          <div class="drink-category-heading">
+            <h2>Ciders</h2>
+          </div>
+          <div class="drink-list">
+            {ciderDrinks.map((drink) => <DrinkRow {...drink} />)}
+          </div>
+        </section>
 
-        <section class="local-wines" data-local-wines-section>
+        <section class="local-wines" data-drink-section>
           <div class="local-wines-heading">
             <div>
               <p class="eyebrow">GROWN JUST DOWN THE ROAD</p>
@@ -324,9 +335,23 @@ const passportTotals = {
           </div>
         </section>
 
-        <div class="drink-list" data-drink-list>
-          {wineGinDrinks.map((drink) => <DrinkRow {...drink} />)}
-        </div>
+        <section class="drink-category-section" data-drink-section>
+          <div class="drink-category-heading">
+            <h2>Festival Wines</h2>
+          </div>
+          <div class="drink-list">
+            {festivalWineDrinks.map((drink) => <DrinkRow {...drink} />)}
+          </div>
+        </section>
+
+        <section class="drink-category-section" data-drink-section>
+          <div class="drink-category-heading">
+            <h2>Gins</h2>
+          </div>
+          <div class="drink-list">
+            {ginDrinks.map((drink) => <DrinkRow {...drink} />)}
+          </div>
+        </section>
 
         <div class="drinks-empty" data-drinks-empty hidden>
           <h2>No drinks match those filters.</h2>
@@ -378,7 +403,7 @@ const passportTotals = {
       const clearButton = document.querySelector("[data-clear-filters]");
       const empty = document.querySelector("[data-drinks-empty]");
       const resultCopy = document.querySelector("[data-results-copy]");
-      const localWinesSection = document.querySelector("[data-local-wines-section]");
+      const drinkSections = [...document.querySelectorAll("[data-drink-section]")];
 
       const overallTried = document.querySelector("[data-overall-tried]");
       const likedCount = document.querySelector("[data-liked-count]");
@@ -521,10 +546,10 @@ const passportTotals = {
 
         if (empty) empty.hidden = visible !== 0;
 
-        if (localWinesSection) {
-          const localRows = [...localWinesSection.querySelectorAll("[data-drink-row]")];
-          localWinesSection.hidden = !localRows.some((row) => !row.hidden);
-        }
+        drinkSections.forEach((section) => {
+          const sectionRows = [...section.querySelectorAll("[data-drink-row]")];
+          section.hidden = !sectionRows.some((row) => !row.hidden);
+        });
 
         if (resultCopy) {
           resultCopy.textContent =

@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import DrinkRow from "../components/DrinkRow.astro";
 import "../styles/global.css";
 import "../styles/drinks.css";
 
@@ -18,11 +19,28 @@ const wines = (await getCollection("wines"))
   .filter((item) => item.data.status === "confirmed")
   .sort((a,b) => (a.data.sortOrder ?? 9999) - (b.data.sortOrder ?? 9999));
 
+const localWines = wines.filter((entry) => entry.data.localSelection);
+const standardWines = wines.filter((entry) => !entry.data.localSelection);
+
 const gins = (await getCollection("gins"))
   .filter((item) => item.data.status === "confirmed")
   .sort((a,b) => (a.data.sortOrder ?? 9999) - (b.data.sortOrder ?? 9999));
 
-const drinks = [
+const mapWine = (entry) => {
+  const isSparkling = entry.data.style === "Sparkling";
+  const isRed = ["Merlot", "Red Rhône Blend"].includes(entry.data.style ?? "");
+  const isRose = entry.data.style === "Rosé";
+
+  return {
+    entry,
+    type: "wine",
+    producer: entry.data.producer,
+    typeLabel: isSparkling ? "Sparkling" : isRed ? "Red" : isRose ? "Rosé" : "White",
+    pillTone: isSparkling ? "sparkling" : isRed ? "red" : isRose ? "rose" : "white",
+  };
+};
+
+const regularDrinks = [
   ...beers.map((entry) => ({
     entry,
     type: "beer",
@@ -39,18 +57,7 @@ const drinks = [
     pillTone: "cider",
   })),
 
-  ...wines.map((entry) => {
-    const isSparkling = entry.data.style === "Sparkling";
-    const isRed = ["Merlot", "Red Rhône Blend"].includes(entry.data.style ?? "");
-
-    return {
-      entry,
-      type: "wine",
-      producer: entry.data.producer,
-      typeLabel: isSparkling ? "Sparkling" : isRed ? "Red" : "White",
-      pillTone: isSparkling ? "sparkling" : isRed ? "red" : "white",
-    };
-  }),
+  ...standardWines.map(mapWine),
 
   ...gins.map((entry) => ({
     entry,
@@ -60,6 +67,9 @@ const drinks = [
     pillTone: "gin",
   })),
 ];
+
+const localWineDrinks = localWines.map(mapWine);
+const drinks = [...regularDrinks, ...localWineDrinks];
 
 const styleOptions = [...new Set(
   drinks.map(({ entry }) => entry.data.style).filter(Boolean)
@@ -204,9 +214,8 @@ const passportTotals = {
           <div class="token-guide-table">
             <div><span>Half pint beer or cider</span><strong>1 token</strong></div>
             <div><span>Pint beer or cider</span><strong>2 tokens</strong></div>
-            <div><span>175ml wine</span><strong>2 tokens</strong></div>
-            <div><span>250ml wine</span><strong>3 tokens</strong></div>
-            <div><span>Bottle of wine</span><strong>9 tokens</strong></div>
+            <div><span>Festival wine · 175ml / 250ml / bottle</span><strong>2 / 3 / 9 tokens</strong></div>
+            <div><span>Local wine · 175ml / 250ml / bottle</span><strong>3 / 4 / 12 tokens</strong></div>
             <div><span>Single premium gin</span><strong>2 tokens</strong></div>
             <div><span>Double premium gin</span><strong>3 tokens</strong></div>
           </div>
@@ -284,97 +293,32 @@ const passportTotals = {
           <p data-results-copy>Showing all {drinks.length} confirmed drinks.</p>
         </div>
 
+        <section class="local-wines" data-local-wines-section>
+          <div class="local-wines-heading">
+            <div>
+              <p class="eyebrow">GROWN JUST DOWN THE ROAD</p>
+              <h2>Local Wines</h2>
+            </div>
+            <span class="local-wines-price">175ml 3 · 250ml 4 · bottle 12 tokens</span>
+          </div>
+          <p class="local-wines-intro">
+            We’re delighted to be serving three wines from Yew Tree Vineyard in
+            neighbouring West Hagbourne. Ed and Gemma Mitcham planted the vineyard
+            in 2015, and these first Yew Tree still wines are made using 100% fruit
+            grown at the vineyard.
+          </p>
+          <div class="drink-list local-wines-list">
+            {localWineDrinks.map((drink) => <DrinkRow {...drink} />)}
+          </div>
+        </section>
+
+        <div class="standard-drinks-heading">
+          <p class="eyebrow">THE FESTIVAL LINE-UP</p>
+          <h2>Beers, ciders, wines &amp; gins</h2>
+        </div>
+
         <div class="drink-list" data-drink-list>
-          {drinks.map(({ entry, type, producer, typeLabel, pillTone }) => (
-            <article
-              class={`drink-row drink-row--${type}`}
-              data-drink-row
-              data-type={type}
-              data-style={(entry.data.style ?? "").toLowerCase()}
-              data-abv={entry.data.abv ?? ""}
-              data-search={`${producer} ${entry.data.name} ${entry.data.style ?? ""} ${entry.data.flavourTags?.join(" ") ?? ""}`.toLowerCase()}
-              data-drink-id={entry.id}
-            >
-              <a class="drink-row-link" href={`/drinks/${entry.id}`}>
-                <div class="drink-row-art">
-                  {entry.data.graphic ? (
-                    <img
-                      src={entry.data.graphic}
-                      alt={`${entry.data.name} artwork`}
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div class="drink-row-placeholder" aria-hidden="true">
-                      <span>⌁</span>
-                      <small>Artwork<br />coming soon</small>
-                    </div>
-                  )}
-                </div>
-
-                <div class="drink-row-copy">
-                  <div class="drink-row-type">
-                    <span class={`type-pill type-pill--${pillTone}`}>{typeLabel}</span>
-                  </div>
-
-                  <p class="drink-maker">{producer}</p>
-                  <h2>{entry.data.name}</h2>
-
-                  {entry.data.description && (
-                    <p class="drink-description">{entry.data.description}</p>
-                  )}
-
-                  {entry.data.flavourTags?.length > 0 && (
-                    <div class="flavour-tags" aria-label="Flavour notes">
-                      {entry.data.flavourTags.slice(0,3).map((tag) => (
-                        <span>{tag}</span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                <div class="drink-row-meta">
-                  {entry.data.style && (
-                    <div class="meta-line">
-                      <span>{entry.data.style}</span>
-                    </div>
-                  )}
-
-                  {entry.data.abv !== undefined && (
-                    <div class="meta-line">
-                      <strong>{entry.data.abv.toFixed(1)}%</strong>
-                      <span class="abv-label">ABV</span>
-                    </div>
-                  )}
-                </div>
-              </a>
-
-              <div class="tasting-actions" aria-label={`Rate ${entry.data.name}`}>
-                <button
-                  class="tasting-button tasting-button--like"
-                  type="button"
-                  data-tasting-like={entry.id}
-                  aria-label={`I like ${entry.data.name}`}
-                  aria-pressed="false"
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M7 10v10H4V10h3Zm3 10V9.5l3.6-5.1a1.5 1.5 0 0 1 2.7 1.1L16 10h3.2a2 2 0 0 1 2 2.4l-1.1 5.5A2.6 2.6 0 0 1 17.6 20H10Z" />
-                  </svg>
-                </button>
-
-                <button
-                  class="tasting-button tasting-button--dislike"
-                  type="button"
-                  data-tasting-dislike={entry.id}
-                  aria-label={`${entry.data.name} is not for me`}
-                  aria-pressed="false"
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M7 14V4H4v10h3Zm3-10v10.5l3.6 5.1a1.5 1.5 0 0 0 2.7-1.1L16 14h3.2a2 2 0 0 0 2-2.4l-1.1-5.5A2.6 2.6 0 0 0 17.6 4H10Z" />
-                  </svg>
-                </button>
-              </div>
-            </article>
-          ))}
+          {regularDrinks.map((drink) => <DrinkRow {...drink} />)}
         </div>
 
         <div class="drinks-empty" data-drinks-empty hidden>
@@ -427,6 +371,7 @@ const passportTotals = {
       const clearButton = document.querySelector("[data-clear-filters]");
       const empty = document.querySelector("[data-drinks-empty]");
       const resultCopy = document.querySelector("[data-results-copy]");
+      const localWinesSection = document.querySelector("[data-local-wines-section]");
 
       const overallTried = document.querySelector("[data-overall-tried]");
       const likedCount = document.querySelector("[data-liked-count]");
@@ -568,6 +513,11 @@ const passportTotals = {
         });
 
         if (empty) empty.hidden = visible !== 0;
+
+        if (localWinesSection) {
+          const localRows = [...localWinesSection.querySelectorAll("[data-drink-row]")];
+          localWinesSection.hidden = !localRows.some((row) => !row.hidden);
+        }
 
         if (resultCopy) {
           resultCopy.textContent =

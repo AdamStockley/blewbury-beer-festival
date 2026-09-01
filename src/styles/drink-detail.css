@@ -79,6 +79,18 @@
   font-size: 2rem;
 }
 
+.drink-detail-token-price {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid rgba(244,198,94,0.55);
+  border-radius: 999px;
+  background: rgba(244,198,94,0.12);
+  color: var(--gold-light);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
 .drink-detail-description {
   max-width: 720px;
   color: rgba(255,255,255,0.86);

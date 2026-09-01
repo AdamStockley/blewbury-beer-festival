@@ -78,6 +78,11 @@ const bestServedLabel = type === "gin" ? "GARNISH" : "BEST SERVED";
             <div class="drink-detail-meta">
               {entry.data.style && <span>{entry.data.style}</span>}
               {entry.data.abv !== undefined && <strong>{entry.data.abv.toFixed(1)}%</strong>}
+              {type === "wine" && (
+                <span class="drink-detail-token-price">
+                  175ml {entry.data.tokens175ml} · 250ml {entry.data.tokens250ml} · bottle {entry.data.tokensBottle} tokens
+                </span>
+              )}
             </div>
 
             {entry.data.flavourTags?.length > 0 && (

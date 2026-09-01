@@ -1,0 +1,105 @@
+---
+const { entry, type, producer, typeLabel, pillTone } = Astro.props;
+const winePrices = type === "wine"
+  ? [
+      ["175ml", entry.data.tokens175ml],
+      ["250ml", entry.data.tokens250ml],
+      ["Bottle", entry.data.tokensBottle],
+    ]
+  : [];
+---
+
+<article
+  class={`drink-row drink-row--${type}`}
+  data-drink-row
+  data-type={type}
+  data-style={(entry.data.style ?? "").toLowerCase()}
+  data-abv={entry.data.abv ?? ""}
+  data-search={`${producer} ${entry.data.name} ${entry.data.style ?? ""} ${entry.data.flavourTags?.join(" ") ?? ""}`.toLowerCase()}
+  data-drink-id={entry.id}
+>
+  <a class="drink-row-link" href={`/drinks/${entry.id}`}>
+    <div class="drink-row-art">
+      {entry.data.graphic ? (
+        <img
+          src={entry.data.graphic}
+          alt={`${entry.data.name} artwork`}
+          loading="lazy"
+        />
+      ) : (
+        <div class="drink-row-placeholder" aria-hidden="true">
+          <span>⌁</span>
+          <small>Artwork<br />coming soon</small>
+        </div>
+      )}
+    </div>
+
+    <div class="drink-row-copy">
+      <div class="drink-row-type">
+        <span class={`type-pill type-pill--${pillTone}`}>{typeLabel}</span>
+      </div>
+
+      <p class="drink-maker">{producer}</p>
+      <h2>{entry.data.name}</h2>
+
+      {entry.data.description && (
+        <p class="drink-description">{entry.data.description}</p>
+      )}
+
+      {entry.data.flavourTags?.length > 0 && (
+        <div class="flavour-tags" aria-label="Flavour notes">
+          {entry.data.flavourTags.slice(0,3).map((tag) => <span>{tag}</span>)}
+        </div>
+      )}
+    </div>
+
+    <div class="drink-row-meta">
+      {entry.data.style && (
+        <div class="meta-line">
+          <span>{entry.data.style}</span>
+        </div>
+      )}
+
+      {entry.data.abv !== undefined && (
+        <div class="meta-line">
+          <strong>{entry.data.abv.toFixed(1)}%</strong>
+          <span class="abv-label">ABV</span>
+        </div>
+      )}
+
+      {winePrices.length > 0 && (
+        <div class={`wine-token-price${entry.data.localSelection ? " wine-token-price--local" : ""}`}>
+          {winePrices.map(([serve, tokens]) => (
+            <span><small>{serve}</small><strong>{tokens} tokens</strong></span>
+          ))}
+        </div>
+      )}
+    </div>
+  </a>
+
+  <div class="tasting-actions" aria-label={`Rate ${entry.data.name}`}>
+    <button
+      class="tasting-button tasting-button--like"
+      type="button"
+      data-tasting-like={entry.id}
+      aria-label={`I like ${entry.data.name}`}
+      aria-pressed="false"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M7 10v10H4V10h3Zm3 10V9.5l3.6-5.1a1.5 1.5 0 0 1 2.7 1.1L16 10h3.2a2 2 0 0 1 2 2.4l-1.1 5.5A2.6 2.6 0 0 1 17.6 20H10Z" />
+      </svg>
+    </button>
+
+    <button
+      class="tasting-button tasting-button--dislike"
+      type="button"
+      data-tasting-dislike={entry.id}
+      aria-label={`${entry.data.name} is not for me`}
+      aria-pressed="false"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M7 14V4H4v10h3Zm3-10v10.5l3.6 5.1a1.5 1.5 0 0 0 2.7-1.1L16 14h3.2a2 2 0 0 0 2-2.4l-1.1-5.5A2.6 2.6 0 0 0 17.6 4H10Z" />
+      </svg>
+    </button>
+  </div>
+</article>

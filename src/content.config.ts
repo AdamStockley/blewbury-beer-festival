@@ -87,6 +87,10 @@ const wines = defineCollection({
   schema: z.object({
     producer: z.string(),
     ...commonDrinkFields,
+    tokens175ml: z.number().int().positive().default(2),
+    tokens250ml: z.number().int().positive().default(3),
+    tokensBottle: z.number().int().positive().default(9),
+    localSelection: z.boolean().default(false),
   }),
 });
 

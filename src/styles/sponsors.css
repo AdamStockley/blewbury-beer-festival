@@ -99,6 +99,27 @@
   color: var(--muted);
 }
 
+.sponsor-copy .sponsor-list-heading {
+  margin: 0.2rem 0 0.4rem;
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.sponsor-highlights {
+  display: grid;
+  gap: 0.3rem;
+  margin: 0 0 0.4rem;
+  padding-left: 1.1rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.sponsor-highlights li::marker {
+  color: var(--gold);
+}
+
 .sponsor-website-button {
   width: fit-content;
   display: inline-flex;

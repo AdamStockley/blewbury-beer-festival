@@ -83,6 +83,15 @@ const initials = (name) =>
                 <h2>{sponsor.data.name}</h2>
                 <p>{sponsor.data.description}</p>
 
+                {sponsor.data.highlights.length > 0 && (
+                  <>
+                    <p class="sponsor-list-heading">Classes include:</p>
+                    <ul class="sponsor-highlights">
+                      {sponsor.data.highlights.map((item) => <li>{item}</li>)}
+                    </ul>
+                  </>
+                )}
+
                 {sponsor.data.website && (
                   <a
                     href={sponsor.data.website}

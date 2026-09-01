@@ -40,7 +40,7 @@ const mapWine = (entry) => {
   };
 };
 
-const regularDrinks = [
+const beerCiderDrinks = [
   ...beers.map((entry) => ({
     entry,
     type: "beer",
@@ -57,6 +57,9 @@ const regularDrinks = [
     pillTone: "cider",
   })),
 
+];
+
+const wineGinDrinks = [
   ...standardWines.map(mapWine),
 
   ...gins.map((entry) => ({
@@ -69,7 +72,7 @@ const regularDrinks = [
 ];
 
 const localWineDrinks = localWines.map(mapWine);
-const drinks = [...regularDrinks, ...localWineDrinks];
+const drinks = [...beerCiderDrinks, ...localWineDrinks, ...wineGinDrinks];
 
 const styleOptions = [...new Set(
   drinks.map(({ entry }) => entry.data.style).filter(Boolean)
@@ -293,6 +296,15 @@ const passportTotals = {
           <p data-results-copy>Showing all {drinks.length} confirmed drinks.</p>
         </div>
 
+        <div class="standard-drinks-heading">
+          <p class="eyebrow">THE FESTIVAL LINE-UP</p>
+          <h2>Beers, ciders, wines &amp; gins</h2>
+        </div>
+
+        <div class="drink-list" data-drink-list>
+          {beerCiderDrinks.map((drink) => <DrinkRow {...drink} />)}
+        </div>
+
         <section class="local-wines" data-local-wines-section>
           <div class="local-wines-heading">
             <div>
@@ -312,13 +324,8 @@ const passportTotals = {
           </div>
         </section>
 
-        <div class="standard-drinks-heading">
-          <p class="eyebrow">THE FESTIVAL LINE-UP</p>
-          <h2>Beers, ciders, wines &amp; gins</h2>
-        </div>
-
         <div class="drink-list" data-drink-list>
-          {regularDrinks.map((drink) => <DrinkRow {...drink} />)}
+          {wineGinDrinks.map((drink) => <DrinkRow {...drink} />)}
         </div>
 
         <div class="drinks-empty" data-drinks-empty hidden>

@@ -151,6 +151,7 @@ const sponsors = defineCollection({
   schema: z.object({
     name: z.string(),
     description: z.string(),
+    highlights: z.array(z.string()).default([]),
     website: z.string().url().optional(),
     logo: z.string().optional(),
     sponsorLabel: z.string().optional(),

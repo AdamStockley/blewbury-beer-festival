@@ -3,7 +3,7 @@
 ## Added from official producer sources
 
 - Loddon Brewery — Hullabaloo pump clip
-- Loddon Brewery — Kia Ora pump clip
+- Loddon Brewery — Dragon Slayer pump clip
 - Bond Brews — Bengal Tiger pump clip
 - Bond Brews — Railway Porter pump clip
 - Tutt's Clump Cider — Reading Gold product image

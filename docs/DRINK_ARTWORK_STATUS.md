@@ -16,7 +16,7 @@
 - Little Ox Brewery — Dark & Seedy
 - Little Ox Brewery — Daydreamer
 - Tap Social — Embers
-- Sharp's Brewery — Twin Coast
+- Sharp's Brewery — Wolf Rock
 - Brains Brewery — SA
 
 The cards no longer use initial letters. Until suitable official artwork is added, they display a quiet "Artwork coming soon" treatment.

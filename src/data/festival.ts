@@ -2,7 +2,7 @@ export const festival = {
   name: "Blewbury Beer Festival",
   year: 2026,
   date: "Saturday 3 October 2026",
-  dateISO: "2026-10-03T12:00:00+01:00",
+  dateISO: "2026-10-03T14:00:00+01:00",
   shortDate: "3 October 2026",
   location: "Blewbury Village Hall, Blewbury, Oxfordshire",
   venue: "Blewbury Village Hall",

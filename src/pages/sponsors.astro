@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import { festival } from "../data/festival";
 import "../styles/global.css";
 import "../styles/sponsors.css";
 
@@ -23,7 +24,7 @@ const initials = (name) =>
 
 <BaseLayout
   title="Barrel Sponsors | Blewbury Beer Festival 2026"
-  description="Meet the local businesses sponsoring beer and cider barrels at Blewbury Beer Festival 2026."
+  description="Meet the local businesses whose barrel sponsorship helped make Blewbury Beer Festival 2026 possible."
 >
   <Header />
 
@@ -34,9 +35,9 @@ const initials = (name) =>
         <h1>Barrel Sponsors</h1>
 
         <p class="sponsors-intro">
-          Our beer and cider barrels are sponsored by local businesses whose
-          support helps make Blewbury Beer Festival possible and allows us to
-          raise more money for local good causes.
+          Our 2026 beer and cider barrels were sponsored by local businesses
+          whose generous support helped make the festival possible and allowed
+          us to raise more money for good causes.
         </p>
       </div>
     </section>
@@ -120,18 +121,33 @@ const initials = (name) =>
           </div>
 
           <div>
-            <p class="sponsor-label">SUPPORT THE FESTIVAL</p>
-            <h2>Sponsor a Barrel</h2>
+            {festival.sponsorship.enabled ? (
+              <>
+                <p class="sponsor-label">SUPPORT THE FESTIVAL</p>
+                <h2>Sponsor a Barrel</h2>
 
-            <p>
-              Would your business like to support Blewbury Beer Festival?
-              Barrel sponsorship gives local businesses recognition at the
-              festival while helping us raise money for local good causes.
-            </p>
+                <p>
+                  Would your business like to support Blewbury Beer Festival?
+                  Barrel sponsorship gives local businesses recognition at the
+                  festival while helping us raise money for local good causes.
+                </p>
 
-            <a class="sponsor-cta-button" href="/sponsor-a-barrel">
-              Sponsor a Barrel
-            </a>
+                <a class="sponsor-cta-button" href="/sponsor-a-barrel">
+                  Sponsor a Barrel
+                </a>
+              </>
+            ) : (
+              <>
+                <p class="sponsor-label">THANK YOU</p>
+                <h2>Our 2026 barrel sponsors</h2>
+
+                <p>
+                  A huge thank you to every local business that sponsored a
+                  barrel or the music stage. Their support helped us put on a
+                  brilliant day and raise more for good causes.
+                </p>
+              </>
+            )}
           </div>
         </section>
       </div>

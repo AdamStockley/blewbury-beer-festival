@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import { festival } from "../data/festival";
 import outputs from "../../amplify_outputs.json";
 import "../styles/global.css";
 import "../styles/contact.css";
@@ -41,14 +42,23 @@ const turnstileSiteKey =
             else not covered elsewhere on the site, use the form.
           </p>
 
-          <p>
-            For barrel sponsorship enquiries, please use our dedicated
-            sponsorship form instead.
-          </p>
+          {festival.sponsorship.enabled ? (
+            <>
+              <p>
+                For barrel sponsorship enquiries, please use our dedicated
+                sponsorship form instead.
+              </p>
 
-          <a class="contact-secondary-link" href="/sponsor-a-barrel">
-            Sponsor a Barrel →
-          </a>
+              <a class="contact-secondary-link" href="/sponsor-a-barrel">
+                Sponsor a Barrel →
+              </a>
+            </>
+          ) : (
+            <p>
+              Barrel sponsorship for the 2026 festival has closed. We'll share
+              details when sponsorship opens for the next event.
+            </p>
+          )}
         </div>
 
         <div class="contact-panel">

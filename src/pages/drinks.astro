@@ -99,8 +99,8 @@ const passportTotals = {
           <p class="eyebrow">2026 DRINKS</p>
           <h1>Festival Drinks</h1>
           <p class="drinks-heading-copy">
-            Discover this year's beers, ciders, wines and gins. Rate each one
-            as you go and build your own tasting passport.
+            Look back at the beers, ciders, wines and gins served at the 2026
+            festival, along with your saved tasting passport.
           </p>
         </div>
 
@@ -108,7 +108,7 @@ const passportTotals = {
           <div class="passport-heading">
             <p class="passport-title">My Festival Tasting Passport</p>
             <p class="passport-total" aria-live="polite">
-              <strong data-overall-tried>0</strong> sampled today
+              <strong data-overall-tried>0</strong> sampled
             </p>
           </div>
 
@@ -204,11 +204,12 @@ const passportTotals = {
       <div class="container">
         <div class="token-guide">
           <div class="token-guide-copy">
-            <p class="eyebrow">AT THE BAR</p>
-            <h2>How the token system works</h2>
+            <p class="eyebrow">AT THE 2026 BAR</p>
+            <h2>How the token system worked</h2>
             <p>
-              To keep ordering quick and simple, alcoholic drinks are purchased
-              using festival tokens. Entry is £5 and includes one drinks token and a glass. Additional tokens can be purchased throughout the festival for £2 each.
+              To keep ordering quick and simple, alcoholic drinks were purchased
+              using festival tokens. Entry was £5 and included one drinks token
+              and a glass. Additional tokens cost £2 each.
             </p>
             <p class="token-price-note">
               Entry £5 · Additional tokens £2 each
@@ -325,7 +326,7 @@ const passportTotals = {
             <span class="local-wines-price">175ml 3 · 250ml 4 · bottle 12 tokens</span>
           </div>
           <p class="local-wines-intro">
-            We’re delighted to be serving three wines from Yew Tree Vineyard in
+            We were delighted to serve three wines from Yew Tree Vineyard in
             neighbouring West Hagbourne. Ed and Gemma Mitcham planted the vineyard
             in 2015, and these first Yew Tree still wines are made using 100% fruit
             grown at the vineyard.
@@ -360,18 +361,17 @@ const passportTotals = {
 
         {(wines.length === 0 || gins.length < 6) && (
           <div class="coming-note">
-            {wines.length === 0 && <span>Wine selection coming soon</span>}
-            {gins.length < 6 && <span>Details of the final gin are still to come</span>}
+            {wines.length === 0 && <span>2026 wine selection unavailable</span>}
+            {gins.length < 6 && <span>Some 2026 gin details are unavailable</span>}
           </div>
         )}
 
         <div class="drinks-disclaimer">
           <p class="eyebrow">PLEASE NOTE</p>
           <p>
-            The drinks listed here are the line-up currently planned for the festival.
-            Beer, cider, wine and gin selections may occasionally change before or during
-            the event if a product becomes unavailable. We'll keep this page updated
-            whenever we can.
+            This was the published 2026 festival line-up. A small number of
+            last-minute substitutions may have been made on the day if a
+            product became unavailable.
           </p>
         </div>
 

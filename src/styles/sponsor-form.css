@@ -217,6 +217,17 @@
   border-color: var(--burgundy-dark);
 }
 
+.sponsor-closed-panel {
+  align-self: center;
+}
+
+.sponsor-closed-link {
+  display: inline-block;
+  width: auto;
+  margin-top: 1rem;
+  text-decoration: none;
+}
+
 .sponsor-submit:disabled {
   cursor: wait;
   opacity: 0.65;

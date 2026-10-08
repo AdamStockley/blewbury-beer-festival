@@ -34,7 +34,9 @@ import { festival } from "../data/festival";
       <div>
         <p class="eyebrow eyebrow-gold">SUPPORT</p>
         <a href="/sponsors">Barrel Sponsors</a>
-        <a href="/sponsor-a-barrel">Sponsor a Barrel</a>
+        {festival.sponsorship.enabled && (
+          <a href="/sponsor-a-barrel">Sponsor a Barrel</a>
+        )}
         <a href="/causes">Good Causes</a>
         <a href="/contact">Contact</a>
       </div>

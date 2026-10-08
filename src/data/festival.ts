@@ -8,6 +8,10 @@ export const festival = {
     enabled: false,
     dateISO: "2026-10-03T14:00:00+01:00",
   },
+  sponsorship: {
+    // Set enabled to true when barrel sponsorship opens for the next festival.
+    enabled: false,
+  },
   location: "Blewbury Village Hall, Blewbury, Oxfordshire",
   venue: "Blewbury Village Hall",
   address: {

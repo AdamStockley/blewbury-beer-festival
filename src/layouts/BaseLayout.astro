@@ -1,7 +1,7 @@
 ---
 const {
-  title = "Blewbury Beer Festival 2026",
-  description = "Blewbury Beer Festival returns on Saturday 3 October 2026. Great drinks, food and live music in Blewbury, Oxfordshire, raising money for local good causes.",
+  title = "Blewbury Beer Festival",
+  description = "Blewbury Beer Festival brings together great drinks, food and live music in Blewbury, Oxfordshire, raising money for good causes. The next festival date will be announced soon.",
   image = "/images/social/blewbury-beer-festival-2026-v2.png",
   noindex = false,
 } = Astro.props;
@@ -50,7 +50,7 @@ const socialImage = new URL(image, site);
         description,
         startDate: "2026-10-03T14:00:00+01:00",
         endDate: "2026-10-03T22:00:00+01:00",
-        eventStatus: "https://schema.org/EventScheduled",
+        eventStatus: "https://schema.org/EventCompleted",
         eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
         image: socialImage.toString(),
         location: {

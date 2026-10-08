@@ -2,35 +2,64 @@
 import { festival } from "../data/festival";
 ---
 
-<section class="countdown-section countdown-section-compact">
-  <div class="container countdown-grid countdown-grid-compact">
-    <div>
-      <p class="eyebrow eyebrow-dark">COUNTING DOWN</p>
-      <h2>See you in October.</h2>
-    </div>
+{
+  festival.countdown.enabled ? (
+    <section class="countdown-section countdown-section-compact">
+      <div class="container countdown-grid countdown-grid-compact">
+        <div>
+          <p class="eyebrow eyebrow-dark">COUNTING DOWN</p>
+          <h2>See you in October.</h2>
+        </div>
 
-    <div
-      class="countdown"
-      data-countdown={festival.dateISO}
-      aria-label="Countdown to Blewbury Beer Festival"
-    >
-      <div class="countdown-unit">
-        <strong data-days>--</strong>
-        <span>Days</span>
-      </div>
+        <div
+          class="countdown"
+          data-countdown={festival.countdown.dateISO}
+          aria-label="Countdown to Blewbury Beer Festival"
+        >
+          <div class="countdown-unit">
+            <strong data-days>--</strong>
+            <span>Days</span>
+          </div>
 
-      <div class="countdown-unit">
-        <strong data-hours>--</strong>
-        <span>Hours</span>
-      </div>
+          <div class="countdown-unit">
+            <strong data-hours>--</strong>
+            <span>Hours</span>
+          </div>
 
-      <div class="countdown-unit">
-        <strong data-minutes>--</strong>
-        <span>Minutes</span>
+          <div class="countdown-unit">
+            <strong data-minutes>--</strong>
+            <span>Minutes</span>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
+  ) : (
+    <section class="countdown-section countdown-section-compact thank-you-section">
+      <div class="container thank-you-grid">
+        <div>
+          <p class="eyebrow eyebrow-dark">FROM ALL OF US</p>
+          <h2>Thank you!</h2>
+        </div>
+
+        <div class="thank-you-copy">
+          <p>
+            A huge thank you to everyone who helped make this year's Blewbury
+            Beer Festival happen — our sponsors, performers, PTA, volunteers
+            and everyone who worked so hard behind the scenes.
+          </p>
+          <p>
+            Most importantly, thank you to everyone who came along and
+            supported the event. We hope you had a fantastic day!
+          </p>
+          <p>
+            We'll share an update shortly on the money raised and the good
+            causes that will benefit.
+          </p>
+        </div>
+      </div>
+    </section>
+  )
+}
 
 <script is:inline>
   (() => {

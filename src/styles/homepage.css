@@ -31,6 +31,29 @@
   font-size: clamp(2rem, 3.5vw, 3.6rem);
 }
 
+.thank-you-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.3fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: start;
+}
+
+.thank-you-grid h2 {
+  margin: 0;
+  font-size: clamp(3.2rem, 7vw, 6.5rem);
+}
+
+.thank-you-copy {
+  max-width: 52rem;
+  padding-top: 0.15rem;
+  font-size: clamp(1rem, 1.7vw, 1.2rem);
+}
+
+.thank-you-copy p:last-child {
+  margin-bottom: 0;
+  font-weight: 750;
+}
+
 .home-features {
   padding: 4rem 0;
   background: var(--cream-light);
@@ -195,7 +218,8 @@
 
   .home-causes-grid,
   .home-latest-grid,
-  .home-volunteer-grid {
+  .home-volunteer-grid,
+  .thank-you-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
